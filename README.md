@@ -24,12 +24,12 @@ db = dmp
 Adds a file to the data management API.
 
 ### Options
-- <user_id> - Identifier to uniquely locate the users files. Can be set to "common" if the files can be shared between users
-- <file_path> - Location of the file in the file system
-- <file_type> - File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
-- <data_type> - The type of information in the file (RNA-seq, ChIP-seq, etc)
-- <source_id> - List of IDs of files that were processed to generate this file
-- <meta_data> - Dictionary object containing the extra data related to the generation of the file or describing the way it was processed
+- `<user_id>` - Identifier to uniquely locate the users files. Can be set to "common" if the files can be shared between users
+- `<file_path>` - Location of the file in the file system
+- `<file_type>` - File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
+- `<data_type>` - The type of information in the file (RNA-seq, ChIP-seq, etc)
+- `<source_id>` - List of IDs of files that were processed to generate this file
+- `<meta_data>` - Dictionary object containing the extra data related to the generation of the file or describing the way it was processed
 
 ### example
 ```
