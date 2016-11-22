@@ -31,21 +31,21 @@ class dmp:
         config.read('mongodb.cnf')
         
         host = config.get("dmp", "host")
-        port = config.get("dmp", "port")
+        port = config.getint("dmp", "port")
         user = config.get("dmp", "user")
         password = config.get("dmp", "pass")
         db = config.get("dmp", "db")
         
         self.client = MongoClient()
         self.client = MongoClient(host, port)
-        self.db = client[db]
+        self.db = self.client[db]
         
     
     def get_file_by_id(self, file_id):
         """
         Returns files data based on the unique_id for a given file
         """
-        entries = db.entries
+        entries = self.db.entries
         file_obj = entries.find_one({'_id': ObjectId(file_id)})
         return file_obj
     
@@ -54,7 +54,7 @@ class dmp:
         """
         Return the file data for a given user
         """
-        entries = db.entries
+        entries = self.db.entries
         files = []
         for entry in entries.find({"user_id" : user_id}):
             files.append(entry)
@@ -65,7 +65,7 @@ class dmp:
         """
         Return the files for a given user based on the user_id and the file type
         """
-        entries = db.entries
+        entries = self.db.entries
         files = []
         for entry in entries.find({"user_id" : user_id, "file_type" : file_type}):
             files.append(entry)
@@ -79,10 +79,10 @@ class dmp:
         
         Needs work to define the format for how declaring the history is best
         """
-        return = []
+        return []
     
     
-    def set_file(self, user_id, file_path, file_type = "", data_type = "", source = [], meta_data = {})
+    def set_file(self, user_id, file_path, file_type = "", data_type = "", source = [], meta_data = {}):
         """
         Add file to the list for managing.
         """
@@ -91,12 +91,12 @@ class dmp:
             "user_id"       : user_id,
             "file_path"     : file_path,
             "file_type"     : file_type,
-            "data_type"     : data_type
+            "data_type"     : data_type,
             "source"        : source,
             "meta"          : meta_data,
             "creation_time" : datetime.datetime.utcnow()
         }
         
-        entries = db.entries
+        entries = self.db.entries
         entry_id = entries.insert_one(entry).inserted_id
         return entry_id
