@@ -32,11 +32,14 @@ class dmp:
         
         host = config.get("dmp", "host")
         port = config.getint("dmp", "port")
-        db = config.get("dmp", "db")
+        user = config.get("dmp", "user")
+        password = config.get("dmp", "pass")
+        dmp_db = config.get("dmp", "db")
         
         self.client = MongoClient()
         self.client = MongoClient(host, port)
-        self.db = self.client[db]
+        self.db = self.client[dmp_db]
+        self.db.authenticate(user, password)
         
     
     def get_file_by_id(self, user_id, file_id):
