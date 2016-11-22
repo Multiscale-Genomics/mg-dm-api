@@ -16,6 +16,7 @@ limitations under the License.
 
 import datetime, ConfigParser
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 
 class dmp:
     """
@@ -40,23 +41,48 @@ class dmp:
         self.db = client[db]
         
     
-    def get_file_by_id(self, id):
+    def get_file_by_id(self, file_id):
         """
         Returns files data based on the unique_id for a given file
         """
-        return {"file": file_path, "meta": meta}
+        entries = db.entries
+        file_obj = entries.find_one({'_id': ObjectId(file_id)})
+        return file_obj
     
     
-    def get_file_by_type(self, user_id, ):
+    def get_files_by_user(self, user_id):
         """
-        Return the file data based on the user and the accession for that file
+        Return the file data for a given user
         """
         entries = db.entries
-        entries.find_one()
-        return {"file": file_path, "meta": meta}
+        files = []
+        for entry in entries.find({"user_id" : user_id}):
+            files.append(entry)
+        return files
     
     
-    def set_file(self, user_id, file_path, file_type = "", source = [], meta_data = {})
+    def get_files_by_type(self, user_id, file_type):
+        """
+        Return the files for a given user based on the user_id and the file type
+        """
+        entries = db.entries
+        files = []
+        for entry in entries.find({"user_id" : user_id, "file_type" : file_type}):
+            files.append(entry)
+        return files
+    
+    
+    def get_file_history(self, user_id, file_id):
+        """
+        Returns the full path of file_ids from teh current file to the original
+        file(s)
+        
+        Needs work to define the format for how declaring the history is best
+        """
+        return = []
+    
+    
+    def set_file(self, user_id, file_path, file_type = "", data_type = "", source = [], meta_data = {})
         """
         Add file to the list for managing.
         """
@@ -65,6 +91,7 @@ class dmp:
             "user_id"       : user_id,
             "file_path"     : file_path,
             "file_type"     : file_type,
+            "data_type"     : data_type
             "source"        : source,
             "meta"          : meta_data,
             "creation_time" : datetime.datetime.utcnow()
