@@ -92,7 +92,7 @@ class dmp:
             "file_path"     : file_path,
             "file_type"     : file_type,
             "data_type"     : data_type,
-            "source"        : source,
+            "source_id"     : source,
             "meta"          : meta_data,
             "creation_time" : datetime.datetime.utcnow()
         }
