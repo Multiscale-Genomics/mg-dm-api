@@ -7,4 +7,5 @@ TADbit-master
 TADbit-master/*
 env
 env/*
+*.cnf
 *~
