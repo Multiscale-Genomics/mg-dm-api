@@ -41,12 +41,12 @@ class dmp:
         self.db = self.client[db]
         
     
-    def get_file_by_id(self, file_id):
+    def get_file_by_id(self, user_id, file_id):
         """
         Returns files data based on the unique_id for a given file
         """
         entries = self.db.entries
-        file_obj = entries.find_one({'_id': ObjectId(file_id)})
+        file_obj = entries.find_one({'_id': ObjectId(file_id), 'user_id': user_id})
         return file_obj
     
     
@@ -61,13 +61,24 @@ class dmp:
         return files
     
     
-    def get_files_by_type(self, user_id, file_type):
+    def get_files_by_file_ype(self, user_id, file_type):
         """
         Return the files for a given user based on the user_id and the file type
         """
         entries = self.db.entries
         files = []
         for entry in entries.find({"user_id" : user_id, "file_type" : file_type}):
+            files.append(entry)
+        return files
+    
+    
+    def get_files_by_data_ype(self, user_id, data_type):
+        """
+        Return the files for a given user based on the user_id and the data type
+        """
+        entries = self.db.entries
+        files = []
+        for entry in entries.find({"user_id" : user_id, "data_type" : data_type}):
             files.append(entry)
         return files
     
