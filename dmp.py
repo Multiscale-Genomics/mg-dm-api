@@ -32,8 +32,6 @@ class dmp:
         
         host = config.get("dmp", "host")
         port = config.getint("dmp", "port")
-        user = config.get("dmp", "user")
-        password = config.get("dmp", "pass")
         db = config.get("dmp", "db")
         
         self.client = MongoClient()
