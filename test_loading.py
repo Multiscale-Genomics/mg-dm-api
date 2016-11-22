@@ -8,7 +8,7 @@ data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
 
 da = dmp()
 
-for i in xrange(100000):
+for i in xrange(10):
     u = random.choice(users)
     ft = random.choice(file_types)
     dt = random.choice(data_types)
