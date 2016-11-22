@@ -74,7 +74,7 @@ class dmp:
     
     def get_file_history(self, user_id, file_id):
         """
-        Returns the full path of file_ids from teh current file to the original
+        Returns the full path of file_ids from the current file to the original
         file(s)
         
         Needs work to define the format for how declaring the history is best
