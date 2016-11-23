@@ -12,12 +12,11 @@ Requirements
 ------------
 - Mongo DB 3.2
 - Python 2.7.10+
-- Python Modules:
-  - pymongo
+- pymongo
 
 Installation
 ------------
-.. code-block:: console
+::
     git clone https://github.com/Multiscale-Genomics/mg-dm-api.git
 
 
