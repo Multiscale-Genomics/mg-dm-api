@@ -118,9 +118,11 @@ class dmp:
     
     def remove_file(self, file_id):
         """
-        Remove single files from the directory.
+        Remove single files from the directory. Returns the ID of the file that
+        was removed
         """
         self.db.entries.delete_one({'_id': ObjectId(file_id)})
+        return file_id
     
     
     def set_file(self, user_id, file_path, file_type = "", data_type = "", source = [], meta_data = {}):
