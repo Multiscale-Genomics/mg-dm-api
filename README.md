@@ -149,3 +149,25 @@ da = dmp()
 da.get_files_by_data_type(<user_id>, <data_type>)
 ```
 
+
+## get_file_history
+For a given `<unique_file_id>` retrieve the list of files that were used in its generation.
+
+### Options
+- `<unique_file_id>` - ID of the file. This is the value returned when a file is loaded into the DMP or is the `_id` for a given file when the files have bee retrieved.
+
+### Returns
+Dictionary of lists. For the queried `<unique_file_id>` this is the key for a list of the parent objects, each recursively containing a list of the parent `<unique_file_id>`s
+
+### example
+```
+from dmp import dmp
+da = dmp()
+history = da.get_file_history("58357157d9422a2b1700a0d5")
+print history
+```
+Output:
+```
+{'58357157d9422a2b1700a0d5': [{u'58357017d9422a2b4292d878': []}]}
+```
+These IDs can then be requested to ruturn the meta data and locations with the `get_file_by_id` method.

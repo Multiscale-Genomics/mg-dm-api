@@ -13,4 +13,4 @@ for i in xrange(10):
     ft = random.choice(file_types)
     dt = random.choice(data_types)
     f = '/tmp/test/' + dt + '/test_' + str(i) + '.' + ft
-    da.set_file(u, f, ft, dt)
+    file_id = da.set_file(u, f, ft, dt)
