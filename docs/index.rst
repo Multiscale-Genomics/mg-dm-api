@@ -8,6 +8,8 @@ Welcome to MuG DMP API's documentation!
 
 API for the management of file locations and users within the MuG VRE.
 
+**Quick Links**: `Source (github) <https://github.com/Multiscale-Genomics/mg-dm-api>`_ - `Documentation (rtd) <https://http://mg-dm-api.readthedocs.io/>`
+
 Requirements
 ------------
 - Mongo DB 3.2
@@ -17,7 +19,7 @@ Requirements
 Installation
 ------------
 .. code-block:: console
-    git clone https://github.com/Multiscale-Genomics/mg-dm-api.git
+    $ git clone https://github.com/Multiscale-Genomics/mg-dm-api.git
 
 
 
