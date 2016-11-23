@@ -16,8 +16,9 @@ Requirements
 
 Installation
 ------------
-::
+.. code-block:: console
     git clone https://github.com/Multiscale-Genomics/mg-dm-api.git
+
 
 
 Contents
@@ -25,6 +26,5 @@ Contents
 .. toctree::
    :maxdepth: 2
    
-   Requirements
-   Installation
+   Functions
 
