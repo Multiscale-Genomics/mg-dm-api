@@ -21,8 +21,6 @@ Installation
 .. code-block:: console
     $ git clone https://github.com/Multiscale-Genomics/mg-dm-api.git
 
-
-
 Contents
 --------
 .. toctree::
