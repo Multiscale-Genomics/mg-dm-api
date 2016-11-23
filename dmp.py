@@ -96,31 +96,31 @@ class dmp:
         reursively goes up the tree of parents to get a full history.
         """
         entries = self.db.entries
-        file_obj = entries.find_one({'_id': ObjectId(file_id), 'user_id': user_id})
+        file_obj = entries.find_one({'_id': ObjectId(file_id)})
         
         parent_files = []
         if len(file_obj['source_id']) > 0:
             for source_id in file_obj['source_id']:
-                parent_files.append(self._get_file_parents())
+                parent_files.append(self._get_file_parents(source_id))
         
         return {file_id : parent_files}
     
     
-    def get_file_history(self, user_id, file_id):
+    def get_file_history(self, file_id):
         """
         Returns the full path of file_ids from the current file to the original
         file(s)
         
         Needs work to define the format for how declaring the history is best
         """
-        return self._get_file_parents()
+        return self._get_file_parents(file_id)
     
     
-    def remove_file(self, user_id, file_id):
+    def remove_file(self, file_id):
         """
         Remove single files from the directory.
         """
-        return []
+        self.db.entries.delete_one({'_id': ObjectId(file_id)})
     
     
     def set_file(self, user_id, file_path, file_type = "", data_type = "", source = [], meta_data = {}):
