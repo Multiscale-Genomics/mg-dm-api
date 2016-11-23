@@ -35,7 +35,7 @@ Adds a file to the data management API.
 `<unique_file_id>` - This is an id for that file within the system and can be used for tracing this file and where it is used and where it has come from
 
 ### example
-```
+```python
 from dmp import dmp
 da = dmp()
 unique_file_id = da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq')
@@ -43,13 +43,13 @@ unique_file_id = da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-s
 
 If the is the processed result of 1 or more files then these can be specified using the file_id:
 
-```
+```python
 da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', source_id=[1, 2])
 ```
 
 Meta data about the file can also be included to provide extra information about the file, origins or how it was generated:
 
-```
+```python
 da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', meta={'downloaded_from' : 'http://www.', })
 ```
 
@@ -71,7 +71,7 @@ Dictionary object containing:
 - `<creation_time>` - Time at which the file was loaded into the system
 
 ### example
-```
+```python
 from dmp import dmp
 da = dmp()
 da.get_file_by_id(<unique_file_id>)
@@ -94,7 +94,7 @@ List of dictionary objects. Each one containing the following:
 - `<creation_time>` - Time at which the file was loaded into the system
 
 ### example
-```
+```python
 from dmp import dmp
 da = dmp()
 da.get_files_by_user(<user_id>)
@@ -118,7 +118,7 @@ List of dictionary objects. Each one containing the following:
 - `<creation_time>` - Time at which the file was loaded into the system
 
 ### example
-```
+```python
 from dmp import dmp
 da = dmp()
 da.get_files_by_file_type(<user_id>, <file_type>)
@@ -143,7 +143,7 @@ List of dictionary objects. Each one containing the following:
 - `<creation_time>` - Time at which the file was loaded into the system
 
 ### example
-```
+```python
 from dmp import dmp
 da = dmp()
 da.get_files_by_data_type(<user_id>, <data_type>)
@@ -160,7 +160,7 @@ For a given `<unique_file_id>` retrieve the list of files that were used in its 
 Dictionary of lists. For the queried `<unique_file_id>` this is the key for a list of the parent objects, each recursively containing a list of the parent `<unique_file_id>`s
 
 ### example
-```
+```python
 from dmp import dmp
 da = dmp()
 history = da.get_file_history("58357157d9422a2b1700a0d5")
