@@ -15,6 +15,7 @@ limitations under the License.
 """
 
 import datetime, ConfigParser
+import pymongo
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
@@ -41,6 +42,11 @@ class dmp:
         self.db = self.client[dmp_db]
         self.db.authenticate(user, password)
         
+        self.entries = self.db.entries
+        self.db.entries.create_index([('user_id', pymongo.ASCENDING)], unique=False)
+        self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('file_type', pymongo.ASCENDING)], unique=False)
+        self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('data_type', pymongo.ASCENDING)], unique=False)
+        
     
     def get_file_by_id(self, user_id, file_id):
         """
@@ -62,7 +68,7 @@ class dmp:
         return files
     
     
-    def get_files_by_file_ype(self, user_id, file_type):
+    def get_files_by_file_type(self, user_id, file_type):
         """
         Return the files for a given user based on the user_id and the file type
         """
@@ -73,7 +79,7 @@ class dmp:
         return files
     
     
-    def get_files_by_data_ype(self, user_id, data_type):
+    def get_files_by_data_type(self, user_id, data_type):
         """
         Return the files for a given user based on the user_id and the data type
         """
@@ -84,12 +90,35 @@ class dmp:
         return files
     
     
+    def _get_file_parents(self, file_id):
+        """
+        Private function for getting all parents on a file_id. This function
+        reursively goes up the tree of parents to get a full history.
+        """
+        entries = self.db.entries
+        file_obj = entries.find_one({'_id': ObjectId(file_id), 'user_id': user_id})
+        
+        parent_files = []
+        if len(file_obj['source_id']) > 0:
+            for source_id in file_obj['source_id']:
+                parent_files.append(self._get_file_parents())
+        
+        return {file_id : parent_files}
+    
+    
     def get_file_history(self, user_id, file_id):
         """
         Returns the full path of file_ids from the current file to the original
         file(s)
         
         Needs work to define the format for how declaring the history is best
+        """
+        return self._get_file_parents()
+    
+    
+    def remove_file(self, user_id, file_id):
+        """
+        Remove single files from the directory.
         """
         return []
     
@@ -111,4 +140,4 @@ class dmp:
         
         entries = self.db.entries
         entry_id = entries.insert_one(entry).inserted_id
-        return entry_id
+        return str(entry_id)
