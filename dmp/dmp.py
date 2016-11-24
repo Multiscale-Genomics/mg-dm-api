@@ -161,7 +161,44 @@ class dmp:
     
     def set_file(self, user_id, file_path, file_type = "", data_type = "", source = [], meta_data = {}):
         """
-        Add file to the list for managing.
+        Adds a file to the data management API.
+        
+        Parameters:
+        -----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to 
+            "common" if the files can be shared between users
+        file_path : str
+            Location of the file in the file system
+        file_type : str
+            File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
+        data_type : str
+            The type of information in the file (RNA-seq, ChIP-seq, etc)
+        source_id : list
+            List of IDs of files that were processed to generate this file
+        meta_data : dict
+            Dictionary object containing the extra data related to the 
+            generation of the file or describing the way it was processed
+        
+        Returns:
+        --------
+        str
+            This is an id for that file within the system and can be used for
+            tracing this file and where it is used and where it has come from.
+        
+        Example:
+        --------
+        >>> from dmp import dmp
+        >>> da = dmp()
+        >>> unique_file_id = da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq')
+        
+        If the is the processed result of 1 or more files then these can be specified using the file_id:
+
+        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', source_id=[1, 2])
+
+        Meta data about the file can also be included to provide extra information about the file, origins or how it was generated:
+        
+        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', meta={'downloaded_from' : 'http://www.', })
         """
         
         entry = {
