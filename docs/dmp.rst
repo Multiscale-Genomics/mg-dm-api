@@ -1,4 +1,4 @@
 ``dmp`` --- ``dmp``
 ============================================
 
-.. automodule:: dmp
+.. automodule:: dmp.dmp
