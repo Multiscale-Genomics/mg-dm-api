@@ -386,7 +386,7 @@ class dmp:
 
         Meta data about the file can also be included to provide extra information about the file, origins or how it was generated:
         
-        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, meta={'downloaded_from' : 'http://www.', })
+        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, meta_data={'downloaded_from' : 'http://www.', })
         """
         
         entry = {
@@ -396,7 +396,7 @@ class dmp:
             "data_type"     : data_type,
             "taxon_id"      : taxon_id,
             "source_id"     : source,
-            "meta"          : meta_data,
+            "meta_data"     : meta_data,
             "creation_time" : datetime.datetime.utcnow()
         }
         
