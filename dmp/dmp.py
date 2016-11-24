@@ -74,6 +74,8 @@ class dmp:
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
                 Taxon ID that the species that the file has been derived from
+            compressed : str
+                Type of compression (None, gzip, zip)
             source_id : list
                 List of IDs of files that were processed to generate this file
             meta_data : dict
@@ -148,6 +150,8 @@ class dmp:
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
                 Taxon ID that the species that the file has been derived from
+            compressed : str
+                Type of compression (None, gzip, zip)
             source_id : list
                 List of IDs of files that were processed to generate this file
             meta_data : dict
@@ -196,6 +200,8 @@ class dmp:
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
                 Taxon ID that the species that the file has been derived from
+            compressed : str
+                Type of compression (None, gzip, zip)
             source_id : list
                 List of IDs of files that were processed to generate this file
             meta_data : dict
@@ -244,6 +250,8 @@ class dmp:
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
                 Taxon ID that the species that the file has been derived from
+            compressed : str
+                Type of compression (None, gzip, zip)
             source_id : list
                 List of IDs of files that were processed to generate this file
             meta_data : dict
@@ -345,7 +353,7 @@ class dmp:
         return file_id
     
     
-    def set_file(self, user_id, file_path, file_type = "", data_type = "", taxon_id = "", source = [], meta_data = {}):
+    def set_file(self, user_id, file_path, file_type = "", data_type = "", taxon_id = "", compressed=None, source = [], meta_data = {}):
         """
         Adds a file to the data management API.
         
@@ -362,6 +370,8 @@ class dmp:
             The type of information in the file (RNA-seq, ChIP-seq, etc)
         taxon_id : int
             Taxon ID that the species that the file has been derived from
+        compressed : str
+            Type of compression (None, gzip, zip)
         source_id : list
             List of IDs of files that were processed to generate this file
         meta_data : dict
@@ -378,15 +388,15 @@ class dmp:
         -------
         >>> from dmp import dmp
         >>> da = dmp()
-        >>> unique_file_id = da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606)
+        >>> unique_file_id = da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, None)
         
         If the is the processed result of 1 or more files then these can be specified using the file_id:
 
-        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, source_id=[1, 2])
+        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, None, source_id=[1, 2])
 
         Meta data about the file can also be included to provide extra information about the file, origins or how it was generated:
         
-        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, meta_data={'downloaded_from' : 'http://www.', })
+        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, None, meta_data={'downloaded_from' : 'http://www.', })
         """
         
         entry = {
@@ -395,6 +405,7 @@ class dmp:
             "file_type"     : file_type,
             "data_type"     : data_type,
             "taxon_id"      : taxon_id,
+            "compressed"    : compressed,
             "source_id"     : source,
             "meta_data"     : meta_data,
             "creation_time" : datetime.datetime.utcnow()
