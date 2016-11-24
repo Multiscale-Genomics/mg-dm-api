@@ -152,8 +152,25 @@ class dmp:
     
     def remove_file(self, file_id):
         """
-        Remove single files from the directory. Returns the ID of the file that
-        was removed
+        Removes a single file from the directory. Returns the ID of the file
+        that was removed
+        
+        Parameters:
+        -----------
+        file_id : str
+            This is the ID for a given file. This is the ObjectID value
+            generated during the set proceedure.
+        
+        Returns:
+        --------
+        str:
+            The file_id of the removed file.
+        
+        Example:
+        --------
+        >>> from dmp import dmp
+        >>> da = dmp()
+        >>> da.remove_file(<file_id>)
         """
         self.db.entries.delete_one({'_id': ObjectId(file_id)})
         return file_id
