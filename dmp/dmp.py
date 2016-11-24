@@ -82,9 +82,10 @@ class dmp:
         
         Example
         -------
-        >>> from dmp import dmp
-        >>> da = dmp()
-        >>> da.get_file_by_id(<unique_file_id>)
+        ::
+            from dmp import dmp
+            da = dmp()
+            da.get_file_by_id(<unique_file_id>)
         """
         entries = self.db.entries
         file_obj = entries.find_one({'_id': ObjectId(file_id), 'user_id': user_id})
