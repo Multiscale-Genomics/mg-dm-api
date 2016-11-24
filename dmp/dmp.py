@@ -45,6 +45,7 @@ class dmp:
         self.db.entries.create_index([('user_id', pymongo.ASCENDING)], unique=False)
         self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('file_type', pymongo.ASCENDING)], unique=False)
         self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('data_type', pymongo.ASCENDING)], unique=False)
+        self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('taxon_id', pymongo.ASCENDING)], unique=False)
         
     
     def get_file_by_id(self, user_id, file_id):
@@ -71,6 +72,8 @@ class dmp:
                 File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
+            taxon_id : int
+                Taxon ID that the species that the file has been derived from
             source_id : list
                 List of IDs of files that were processed to generate this file
             meta_data : dict
@@ -143,6 +146,8 @@ class dmp:
                 File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
+            taxon_id : int
+                Taxon ID that the species that the file has been derived from
             source_id : list
                 List of IDs of files that were processed to generate this file
             meta_data : dict
@@ -189,6 +194,8 @@ class dmp:
                 File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
+            taxon_id : int
+                Taxon ID that the species that the file has been derived from
             source_id : list
                 List of IDs of files that were processed to generate this file
             meta_data : dict
@@ -206,6 +213,54 @@ class dmp:
         entries = self.db.entries
         files = []
         for entry in entries.find({"user_id" : user_id, "data_type" : data_type}):
+            files.append(entry)
+        return files
+    
+    
+    def get_files_by_taxon_id(self, user_id, taxon_id):
+        """
+        Get a list of the file dictionary objects given a `user_id` and 
+        `taxon_id`
+        
+        Parameters
+        ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to 
+            "common" if the files can be shared between users
+        taxon_id : int
+            Taxon ID that the species that the file has been derived from
+        
+        Returns
+        -------
+        dict
+            user_id : str
+                Identifier to uniquely locate the users files. Can be set to 
+                "common" if the files can be shared between users
+            file_path : str
+                Location of the file in the file system
+            file_type : str
+                File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
+            data_type : str
+                The type of information in the file (RNA-seq, ChIP-seq, etc)
+            taxon_id : int
+                Taxon ID that the species that the file has been derived from
+            source_id : list
+                List of IDs of files that were processed to generate this file
+            meta_data : dict
+                Dictionary object containing the extra data related to the 
+                generation of the file or describing the way it was processed
+            creation_time : list
+                    Time at which the file was loaded into the system
+        
+        Example
+        -------
+        >>> from dmp import dmp
+        >>> da = dmp()
+        >>> da.get_files_by_taxon_id(<user_id>, <taxon_id>)
+        """
+        entries = self.db.entries
+        files = []
+        for entry in entries.find({"user_id" : user_id, "taxon_id" : taxon_id}):
             files.append(entry)
         return files
     
@@ -290,7 +345,7 @@ class dmp:
         return file_id
     
     
-    def set_file(self, user_id, file_path, file_type = "", data_type = "", source = [], meta_data = {}):
+    def set_file(self, user_id, file_path, file_type = "", data_type = "", taxon_id = "", source = [], meta_data = {}):
         """
         Adds a file to the data management API.
         
@@ -305,6 +360,8 @@ class dmp:
             File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
         data_type : str
             The type of information in the file (RNA-seq, ChIP-seq, etc)
+        taxon_id : int
+            Taxon ID that the species that the file has been derived from
         source_id : list
             List of IDs of files that were processed to generate this file
         meta_data : dict
@@ -321,15 +378,15 @@ class dmp:
         -------
         >>> from dmp import dmp
         >>> da = dmp()
-        >>> unique_file_id = da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq')
+        >>> unique_file_id = da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606)
         
         If the is the processed result of 1 or more files then these can be specified using the file_id:
 
-        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', source_id=[1, 2])
+        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, source_id=[1, 2])
 
         Meta data about the file can also be included to provide extra information about the file, origins or how it was generated:
         
-        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', meta={'downloaded_from' : 'http://www.', })
+        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, meta={'downloaded_from' : 'http://www.', })
         """
         
         entry = {
@@ -337,6 +394,7 @@ class dmp:
             "file_path"     : file_path,
             "file_type"     : file_type,
             "data_type"     : data_type,
+            "taxon_id"      : taxon_id,
             "source_id"     : source,
             "meta"          : meta_data,
             "creation_time" : datetime.datetime.utcnow()
