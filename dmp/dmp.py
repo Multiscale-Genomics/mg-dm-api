@@ -79,6 +79,13 @@ class dmp:
                 generation of the file or describing the way it was processed
             creation_time : list
                 Time at which the file was loaded into the system
+        
+        Example
+        -------
+        .. code-block:: python
+            from dmp import dmp
+            da = dmp()
+            da.get_file_by_id(<unique_file_id>)
         """
         entries = self.db.entries
         file_obj = entries.find_one({'_id': ObjectId(file_id), 'user_id': user_id})
