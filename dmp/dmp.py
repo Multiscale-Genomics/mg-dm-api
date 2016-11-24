@@ -62,7 +62,7 @@ class dmp:
         
         Returns
         -------
-        file_obj : dict
+        dict
             user_id : str
                 Identifier to uniquely locate the users files. Can be set to 
                 "common" if the files can be shared between users
