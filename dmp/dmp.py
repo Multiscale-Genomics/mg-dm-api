@@ -165,11 +165,11 @@ class dmp:
         -------
         >>> from dmp import dmp
         >>> da = dmp()
-        >>> history = da.get_file_history("58357157d9422a2b1700a0d5")
+        >>> history = da.get_file_history("aLongString")
         >>> print history
         
         Output:
-        ``{'58357157d9422a2b1700a0d5': [{u'58357017d9422a2b4292d878': []}]}``
+        ``{'aLongString': [{u'parentOfaLongString': []}]}``
         
         These IDs can then be requested to ruturn the meta data and locations
         with the `get_file_by_id` method.
