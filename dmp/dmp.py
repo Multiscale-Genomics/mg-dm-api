@@ -51,6 +51,34 @@ class dmp:
     def get_file_by_id(self, user_id, file_id):
         """
         Returns files data based on the unique_id for a given file
+        
+        Parameters
+        ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to 
+            "common" if the files can be shared between users
+        file_id : str
+            Location of the file in the file system
+        
+        Returns
+        -------
+        file_obj : dict
+            user_id : str
+                Identifier to uniquely locate the users files. Can be set to 
+                "common" if the files can be shared between users
+            file_path : str
+                Location of the file in the file system
+            file_type : str
+                File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
+            data_type : str
+                The type of information in the file (RNA-seq, ChIP-seq, etc)
+            source_id : list
+                List of IDs of files that were processed to generate this file
+            meta_data : dict
+                Dictionary object containing the extra data related to the
+                generation of the file or describing the way it was processed
+            creation_time : list
+                Time at which the file was loaded into the system
         """
         entries = self.db.entries
         file_obj = entries.find_one({'_id': ObjectId(file_id), 'user_id': user_id})
