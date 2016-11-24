@@ -26,6 +26,6 @@ Contents
 .. toctree::
    :maxdepth: 2
    
-   License
+   license
    dmp
 
