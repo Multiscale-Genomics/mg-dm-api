@@ -18,7 +18,7 @@ Requirements
 
 Installation
 ------------
-::
+.. ::
     $ git clone https://github.com/Multiscale-Genomics/mg-dm-api.git
 
 Contents
