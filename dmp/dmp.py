@@ -52,16 +52,16 @@ class dmp:
         """
         Returns files data based on the unique_id for a given file
         
-        Parameters
-        ----------
+        Parameters:
+        -----------
         user_id : str
             Identifier to uniquely locate the users files. Can be set to 
             "common" if the files can be shared between users
         file_id : str
             Location of the file in the file system
         
-        Returns
-        -------
+        Returns:
+        --------
         dict
             user_id : str
                 Identifier to uniquely locate the users files. Can be set to 
@@ -80,12 +80,11 @@ class dmp:
             creation_time : list
                 Time at which the file was loaded into the system
         
-        Example
-        -------
-        ::
-            from dmp import dmp
-            da = dmp()
-            da.get_file_by_id(<unique_file_id>)
+        Example:
+        --------
+        >>> from dmp import dmp
+        >>> da = dmp()
+        >>> da.get_file_by_id(<unique_file_id>)
         """
         entries = self.db.entries
         file_obj = entries.find_one({'_id': ObjectId(file_id), 'user_id': user_id})
