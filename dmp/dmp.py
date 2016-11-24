@@ -52,16 +52,16 @@ class dmp:
         """
         Returns files data based on the unique_id for a given file
         
-        Parameters:
-        -----------
+        Parameters
+        ----------
         user_id : str
             Identifier to uniquely locate the users files. Can be set to 
             "common" if the files can be shared between users
         file_id : str
             Location of the file in the file system
         
-        Returns:
-        --------
+        Returns
+        -------
         dict
             user_id : str
                 Identifier to uniquely locate the users files. Can be set to 
@@ -80,8 +80,8 @@ class dmp:
             creation_time : list
                 Time at which the file was loaded into the system
         
-        Example:
-        --------
+        Example
+        -------
         >>> from dmp import dmp
         >>> da = dmp()
         >>> da.get_file_by_id(<unique_file_id>)
@@ -147,29 +147,29 @@ class dmp:
         
         Needs work to define the format for how declaring the history is best
         
-        Parameters:
-        -----------
+        Parameters
+        ----------
         file_id : str
             ID of the file. This is the value returned when a file is loaded
             into the DMP or is the `_id` for a given file when the files have
             been retrieved.
         
-        Returns:
-        --------
+        Returns
+        -------
         dict
             Dictionary of lists. For the queried `<unique_file_id>` this is the
             key for a list of the parent objects, each recursively containing a
             list of the parent `<unique_file_id>`s.
         
-        Example:
-        --------
+        Example
+        -------
         >>> from dmp import dmp
         >>> da = dmp()
         >>> history = da.get_file_history("58357157d9422a2b1700a0d5")
         >>> print history
         
         Output:
-        `{'58357157d9422a2b1700a0d5': [{u'58357017d9422a2b4292d878': []}]}`
+        ``{'58357157d9422a2b1700a0d5': [{u'58357017d9422a2b4292d878': []}]}``
         
         These IDs can then be requested to ruturn the meta data and locations
         with the `get_file_by_id` method.
@@ -182,20 +182,20 @@ class dmp:
         Removes a single file from the directory. Returns the ID of the file
         that was removed
         
-        Parameters:
-        -----------
+        Parameters
+        ----------
         file_id : str
             ID of the file. This is the value returned when a file is loaded
             into the DMP or is the `_id` for a given file when the files have
             been retrieved.
         
-        Returns:
-        --------
+        Returns
+        -------
         str
             The file_id of the removed file.
         
-        Example:
-        --------
+        Example
+        -------
         >>> from dmp import dmp
         >>> da = dmp()
         >>> da.remove_file(<file_id>)
@@ -208,8 +208,8 @@ class dmp:
         """
         Adds a file to the data management API.
         
-        Parameters:
-        -----------
+        Parameters
+        ----------
         user_id : str
             Identifier to uniquely locate the users files. Can be set to 
             "common" if the files can be shared between users
@@ -225,14 +225,14 @@ class dmp:
             Dictionary object containing the extra data related to the 
             generation of the file or describing the way it was processed
         
-        Returns:
-        --------
+        Returns
+        -------
         str
             This is an id for that file within the system and can be used for
             tracing this file and where it is used and where it has come from.
         
-        Example:
-        --------
+        Example
+        -------
         >>> from dmp import dmp
         >>> da = dmp()
         >>> unique_file_id = da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq')
