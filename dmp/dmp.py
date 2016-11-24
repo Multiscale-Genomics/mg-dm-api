@@ -93,7 +93,24 @@ class dmp:
     
     def get_files_by_user(self, user_id):
         """
-        Return the file data for a given user
+        Get a list of the file dictionary objects given a `user_id`
+        
+        Parameters
+        ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to 
+            "common" if the files can be shared between users
+        
+        Returns
+        -------
+        list
+            List of dict objects for each file that has been loaded by a user.
+        
+        Example
+        -------
+        >>> from dmp import dmp
+        >>> da = dmp()
+        >>> da.get_files_by_user(<user_id>)
         """
         entries = self.db.entries
         files = []
@@ -104,7 +121,42 @@ class dmp:
     
     def get_files_by_file_type(self, user_id, file_type):
         """
-        Return the files for a given user based on the user_id and the file type
+        Get a list of the file dictionary objects given a `user_id` and
+        `file_type`
+        
+        Parameters
+        ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to 
+            "common" if the files can be shared between users
+        file_type : str
+            File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
+        
+        Returns
+        -------
+        dict
+            user_id : str
+                Identifier to uniquely locate the users files. Can be set to 
+                "common" if the files can be shared between users
+            file_path : str
+                Location of the file in the file system
+            file_type : str
+                File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
+            data_type : str
+                The type of information in the file (RNA-seq, ChIP-seq, etc)
+            source_id : list
+                List of IDs of files that were processed to generate this file
+            meta_data : dict
+                Dictionary object containing the extra data related to the 
+                generation of the file or describing the way it was processed
+            creation_time : list
+                Time at which the file was loaded into the system
+        
+        Example
+        -------
+        >>> from dmp import dmp
+        >>> da = dmp()
+        >>> da.get_files_by_file_type(<user_id>, <file_type>)
         """
         entries = self.db.entries
         files = []
@@ -115,7 +167,42 @@ class dmp:
     
     def get_files_by_data_type(self, user_id, data_type):
         """
-        Return the files for a given user based on the user_id and the data type
+        Get a list of the file dictionary objects given a `user_id` and 
+        `data_type`
+        
+        Parameters
+        ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to 
+            "common" if the files can be shared between users
+        data_type : str
+            The type of information in the file (RNA-seq, ChIP-seq, etc)
+        
+        Returns
+        -------
+        dict
+            user_id : str
+                Identifier to uniquely locate the users files. Can be set to 
+                "common" if the files can be shared between users
+            file_path : str
+                Location of the file in the file system
+            file_type : str
+                File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
+            data_type : str
+                The type of information in the file (RNA-seq, ChIP-seq, etc)
+            source_id : list
+                List of IDs of files that were processed to generate this file
+            meta_data : dict
+                Dictionary object containing the extra data related to the 
+                generation of the file or describing the way it was processed
+            creation_time : list
+                    Time at which the file was loaded into the system
+        
+        Example
+        -------
+        >>> from dmp import dmp
+        >>> da = dmp()
+        >>> da.get_files_by_data_type(<user_id>, <data_type>)
         """
         entries = self.db.entries
         files = []
