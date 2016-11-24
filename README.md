@@ -1,5 +1,7 @@
 # mg-dm-api
 
+[![Documentation Status](https://readthedocs.org/projects/mg-dm-api/badge/?version=latest)](http://mg-dm-api.readthedocs.org/en/latest/)
+
 API for the management of file locations and users within the MuG VRE.
 
 Full documentation can be found on [ReadTheDocs](http://mg-dm-api.readthedocs.io)
