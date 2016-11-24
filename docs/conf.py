@@ -32,10 +32,10 @@ import dmp
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.coverage',
-    'sphinx.ext.ifconfig',
-    'sphinx.ext.viewcode',
+#    'sphinx.ext.intersphinx',
+#    'sphinx.ext.coverage',
+#    'sphinx.ext.ifconfig',
+#    'sphinx.ext.viewcode',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -350,12 +350,3 @@ texinfo_documents = [
 intersphinx_mapping = {'https://docs.python.org/': None}
 
 
-# -- User added functions -------------------------------------------------
-
-from sphinx.ext.autodoc import between
-
-def setup(app):
-    # Register a sphinx.ext.autodoc.between listener to ignore everything
-    # between lines that contain the word IGNORE
-    app.connect('autodoc-process-docstring', between('^.*IGNORE.*$', exclude=True))
-    return app
