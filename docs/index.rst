@@ -27,4 +27,5 @@ Contents
    :maxdepth: 2
    
    functions
+   dmp
 
