@@ -64,9 +64,6 @@ class dmp:
         Returns
         -------
         dict
-            user_id : str
-                Identifier to uniquely locate the users files. Can be set to 
-                "common" if the files can be shared between users
             file_path : str
                 Location of the file in the file system
             file_type : str
@@ -119,7 +116,7 @@ class dmp:
         """
         entries = self.db.entries
         files = []
-        for entry in entries.find({"user_id" : user_id}):
+        for entry in entries.find({"user_id" : user_id}, {file_path : 1, file_type : 1, data_type : 1, taxon_id : 1, source_id : 1, meta_data : 1, creation_time : 1}):
             files.append(entry)
         return files
     
@@ -140,9 +137,6 @@ class dmp:
         Returns
         -------
         dict
-            user_id : str
-                Identifier to uniquely locate the users files. Can be set to 
-                "common" if the files can be shared between users
             file_path : str
                 Location of the file in the file system
             file_type : str
@@ -190,9 +184,6 @@ class dmp:
         Returns
         -------
         dict
-            user_id : str
-                Identifier to uniquely locate the users files. Can be set to 
-                "common" if the files can be shared between users
             file_path : str
                 Location of the file in the file system
             file_type : str
@@ -219,7 +210,7 @@ class dmp:
         """
         entries = self.db.entries
         files = []
-        for entry in entries.find({"user_id" : user_id, "data_type" : data_type}):
+        for entry in entries.find({"user_id" : user_id, "data_type" : data_type}, {file_path : 1, file_type : 1, data_type : 1, taxon_id : 1, source_id : 1, meta_data : 1, creation_time : 1}):
             files.append(entry)
         return files
     
@@ -240,9 +231,6 @@ class dmp:
         Returns
         -------
         dict
-            user_id : str
-                Identifier to uniquely locate the users files. Can be set to 
-                "common" if the files can be shared between users
             file_path : str
                 Location of the file in the file system
             file_type : str
@@ -269,7 +257,7 @@ class dmp:
         """
         entries = self.db.entries
         files = []
-        for entry in entries.find({"user_id" : user_id, "taxon_id" : taxon_id}):
+        for entry in entries.find({"user_id" : user_id, "taxon_id" : taxon_id}, {file_path : 1, file_type : 1, data_type : 1, taxon_id : 1, source_id : 1, meta_data : 1, creation_time : 1}):
             files.append(entry)
         return files
     
@@ -280,7 +268,7 @@ class dmp:
         reursively goes up the tree of parents to get a full history.
         """
         entries = self.db.entries
-        file_obj = entries.find_one({'_id': ObjectId(file_id)})
+        file_obj = entries.find_one({'_id': ObjectId(file_id)}, {source_id : 1})
         
         parent_files = []
         if len(file_obj['source_id']) > 0:
