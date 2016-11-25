@@ -36,6 +36,7 @@ class dmp:
         user = config.get("dmp", "user")
         password = config.get("dmp", "pass")
         dmp_db = config.get("dmp", "db")
+        self.ftp_root = config.get("dmp", "ftp_root")
         
         self.client = MongoClient()
         self.client = MongoClient(host, port)
@@ -49,7 +50,7 @@ class dmp:
         self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('taxon_id', pymongo.ASCENDING)], unique=False)
         
     
-    def get_file_by_id(self, user_id, file_id):
+    def get_file_by_id(self, user_id, file_id, rest = False):
         """
         Returns files data based on the unique_id for a given file
         
@@ -93,7 +94,7 @@ class dmp:
         return file_obj
     
     
-    def get_files_by_user(self, user_id):
+    def get_files_by_user(self, user_id, rest = False):
         """
         Get a list of the file dictionary objects given a `user_id`
         
@@ -116,7 +117,11 @@ class dmp:
         """
         entries = self.db.entries
         files = []
-        for entry in entries.find({"user_id" : user_id}, {file_path : 1, file_type : 1, data_type : 1, taxon_id : 1, source_id : 1, meta_data : 1, creation_time : 1}):
+        for entry in entries.find({"user_id" : user_id}, {"file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1, "source_id" : 1, "meta_data" : 1, "creation_time" : 1}):
+            if rest == True:
+                file_path = str(entry["file_path"]).split("/")
+                url = "/".join([self.ftp_root, (entry["_id"])] + file_path[-2:])
+                entry = url
             files.append(entry)
         return files
     
@@ -210,7 +215,7 @@ class dmp:
         """
         entries = self.db.entries
         files = []
-        for entry in entries.find({"user_id" : user_id, "data_type" : data_type}, {file_path : 1, file_type : 1, data_type : 1, taxon_id : 1, source_id : 1, meta_data : 1, creation_time : 1}):
+        for entry in entries.find({"user_id" : user_id, "data_type" : data_type}, {"file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1, "source_id" : 1, "meta_data" : 1, "creation_time" : 1}):
             files.append(entry)
         return files
     
@@ -257,7 +262,7 @@ class dmp:
         """
         entries = self.db.entries
         files = []
-        for entry in entries.find({"user_id" : user_id, "taxon_id" : taxon_id}, {file_path : 1, file_type : 1, data_type : 1, taxon_id : 1, source_id : 1, meta_data : 1, creation_time : 1}):
+        for entry in entries.find({"user_id" : user_id, "taxon_id" : taxon_id}, {"file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1, "source_id" : 1, "meta_data" : 1, "creation_time" : 1}):
             files.append(entry)
         return files
     
