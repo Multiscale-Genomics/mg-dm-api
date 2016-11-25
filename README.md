@@ -32,4 +32,5 @@ port = 27017
 user = 
 pass = 
 db = dmp
+ftp_root = ftp://ftp.<url_root>
 ```
