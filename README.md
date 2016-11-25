@@ -12,8 +12,19 @@ Full documentation can be found on [ReadTheDocs](http://mg-dm-api.readthedocs.io
 - Python Modules:
   - pymongo
 
+# Installation
+Cloneing from GitHub:
+```
+git clone https://github.com/Multiscale-Genomics/mg-dm-api.git
+```
+
+Installation via pip:
+```
+pip install git+https://github.com/Multiscale-Genomics/mg-dm-api.git
+```
+
 # Configuration file
-Requires a file with the name `dmp.cnf` withthe following parameters to define the MongoDB server:
+Requires a file with the name `dmp.cnf` with the following parameters to define the MongoDB server:
 ```
 [dmp]
 host = localhost

@@ -19,7 +19,10 @@ Requirements
 Installation
 ------------
 .. code-block:: console
-    $ git clone https://github.com/Multiscale-Genomics/mg-dm-api.git
+   $ git clone https://github.com/Multiscale-Genomics/mg-dm-api.git
+
+.. code-block:: console
+   $ pip install git+https://github.com/Multiscale-Genomics/mg-dm-api.git
 
 Contents
 --------
