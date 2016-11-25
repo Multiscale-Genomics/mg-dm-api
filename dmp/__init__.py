@@ -16,4 +16,6 @@ limitations under the License.
 
 from dmp import dmp
 
+__author__  = 'Mark McDowall'
 __version__ = '0.0'
+__licence__ = 'Apache 2.0'
