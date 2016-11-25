@@ -273,14 +273,15 @@ class dmp:
         reursively goes up the tree of parents to get a full history.
         """
         entries = self.db.entries
-        file_obj = entries.find_one({'_id': ObjectId(file_id)}, {source_id : 1})
+        file_obj = entries.find_one({'_id': ObjectId(file_id)}, {"source_id" : 1})
         
         parent_files = []
         if len(file_obj['source_id']) > 0:
             for source_id in file_obj['source_id']:
-                parent_files.append(self._get_file_parents(source_id))
+                parent_files.append([file_id, str(source_id)])
+                parent_files += self._get_file_parents(source_id)
         
-        return {file_id : parent_files}
+        return parent_files
     
     
     def get_file_history(self, file_id):
@@ -299,10 +300,8 @@ class dmp:
         
         Returns
         -------
-        dict
-            Dictionary of lists. For the queried `<unique_file_id>` this is the
-            key for a list of the parent objects, each recursively containing a
-            list of the parent `<unique_file_id>`s.
+        list
+            List of lists representing the adjancency of child and parent files.
         
         Example
         -------
@@ -312,12 +311,13 @@ class dmp:
         >>> print history
         
         Output:
-        ``{'aLongString': [{u'parentOfaLongString': []}]}``
+        ``[['aLongString', 'parentOfaLongString'], ['parentOfaLongString', 'parentOfParent']]``
         
         These IDs can then be requested to ruturn the meta data and locations
         with the `get_file_by_id` method.
         """
-        return self._get_file_parents(file_id)
+        unique_data = [list(x) for x in set(tuple(x) for x in self._get_file_parents(file_id))]
+        return unique_data
     
     
     def remove_file(self, file_id):
