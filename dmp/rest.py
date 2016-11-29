@@ -58,7 +58,7 @@ class rest:
     
     def get_available_services(self):
         """
-        List services that are returning HTTP code 200
+        List all services
         """
         entries = self.db.entries
         services = entries.find({'name': 1})
