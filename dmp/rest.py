@@ -52,22 +52,35 @@ class rest:
         Retreive the full details about a service
         """
         entries = self.db.entries
-        file_obj = entries.find_one({'name': service["name"]})
-        return file_obj
+        service = entries.find_one({'name': service["name"]})
+        return service
     
     
     def get_available_services(self):
         """
         List services that are returning HTTP code 200
         """
-        return []
+        entries = self.db.entries
+        services = entries.find({'name': 1})
+        return services
+    
+    
+    def get_available_services(self):
+        """
+        List services that are returning HTTP code 200
+        """
+        entries = self.db.entries
+        services = entries.find({'status': 'up'}, {'name': 1})
+        return services
     
     
     def get_down_services(self):
         """
         List services that are NOT returning HTTP code 200
         """
-        return []
+        entries = self.db.entries
+        services = entries.find({'status': 'down'}, {'name': 1})
+        return services
     
     
     def is_service(self, name):
