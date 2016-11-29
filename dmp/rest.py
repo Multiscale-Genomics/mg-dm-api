@@ -52,7 +52,7 @@ class rest:
         Retreive the full details about a service
         """
         entries = self.db.entries
-        service = entries.find_one({'name': service["name"]})
+        service = entries.find_one({'name': name})
         return service
     
     
