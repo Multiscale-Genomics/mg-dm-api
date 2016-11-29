@@ -15,6 +15,7 @@ limitations under the License.
 """
 
 from dmp import dmp
+from dmp import rest
 
 __author__  = 'Mark McDowall'
 __version__ = 'v0.0'
