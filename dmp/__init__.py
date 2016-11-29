@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from dmp import *
+from dmp import dmp
 
 __author__  = 'Mark McDowall'
 __version__ = 'v0.0'
