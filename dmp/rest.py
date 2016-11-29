@@ -88,7 +88,7 @@ class rest:
         Identify if a service is already present in the registry
         """
         entries = self.db.entries
-        file_obj = entries.find_one({'name': service["name"]}, {'name': 1})
+        file_obj = entries.find_one({'name': name]}, {'name': 1})
         if len(file_obj) > 0:
             return True
         return False
