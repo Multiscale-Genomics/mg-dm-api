@@ -114,4 +114,6 @@ class rest:
         """
         Update the status of the service if it is already present in the db.
         """
+        entries = self.db.entries
+        entries.update({'name': name}, {'$set': {'status': status}})
         return 1
