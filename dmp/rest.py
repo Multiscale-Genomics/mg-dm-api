@@ -89,7 +89,7 @@ class rest:
         """
         entries = self.db.entries
         file_obj = entries.find_one({'name': name}, {'name': 1})
-        if len(file_obj) > 0:
+        if type(file_obj) != "NoneType":
             return True
         return False
         
