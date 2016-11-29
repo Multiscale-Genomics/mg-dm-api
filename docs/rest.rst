@@ -3,7 +3,7 @@
 
 .. automodule:: dmp
    
-   RESTful Service Status
+   REST
    ----------------------
    .. autoclass:: rest
       :members:
