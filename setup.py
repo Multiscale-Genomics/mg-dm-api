@@ -24,6 +24,6 @@ setup(
     download_url='https://github.com/Multiscale-Genomics/mg-dm-api',
     author=dmp.__author__,
     author_email='mcdowall@ebi.ac.uk',
-    license=dmp.__licence__,
+    license=dmp.__license__,
     packages=find_packages(),
 )
