@@ -33,4 +33,5 @@ Contents
    
    license
    dmp
+   rest
 
