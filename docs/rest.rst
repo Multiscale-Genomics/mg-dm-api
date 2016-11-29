@@ -1,7 +1,7 @@
 ``rest`` --- ``rest``
 ============================================
 
-.. automodule:: rest
+.. automodule:: dmp
    
    RESTful Service Status
    ----------------------
