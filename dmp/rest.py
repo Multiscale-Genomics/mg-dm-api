@@ -43,22 +43,47 @@ class rest:
         self.db.authenticate(user, password)
         
         self.entries = self.db.entries
-        self.db.entries.create_index([('user_id', pymongo.ASCENDING)], unique=False)
-        self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('file_type', pymongo.ASCENDING)], unique=False)
-        self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('data_type', pymongo.ASCENDING)], unique=False)
-        self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('taxon_id', pymongo.ASCENDING)], unique=False)
-    
+        self.db.entries.create_index([('name', pymongo.ASCENDING)], unique=True)
+        self.db.entries.create_index([('status', pymongo.ASCENDING)], unique=False)
+        
     
     def get_service(self, name):
         """
-        
+        Retreive the full details about a service
         """
-        return 1
+        entries = self.db.entries
+        file_obj = entries.find_one({'name': service["name"]})
+        return file_obj
+    
+    
+    def get_available_services(self):
+        """
+        List services that are returning HTTP code 200
+        """
+        return []
+    
+    
+    def get_down_services(self):
+        """
+        List services that are NOT returning HTTP code 200
+        """
+        return []
+    
+    
+    def is_service(self, name):
+        """
+        Identify if a service is already present in the registry
+        """
+        entries = self.db.entries
+        file_obj = entries.find_one({'name': service["name"]}, {'name': 1})
+        if len(file_obj) > 0:
+            return True
+        return False
         
     
     def add_service(self, name, url, description, status=None):
         """
-        
+        Add a service to the registry
         """
         entry = {
             "name"        : name,
@@ -74,6 +99,6 @@ class rest:
     
     def set_service_status(self, name, status):
         """
-        
+        Update the status of the service if it is already present in the db.
         """
         return 1
