@@ -39,7 +39,7 @@ class rest:
         
         self.client = MongoClient()
         self.client = MongoClient(host, port)
-        self.db = self.client[rest_db]
+        self.db = self.client[db]
         self.db.authenticate(user, password)
         
         self.entries = self.db.entries
