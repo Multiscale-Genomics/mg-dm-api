@@ -50,6 +50,23 @@ class rest:
     def get_service(self, name):
         """
         Retreive the full details about a service
+        
+        Parameters
+        ----------
+        name : str
+            Unique name for the service
+        
+        Returns
+        -------
+        dict
+            name: str
+                Unique name for the service
+            description: str
+                Description defined by the service
+            url: str
+                Base URL for the RESET service.
+            status: str
+                Service HTTP status code - `up` or `down`
         """
         entries = self.db.entries
         service = entries.find_one({'name': name})
@@ -59,15 +76,25 @@ class rest:
     def get_available_services(self):
         """
         List all services
+        
+        Returns
+        -------
+        list
+            List of dict objects for each service
         """
         entries = self.db.entries
         services = entries.find({'name': 1})
         return services
     
     
-    def get_available_services(self):
+    def get_up_services(self):
         """
         List services that are returning HTTP code 200
+        
+        Returns
+        -------
+        list
+            List of dict objects for each service
         """
         entries = self.db.entries
         services = entries.find({'status': 'up'}, {'name': 1})
@@ -77,6 +104,11 @@ class rest:
     def get_down_services(self):
         """
         List services that are NOT returning HTTP code 200
+        
+        Returns
+        -------
+        list
+            List of dict objects for each service
         """
         entries = self.db.entries
         services = entries.find({'status': 'down'}, {'name': 1})
@@ -86,6 +118,15 @@ class rest:
     def is_service(self, name):
         """
         Identify if a service is already present in the registry
+        
+        Parameters
+        ----------
+        name : str
+            Unique name for the service
+        
+        Returns
+        -------
+        
         """
         entries = self.db.entries
         file_obj = entries.find_one({'name': name}, {'name': 1})
@@ -97,6 +138,21 @@ class rest:
     def add_service(self, name, url, description, status=None):
         """
         Add a service to the registry
+        
+        Parameters
+        ----------
+        name : str
+            Unique name for the service
+        description: str
+            Description defined by the service
+        url: str
+            Base URL for the RESET service.
+        status : str
+            Service HTTP status code - `up` or `down`
+        
+        Returns
+        -------
+        
         """
         entry = {
             "name"        : name,
@@ -113,6 +169,18 @@ class rest:
     def set_service_status(self, name, status):
         """
         Update the status of the service if it is already present in the db.
+        
+        Parameters
+        ----------
+        name : str
+            Unique name for the service
+        status : str
+            Service HTTP status code - `up` or `down`
+        
+        Returns
+        -------
+        bool
+            `True` when done
         """
         entries = self.db.entries
         entries.update({'name': name}, {'$set': {'status': status}})
