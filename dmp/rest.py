@@ -90,8 +90,8 @@ class rest:
         entries = self.db.entries
         file_obj = entries.find_one({'name': name}, {'name': 1})
         if type(file_obj) != "NoneType":
-            return True
-        return False
+            return False
+        return True
         
     
     def add_service(self, name, url, description, status=None):
