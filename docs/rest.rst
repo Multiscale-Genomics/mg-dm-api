@@ -1,9 +1,9 @@
 ``dmp`` --- ``rest``
 ============================================
 
-.. automodule:: rest
+.. automodule:: dmp.rest
    
    REST
    ----------------------
-   .. autoclass:: rest
+   .. autoclass:: dmp.rest.rest
       :members:
