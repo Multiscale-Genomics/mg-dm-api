@@ -1,9 +1,9 @@
 ``dmp`` --- ``dmp``
 ============================================
 
-.. automodule:: dmp
+.. automodule:: dmp.dmp
    
    DMP
    ----------------
-   .. autoclass:: dmp
+   .. autoclass:: dmp.dmp
       :members:
