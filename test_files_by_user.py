@@ -4,7 +4,7 @@ from dmp import dmp
 
 users = ["adam", "ben", "chris", "denis", "eric"]
 
-da = dmp.gtdmp()
+da = dmp.dmp()
 
 for u in users:
     results = da.get_files_by_user(u)
