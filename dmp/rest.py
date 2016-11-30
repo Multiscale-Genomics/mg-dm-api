@@ -16,8 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-import datetime, ConfigParser
-import pymongo
+import datetime, ConfigParser, pymongo
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 

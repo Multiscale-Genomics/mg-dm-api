@@ -29,7 +29,6 @@ Using pip:
 Contents
 --------
 .. toctree::
-   :maxdepth: 2
    
    license
    dmp
