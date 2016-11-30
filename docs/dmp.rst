@@ -5,5 +5,5 @@
    
    DMP
    ----------------
-   .. autoclass:: dmp.dmp
+   .. autoclass:: dmp.dmp.dmp
       :members:
