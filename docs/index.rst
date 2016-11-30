@@ -29,6 +29,8 @@ Using pip:
 Contents
 --------
 .. toctree::
+   :caption: Table of Contents
+   :name: mastertoc
    
    license
    dmp
