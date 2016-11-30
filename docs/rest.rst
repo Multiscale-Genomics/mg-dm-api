@@ -3,7 +3,7 @@
 
 .. automodule:: dmp.rest
    
-   REST
+   RESTful Monitor
    ----------------------
    .. autoclass:: dmp.rest.rest
       :members:

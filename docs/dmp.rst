@@ -3,7 +3,7 @@
 
 .. automodule:: dmp.dmp
    
-   DMP
+   Data Management Plan
    ----------------
    .. autoclass:: dmp.dmp.dmp
       :members:
