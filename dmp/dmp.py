@@ -347,7 +347,7 @@ class dmp:
         return file_id
     
     
-    def set_file(self, user_id, file_path, file_type = "", data_type = "", taxon_id = "", compressed=None, source = [], meta_data = {}):
+    def set_file(self, user_id, file_path, file_type = "", data_type = "", taxon_id = "", compressed=None, source = [], meta_data = {}, **kwargs):
         """
         Adds a file to the data management API.
         
@@ -371,6 +371,10 @@ class dmp:
         meta_data : dict
             Dictionary object containing the extra data related to the 
             generation of the file or describing the way it was processed
+        assembly : string
+            Dependent paramenter. If the sequence has been aligned at some point
+            during the production of this file then the assembly must be
+            recorded.
         
         Returns
         -------
@@ -404,6 +408,7 @@ class dmp:
             "meta_data"     : meta_data,
             "creation_time" : datetime.datetime.utcnow()
         }
+        entry.update(kwargs)
         
         entries = self.db.entries
         entry_id = entries.insert_one(entry).inserted_id
