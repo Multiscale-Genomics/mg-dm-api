@@ -17,6 +17,6 @@ setup(
     license=dmp.__license__,
     packages=find_packages(),
     install_requires = [
-        'pymongo>=3.3', 'monogomock'
+        'pymongo>=3.3', 'monogomock>=3.7'
     ]
 )
