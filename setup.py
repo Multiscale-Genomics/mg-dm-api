@@ -1,21 +1,20 @@
-import sys
-import codecs
-
 from setuptools import setup, find_packages
-from setuptools.command.test import test as TestCommand
-
-import dmp
 
 setup(
     name='dmp',
-    version=dmp.__version__,
+    version='0.0.1',
     description='MuG DMP API',
+    
     url='http://www.multiscalegenomics.eu',
     download_url='https://github.com/Multiscale-Genomics/mg-dm-api',
-    author=dmp.__author__,
+    
+    author='Mark McDowall',
     author_email='mcdowall@ebi.ac.uk',
-    license=dmp.__license__,
-    include_package_data=True,
+    
+    license='Apache 2.0',
+    
+    packages=find_packages(),
+    
     install_requires = [
         'pymongo>=3.3', 'mongomock>=3.7'
     ]
