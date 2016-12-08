@@ -15,8 +15,9 @@ setup(
     author=dmp.__author__,
     author_email='mcdowall@ebi.ac.uk',
     license=dmp.__license__,
-    packages=find_packages(),
+    #packages=find_packages(),
+    include_package_data=True,
     install_requires = [
-        'pymongo>=3.3', 'monogomock>=3.7'
+        'pymongo>=3.3', 'monogomock>=3.7.0'
     ]
 )
