@@ -58,6 +58,11 @@ class dmp:
         
     
     def _test_loading_dataset(self):
+        users = ["adam", "ben", "chris", "denis", "eric"]
+        file_types = ["fastq", "fasta", "bam", "bed", "hdf5", "tsv", "wig", "pdb"]
+        data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
+        compressed = [None, 'gzip', 'zip']
+        
         for i in xrange(10):
             u = random.choice(users)
             ft = random.choice(file_types)
