@@ -14,7 +14,7 @@
    limitations under the License.
 """
 
-import datetime, ConfigParser
+import datetime, ConfigParser, random
 import mongomock
 import pymongo
 from pymongo import MongoClient
