@@ -18,6 +18,6 @@ setup(
     #packages=find_packages(),
     include_package_data=True,
     install_requires = [
-        'pymongo>=3.3', 'monogomock>=3.7.0'
+        'pymongo>=3.3', 'mongomock>=3.7'
     ]
 )
