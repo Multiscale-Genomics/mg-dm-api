@@ -6,17 +6,6 @@ from setuptools.command.test import test as TestCommand
 
 import dmp
 
-install_requires = [
-    'pymongo>=3.3',
-    'monogomock'
-]
-
-# bdist_wheel
-extras_require = {
-    # http://wheel.readthedocs.io/en/latest/#defining-conditional-dependencies
-    ':python_version == "2.7"'
-}
-
 setup(
     name='dmp',
     version=dmp.__version__,
@@ -27,4 +16,7 @@ setup(
     author_email='mcdowall@ebi.ac.uk',
     license=dmp.__license__,
     packages=find_packages(),
+    install_requires = [
+        'pymongo>=3.3', 'monogomock'
+    ]
 )
