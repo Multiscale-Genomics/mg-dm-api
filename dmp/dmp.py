@@ -43,6 +43,7 @@ class dmp:
         if test == True:
             self.client = mongomock.MongoClient()
             self.db = self.client[dmp_db]
+            self._test_loading_dataset()
         else:    
             self.client = MongoClient()
             self.client = MongoClient(host, port)
@@ -55,6 +56,20 @@ class dmp:
         self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('data_type', pymongo.ASCENDING)], unique=False)
         self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('taxon_id', pymongo.ASCENDING)], unique=False)
         
+    
+    def _test_loading_dataset(self):
+        for i in xrange(10):
+            u = random.choice(users)
+            ft = random.choice(file_types)
+            dt = random.choice(data_types)
+            z  = random.choice(compressed)
+            f = '/tmp/test/' + dt + '/test_' + str(i) + '.' + ft
+            file_id = self.set_file(u, f, ft, dt, 9606, z)
+            
+            if dt == 'RNA-seq' and ft == 'fastq' and random.choice([0,1]) == 1:
+                 f = '/tmp/test/' + dt + '/test_' + str(i) + '.bam'
+                 self.set_file(u, f, 'bam', dt, 9606, None, [file_id])
+    
     
     def get_file_by_id(self, user_id, file_id, rest = False):
         """
