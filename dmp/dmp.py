@@ -15,6 +15,7 @@
 """
 
 import datetime, ConfigParser
+import mongomock
 import pymongo
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -24,10 +25,11 @@ class dmp:
     API for management of files within the VRE
     """
     
-    def __init__(self):
+    def __init__(self, test = False):
         """
         Initialise the module and 
         """
+        
         config = ConfigParser.RawConfigParser()
         config.read('mongodb.cnf')
         
@@ -38,10 +40,14 @@ class dmp:
         dmp_db = config.get("dmp", "db")
         self.ftp_root = config.get("dmp", "ftp_root")
         
-        self.client = MongoClient()
-        self.client = MongoClient(host, port)
-        self.db = self.client[dmp_db]
-        self.db.authenticate(user, password)
+        if test == True:
+            self.client = mongomock.MongoClient()
+            self.db = self.client[dmp_db]
+        else:    
+            self.client = MongoClient()
+            self.client = MongoClient(host, port)
+            self.db = self.client[dmp_db]
+            self.db.authenticate(user, password)
         
         self.entries = self.db.entries
         self.db.entries.create_index([('user_id', pymongo.ASCENDING)], unique=False)

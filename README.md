@@ -11,12 +11,19 @@ Full documentation can be found on [ReadTheDocs](http://mg-dm-api.readthedocs.io
 - Python 2.7.10+
 - Python Modules:
   - pymongo
+  - monogomock
 
 # Installation
 Cloneing from GitHub:
 ```
 git clone https://github.com/Multiscale-Genomics/mg-dm-api.git
 ```
+To get this to be picked up by pip if part of a webserver then:
+```
+pip install --editable .
+```
+This should install the required packages listed in the `setup.py` script.
+
 
 Installation via pip:
 ```

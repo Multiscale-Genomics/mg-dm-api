@@ -23,7 +23,7 @@ class rest:
     API for management of files within the VRE
     """
     
-    def __init__(self):
+    def __init__(self, test = False):
         """
         Initialise the module and 
         """
@@ -36,10 +36,14 @@ class rest:
         password = config.get("rest", "pass")
         db = config.get("rest", "db")
         
-        self.client = MongoClient()
-        self.client = MongoClient(host, port)
-        self.db = self.client[db]
-        self.db.authenticate(user, password)
+        if test == True:
+            self.client = mongomock.MongoClient()
+            self.db = self.client[db]
+        else: 
+            self.client = MongoClient()
+            self.client = MongoClient(host, port)
+            self.db = self.client[db]
+            self.db.authenticate(user, password)
         
         self.entries = self.db.entries
         self.db.entries.create_index([('name', pymongo.ASCENDING)], unique=True)

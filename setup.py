@@ -7,7 +7,8 @@ from setuptools.command.test import test as TestCommand
 import dmp
 
 install_requires = [
-    'pymongo>=3.3'
+    'pymongo>=3.3',
+    'monogomock'
 ]
 
 # bdist_wheel
