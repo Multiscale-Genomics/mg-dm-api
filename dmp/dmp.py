@@ -33,18 +33,20 @@ class dmp:
         config = ConfigParser.RawConfigParser()
         config.read('mongodb.cnf')
         
-        host = config.get("dmp", "host")
-        port = config.getint("dmp", "port")
-        user = config.get("dmp", "user")
-        password = config.get("dmp", "pass")
-        dmp_db = config.get("dmp", "db")
-        self.ftp_root = config.get("dmp", "ftp_root")
+        self.ftp_root = "ftp://test.test_url.org/"
         
         if test == True:
             self.client = mongomock.MongoClient()
             self.db = self.client[dmp_db]
             self._test_loading_dataset()
         else:    
+            host = config.get("dmp", "host")
+            port = config.getint("dmp", "port")
+            user = config.get("dmp", "user")
+            password = config.get("dmp", "pass")
+            dmp_db = config.get("dmp", "db")
+            self.ftp_root = config.get("dmp", "ftp_root")
+            
             self.client = MongoClient()
             self.client = MongoClient(host, port)
             self.db = self.client[dmp_db]

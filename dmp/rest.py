@@ -31,16 +31,16 @@ class rest:
         config = ConfigParser.RawConfigParser()
         config.read('mongodb.cnf')
         
-        host = config.get("rest", "host")
-        port = config.getint("rest", "port")
-        user = config.get("rest", "user")
-        password = config.get("rest", "pass")
-        db = config.get("rest", "db")
-        
         if test == True:
             self.client = mongomock.MongoClient()
             self.db = self.client[db]
         else: 
+            host = config.get("rest", "host")
+            port = config.getint("rest", "port")
+            user = config.get("rest", "user")
+            password = config.get("rest", "pass")
+            db = config.get("rest", "db")
+            
             self.client = MongoClient()
             self.client = MongoClient(host, port)
             self.db = self.client[db]
