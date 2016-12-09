@@ -151,6 +151,7 @@ class dmp:
             if rest == True:
                 file_path = str(entry["file_path"]).split("/")
                 entry["file_path"] = "/".join([self.ftp_root, str(entry["_id"])] + file_path[-2:])
+            entry["create_time"] = str(entry["create_time"])
             files.append(entry)
         return files
     
@@ -198,6 +199,7 @@ class dmp:
         entries = self.db.entries
         files = []
         for entry in entries.find({"user_id" : user_id, "file_type" : file_type}):
+            entry["create_time"] = str(entry["create_time"])
             files.append(entry)
         return files
     
@@ -245,6 +247,7 @@ class dmp:
         entries = self.db.entries
         files = []
         for entry in entries.find({"user_id" : user_id, "data_type" : data_type}, {"file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1, "source_id" : 1, "meta_data" : 1, "creation_time" : 1}):
+            entry["create_time"] = str(entry["create_time"])
             files.append(entry)
         return files
     
@@ -292,6 +295,7 @@ class dmp:
         entries = self.db.entries
         files = []
         for entry in entries.find({"user_id" : user_id, "taxon_id" : taxon_id}, {"file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1, "source_id" : 1, "meta_data" : 1, "creation_time" : 1}):
+            entry["create_time"] = str(entry["create_time"])
             files.append(entry)
         return files
     
