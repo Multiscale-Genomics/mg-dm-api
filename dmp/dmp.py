@@ -150,8 +150,7 @@ class dmp:
         for entry in entries.find({"user_id" : user_id}, {"file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1, "source_id" : 1, "meta_data" : 1, "creation_time" : 1}):
             if rest == True:
                 file_path = str(entry["file_path"]).split("/")
-                url = "/".join([self.ftp_root, str(entry["_id"])] + file_path[-2:])
-                entry = url
+                entry["file_path"] = "/".join([self.ftp_root, str(entry["_id"])] + file_path[-2:])
             files.append(entry)
         return files
     
