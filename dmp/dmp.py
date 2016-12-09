@@ -63,6 +63,10 @@ class dmp:
         data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
         compressed = [None, 'gzip', 'zip']
         
+        resource_package = __name__
+        resource_path = os.path.join(os.path.dirname(__file__), 'rao2014.hdf5')
+        file_id = self.set_file("rao", resource_path, "hdf5", "HiC", 9606, None)
+        
         for i in xrange(10):
             u = random.choice(users)
             ft = random.choice(file_types)
