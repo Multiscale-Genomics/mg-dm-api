@@ -37,7 +37,7 @@ class dmp:
         
         if test == True:
             self.client = mongomock.MongoClient()
-            self.db = self.client[dmp_db]
+            self.db = self.client["dmp"]
             self._test_loading_dataset()
         else:    
             host = config.get("dmp", "host")

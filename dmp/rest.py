@@ -33,7 +33,7 @@ class rest:
         
         if test == True:
             self.client = mongomock.MongoClient()
-            self.db = self.client[db]
+            self.db = self.client["rest"]
         else: 
             host = config.get("rest", "host")
             port = config.getint("rest", "port")
