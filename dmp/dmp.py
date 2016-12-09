@@ -121,6 +121,8 @@ class dmp:
         """
         entries = self.db.entries
         file_obj = entries.find_one({'_id': ObjectId(file_id), 'user_id': user_id})
+        file_obj["_id"] = str(file_obj["_id"])
+        file_obj["creation_time"] = str(file_obj["creation_time"])
         return file_obj
     
     
@@ -151,6 +153,7 @@ class dmp:
             if rest == True:
                 file_path = str(entry["file_path"]).split("/")
                 entry["file_path"] = "/".join([self.ftp_root, str(entry["_id"])] + file_path[-2:])
+            entry["_id"] = str(entry["_id"])
             entry["creation_time"] = str(entry["creation_time"])
             files.append(entry)
         return files
@@ -199,6 +202,7 @@ class dmp:
         entries = self.db.entries
         files = []
         for entry in entries.find({"user_id" : user_id, "file_type" : file_type}):
+            entry["_id"] = str(entry["_id"])
             entry["creation_time"] = str(entry["creation_time"])
             files.append(entry)
         return files
@@ -247,6 +251,7 @@ class dmp:
         entries = self.db.entries
         files = []
         for entry in entries.find({"user_id" : user_id, "data_type" : data_type}, {"file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1, "source_id" : 1, "meta_data" : 1, "creation_time" : 1}):
+            entry["_id"] = str(entry["_id"])
             entry["creation_time"] = str(entry["creation_time"])
             files.append(entry)
         return files
@@ -295,6 +300,7 @@ class dmp:
         entries = self.db.entries
         files = []
         for entry in entries.find({"user_id" : user_id, "taxon_id" : taxon_id}, {"file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1, "source_id" : 1, "meta_data" : 1, "creation_time" : 1}):
+            entry["_id"] = str(entry["_id"])
             entry["creation_time"] = str(entry["creation_time"])
             files.append(entry)
         return files
