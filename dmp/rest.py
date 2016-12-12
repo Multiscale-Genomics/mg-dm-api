@@ -34,6 +34,7 @@ class rest:
         if test == True:
             self.client = mongomock.MongoClient()
             self.db = self.client["rest"]
+            self._test_loading_dataset()
         else: 
             host = config.get("rest", "host")
             port = config.getint("rest", "port")
@@ -50,6 +51,12 @@ class rest:
         self.db.entries.create_index([('name', pymongo.ASCENDING)], unique=True)
         self.db.entries.create_index([('status', pymongo.ASCENDING)], unique=False)
         
+    
+    def _test_loading_dataset(self):
+        self.add_service("service", "Root API service", "/api", "up")
+        self.add_service("dmp", "DMP API - Lists static tracks", "/api/dmp", "up")
+        self.add_service("adjacency", "Adjacency - API for accessing Hi-C adjacency files", "/api/adjacency", "up")
+    
     
     def get_service(self, name):
         """
