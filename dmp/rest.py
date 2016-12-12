@@ -15,7 +15,6 @@
 """
 
 import datetime, ConfigParser, pymongo
-import mongomock
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
@@ -32,6 +31,7 @@ class rest:
         config.read('mongodb.cnf')
         
         if test == True:
+            import mongomock
             self.client = mongomock.MongoClient()
             self.db = self.client["rest"]
         else: 
