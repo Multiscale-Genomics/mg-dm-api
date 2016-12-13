@@ -118,7 +118,7 @@ class dmp:
         Example
         -------
         >>> from dmp import dmp
-        >>> da = dmp.dmp()
+        >>> da = dmp()
         >>> da.get_file_by_id(<unique_file_id>)
         """
         entries = self.db.entries
@@ -146,7 +146,7 @@ class dmp:
         Example
         -------
         >>> from dmp import dmp
-        >>> da = dmp.dmp()
+        >>> da = dmp()
         >>> da.get_files_by_user(<user_id>)
         """
         entries = self.db.entries
@@ -198,7 +198,7 @@ class dmp:
         Example
         -------
         >>> from dmp import dmp
-        >>> da = dmp.dmp()
+        >>> da = dmp()
         >>> da.get_files_by_file_type(<user_id>, <file_type>)
         """
         entries = self.db.entries
@@ -247,7 +247,7 @@ class dmp:
         Example
         -------
         >>> from dmp import dmp
-        >>> da = dmp.dmp()
+        >>> da = dmp()
         >>> da.get_files_by_data_type(<user_id>, <data_type>)
         """
         entries = self.db.entries
@@ -296,7 +296,7 @@ class dmp:
         Example
         -------
         >>> from dmp import dmp
-        >>> da = dmp.dmp()
+        >>> da = dmp()
         >>> da.get_files_by_taxon_id(<user_id>, <taxon_id>)
         """
         entries = self.db.entries
@@ -347,7 +347,7 @@ class dmp:
         Example
         -------
         >>> from dmp import dmp
-        >>> da = dmp.dmp()
+        >>> da = dmp()
         >>> history = da.get_file_history("aLongString")
         >>> print history
         
@@ -381,7 +381,7 @@ class dmp:
         Example
         -------
         >>> from dmp import dmp
-        >>> da = dmp.dmp()
+        >>> da = dmp()
         >>> da.remove_file(<file_id>)
         """
         self.db.entries.delete_one({'_id': ObjectId(file_id)})
@@ -426,7 +426,7 @@ class dmp:
         Example
         -------
         >>> from dmp import dmp
-        >>> da = dmp.dmp()
+        >>> da = dmp()
         >>> unique_file_id = da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, None)
         
         If the is the processed result of 1 or more files then these can be specified using the file_id:
