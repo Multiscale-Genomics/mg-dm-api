@@ -163,7 +163,8 @@ class rest:
         
         Returns
         -------
-        
+        str
+            Entry ID
         """
         entry = {
             "name"        : name,
