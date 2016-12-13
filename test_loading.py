@@ -7,7 +7,7 @@ file_types = ["fastq", "fasta", "bam", "bed", "hdf5", "tsv", "wig", "pdb"]
 data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
 compressed = [None, 'gzip', 'zip']
 
-da = dmp.dmp()
+da = dmp(test=True)
 
 for i in xrange(10):
     u = random.choice(users)
@@ -20,3 +20,7 @@ for i in xrange(10):
     if dt == 'RNA-seq' and ft == 'fastq' and random.choice([0,1]) == 1:
          f = '/tmp/test/' + dt + '/test_' + str(i) + '.bam'
          da.set_file(u, f, 'bam', dt, 9606, None, [file_id])
+
+for u in users:
+    results = da.get_files_by_user(u)
+    print u, len(results)
