@@ -15,7 +15,6 @@
 """
 
 import datetime, ConfigParser, random, os
-import mongomock
 import pymongo
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -36,6 +35,7 @@ class dmp:
         self.ftp_root = "ftp://test.test_url.org/"
         
         if test == True:
+            import mongomock
             self.client = mongomock.MongoClient()
             self.db = self.client["dmp"]
             self._test_loading_dataset()
