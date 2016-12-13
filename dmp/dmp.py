@@ -388,7 +388,7 @@ class dmp:
         return file_id
     
     
-    def set_file(self, user_id, file_path, file_type = "", data_type = "", taxon_id = "", compressed=None, source = [], meta_data = {}, **kwargs):
+    def set_file(self, user_id, file_path, file_type = "", data_type = "", taxon_id = "", compressed=None, source_id = [], meta_data = {}, **kwargs):
         """
         Adds a file to the data management API.
         
