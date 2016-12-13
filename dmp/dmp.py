@@ -445,7 +445,7 @@ class dmp:
             "data_type"     : data_type,
             "taxon_id"      : taxon_id,
             "compressed"    : compressed,
-            "source_id"     : source,
+            "source_id"     : source_id,
             "meta_data"     : meta_data,
             "creation_time" : datetime.datetime.utcnow()
         }
