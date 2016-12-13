@@ -14,8 +14,8 @@
    limitations under the License.
 """
 
-import dmp.dmp
-import rest.rest
+import dmp
+import rest
 
 __author__  = 'Mark McDowall'
 __version__ = '0.0'
