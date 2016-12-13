@@ -14,9 +14,9 @@
    limitations under the License.
 """
 
-import dmp
-import rest
+import dmp.dmp
+import rest.rest
 
 __author__  = 'Mark McDowall'
-__version__ = 'v0.0'
+__version__ = '0.0'
 __license__ = 'Apache 2.0'
