@@ -24,13 +24,13 @@ class dmp:
     API for management of files within the VRE
     """
     
-    def __init__(self, test = False):
+    def __init__(self, cnf_loc = '', test = False):
         """
         Initialise the module and 
         """
         
         config = ConfigParser.RawConfigParser()
-        config.read(os.path.join(os.path.dirname(__file__) 'mongodb.cnf'))
+        config.read(cnf_loc)
         
         self.ftp_root = "ftp://test.test_url.org/"
         
