@@ -15,7 +15,7 @@
 """
 
 import datetime, ConfigParser, random, os
-import pymongo
+from pymongo import MongoClient, ReadPreference
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
@@ -47,16 +47,20 @@ class dmp:
             dmp_db = config.get("dmp", "db")
             self.ftp_root = config.get("dmp", "ftp_root")
             
-            self.client = MongoClient()
-            self.client = MongoClient(host, port)
-            self.db = self.client[dmp_db]
-            self.db.authenticate(user, password)
+            try:
+                self.client = MongoClient(host, port, read_preference = ReadPreference.SECONDARY_PREFERRED)
+                self.client.admin.authenticate(user, password, mechanism='MONGODB-CR')
+                self.db = self.client[dmp_db]
+            except:
+                e = sys.exc_info()[0]
+                print "Error: %s" % e
+                sys.exit(1)
         
         self.entries = self.db.entries
-        self.db.entries.create_index([('user_id', pymongo.ASCENDING)], unique=False)
-        self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('file_type', pymongo.ASCENDING)], unique=False)
-        self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('data_type', pymongo.ASCENDING)], unique=False)
-        self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('taxon_id', pymongo.ASCENDING)], unique=False)
+        self.db.entries.create_index([('user_id', pymongo.ASCENDING)], unique=False, background=True)
+        self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('file_type', pymongo.ASCENDING)], unique=False, background=True)
+        self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('data_type', pymongo.ASCENDING)], unique=False, background=True)
+        self.db.entries.create_index([('user_id', pymongo.ASCENDING), ('taxon_id', pymongo.ASCENDING)], unique=False, background=True)
         
     
     def _test_loading_dataset(self):
