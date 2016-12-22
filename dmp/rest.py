@@ -15,7 +15,7 @@
 """
 
 import datetime, ConfigParser, pymongo
-from pymongo import MongoClient
+from pymongo import MongoClient, ReadPreference
 from bson.objectid import ObjectId
 
 class rest:
@@ -23,12 +23,13 @@ class rest:
     API for management of files within the VRE
     """
     
-    def __init__(self, test = False):
+    def __init__(self, cnf_loc = '', test = False):
         """
         Initialise the module and 
         """
+        
         config = ConfigParser.RawConfigParser()
-        config.read('mongodb.cnf')
+        config.read(cnf_loc)
         
         if test == True:
             import mongomock
@@ -42,10 +43,14 @@ class rest:
             password = config.get("rest", "pass")
             db = config.get("rest", "db")
             
-            self.client = MongoClient()
-            self.client = MongoClient(host, port)
-            self.db = self.client[db]
-            self.db.authenticate(user, password)
+            try:
+                self.client = MongoClient(host, port, read_preference = ReadPreference.SECONDARY_PREFERRED)
+                self.client.admin.authenticate(user, password)
+                self.db = self.client[db]
+            except:
+                e = sys.exc_info()[0]
+                print "Error: %s" % e
+                sys.exit(1)
         
         self.entries = self.db.entries
         self.db.entries.create_index([('name', pymongo.ASCENDING)], unique=True)
