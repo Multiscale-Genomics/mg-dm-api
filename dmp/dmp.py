@@ -14,9 +14,9 @@
    limitations under the License.
 """
 
-import datetime, ConfigParser, random, os
+import datetime, ConfigParser, random, os, sys
 from pymongo import MongoClient, ReadPreference
-from pymongo import MongoClient
+import pymongo
 from bson.objectid import ObjectId
 
 class dmp:
@@ -49,7 +49,7 @@ class dmp:
             
             try:
                 self.client = MongoClient(host, port, read_preference = ReadPreference.SECONDARY_PREFERRED)
-                self.client.admin.authenticate(user, password, mechanism='MONGODB-CR')
+                self.client.admin.authenticate(user, password)
                 self.db = self.client[dmp_db]
             except:
                 e = sys.exc_info()[0]
