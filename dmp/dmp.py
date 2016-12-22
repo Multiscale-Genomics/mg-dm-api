@@ -30,7 +30,7 @@ class dmp:
         """
         
         config = ConfigParser.RawConfigParser()
-        config.read('mongodb.cnf')
+        config.read(os.path.join(os.path.dirname(__file__), 'mongodb.cnf'))
         
         self.ftp_root = "ftp://test.test_url.org/"
         
@@ -46,7 +46,7 @@ class dmp:
             password = config.get("dmp", "pass")
             dmp_db = config.get("dmp", "db")
             self.ftp_root = config.get("dmp", "ftp_root")
-            print "User", user
+            
             try:
                 self.client = MongoClient(host, port, read_preference = ReadPreference.SECONDARY_PREFERRED)
                 self.client.admin.authenticate(user, password)
