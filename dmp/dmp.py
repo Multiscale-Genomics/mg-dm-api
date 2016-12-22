@@ -29,7 +29,6 @@ class dmp:
         Initialise the module and 
         """
         
-        print "Path:", os.path.join(os.path.dirname(__file__) 'mongodb.cnf')
         config = ConfigParser.RawConfigParser()
         config.read(os.path.join(os.path.dirname(__file__) 'mongodb.cnf'))
         
@@ -55,6 +54,7 @@ class dmp:
             except:
                 e = sys.exc_info()[0]
                 print "Error: %s" % e
+                print "Path:", os.path.join(os.path.dirname(__file__), 'mongodb.cnf')
                 sys.exit(1)
         
         self.entries = self.db.entries
