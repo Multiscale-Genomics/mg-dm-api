@@ -14,9 +14,8 @@
    limitations under the License.
 """
 
-import datetime, ConfigParser, random, os, sys
+import datetime, ConfigParser, os, pymongo, random, sys
 from pymongo import MongoClient, ReadPreference
-import pymongo
 from bson.objectid import ObjectId
 
 class dmp:
@@ -54,7 +53,6 @@ class dmp:
             except:
                 e = sys.exc_info()[0]
                 print "Error: %s" % e
-                print "Path:", os.path.join(os.path.dirname(__file__), 'mongodb.cnf')
                 sys.exit(1)
         
         self.entries = self.db.entries
