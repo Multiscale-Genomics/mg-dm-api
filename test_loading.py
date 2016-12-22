@@ -7,7 +7,7 @@ file_types = ["fastq", "fasta", "bam", "bed", "hdf5", "tsv", "wig", "pdb"]
 data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
 compressed = [None, 'gzip', 'zip']
 
-da = dmp(test=True)
+da = dmp(test=False)
 
 for i in xrange(10):
     u = random.choice(users)
