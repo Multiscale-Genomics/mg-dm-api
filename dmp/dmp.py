@@ -29,8 +29,9 @@ class dmp:
         Initialise the module and 
         """
         
+        print "Path:", os.path.join(os.path.dirname(__file__) 'mongodb.cnf')
         config = ConfigParser.RawConfigParser()
-        config.read(os.path.join(os.path.dirname(__file__), 'mongodb.cnf'))
+        config.read(os.path.join(os.path.dirname(__file__) 'mongodb.cnf'))
         
         self.ftp_root = "ftp://test.test_url.org/"
         
