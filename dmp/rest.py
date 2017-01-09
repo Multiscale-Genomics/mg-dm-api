@@ -116,7 +116,7 @@ class rest:
         entries = self.db.entries
         results = entries.find({'status': 'up'}, {'name': 1, 'url': 1, 'description': 1})
         for r in results:
-            services.append({'name': r["name"], 'url': r["url"], 'description': r["description"]})
+            services.append({'name': r["name"], 'url': r["url"].replace('/ping', ''), 'description': r["description"]})
         return services
     
     
