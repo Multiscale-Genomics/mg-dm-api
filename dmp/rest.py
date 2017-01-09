@@ -99,7 +99,7 @@ class rest:
             List of dict objects for each service
         """
         entries = self.db.entries
-        services = entries.find({'name': 1})
+        services = entries.find()
         return services
     
     
@@ -114,7 +114,7 @@ class rest:
         """
         services = []
         entries = self.db.entries
-        results = entries.find({'status': 'up'}, {'name': 1})
+        results = entries.find({'status': 'up'}, {'name': 1, 'url': 1, 'description': 1})
         for r in results:
             services.append({'name': r["name"], 'url': r["url"], 'description': r["description"]})
         return services
