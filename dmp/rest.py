@@ -85,7 +85,8 @@ class rest:
                 Service HTTP status code - `up` or `down`
         """
         entries = self.db.entries
-        service = entries.find_one({'name': name})
+        result = entries.find_one({'name': name})
+        service = {'name': r["name"], 'url': r["url"].replace('/ping', ''), 'description': r["description"]}
         return service
     
     
@@ -98,8 +99,11 @@ class rest:
         list
             List of dict objects for each service
         """
+        services = []
         entries = self.db.entries
-        services = entries.find()
+        results = entries.find()
+        for r in results:
+            services.append({'name': r["name"], 'url': r["url"].replace('/ping', ''), 'description': r["description"]})
         return services
     
     
@@ -129,8 +133,11 @@ class rest:
         list
             List of dict objects for each service
         """
+        services = []
         entries = self.db.entries
-        services = entries.find({'status': 'down'}, {'name': 1})
+        results = entries.find({'status': 'down'}, {'name': 1, 'url': 1, 'description': 1})
+        for r in results:
+            services.append({'name': r["name"], 'url': r["url"].replace('/ping', ''), 'description': r["description"]})
         return services
     
     
