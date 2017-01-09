@@ -112,8 +112,11 @@ class rest:
         list
             List of dict objects for each service
         """
+        services = []
         entries = self.db.entries
-        services = entries.find({'status': 'up'}, {'name': 1})
+        results = entries.find({'status': 'up'}, {'name': 1})
+        for r in results:
+            services.append({'name': r["name"], 'url': r["url"], 'description': r["description"]})
         return services
     
     
