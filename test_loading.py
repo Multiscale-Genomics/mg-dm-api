@@ -7,9 +7,9 @@ file_types = ["fastq", "fasta", "bam", "bed", "hdf5", "tsv", "wig", "pdb"]
 data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
 compressed = [None, 'gzip', 'zip']
 
-da = dmp(test=False)
+da = dmp(test=True)
 
-for i in xrange(10):
+for i in range(10):
     u = random.choice(users)
     ft = random.choice(file_types)
     dt = random.choice(data_types)
@@ -23,4 +23,4 @@ for i in xrange(10):
 
 for u in users:
     results = da.get_files_by_user(u)
-    print u, len(results)
+    print(u, len(results))
