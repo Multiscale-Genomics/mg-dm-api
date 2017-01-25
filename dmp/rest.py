@@ -14,9 +14,13 @@
    limitations under the License.
 """
 
-import datetime, ConfigParser, pymongo
+import datetime
+import pymongo
+import sys
 from pymongo import MongoClient, ReadPreference
 from bson.objectid import ObjectId
+
+import configparser
 
 class rest:
     """
@@ -28,7 +32,7 @@ class rest:
         Initialise the module and 
         """
         
-        config = ConfigParser.RawConfigParser()
+        config = configparser.RawConfigParser()
         config.read(cnf_loc)
         
         if test == True:
@@ -49,7 +53,7 @@ class rest:
                 self.db = self.client[db]
             except:
                 e = sys.exc_info()[0]
-                print "Error: %s" % e
+                print("Error: %s" % e)
                 sys.exit(1)
         
         self.entries = self.db.entries

@@ -14,9 +14,15 @@
    limitations under the License.
 """
 
-import datetime, ConfigParser, os, pymongo, random, sys
+import datetime
+import os
+import pymongo
+import random
+import sys
 from pymongo import MongoClient, ReadPreference
 from bson.objectid import ObjectId
+
+import configparser
 
 class dmp:
     """
@@ -28,7 +34,7 @@ class dmp:
         Initialise the module and 
         """
         
-        config = ConfigParser.RawConfigParser()
+        config = configparser.RawConfigParser()
         config.read(cnf_loc)
         
         self.ftp_root = "ftp://test.test_url.org/"
@@ -52,7 +58,7 @@ class dmp:
                 self.db = self.client[dmp_db]
             except:
                 e = sys.exc_info()[0]
-                print "Error: %s" % e
+                print("Error: %s" % e)
                 sys.exit(1)
         
         self.entries = self.db.entries
@@ -72,7 +78,7 @@ class dmp:
         resource_path = os.path.join(os.path.dirname(__file__), 'rao2014.hdf5')
         file_id = self.set_file("rao", resource_path, "hdf5", "HiC", 9606, None)
         
-        for i in xrange(10):
+        for i in range(10):
             u = random.choice(users)
             ft = random.choice(file_types)
             dt = random.choice(data_types)
