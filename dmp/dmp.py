@@ -70,7 +70,7 @@ class dmp:
     
     def _test_loading_dataset(self):
         users = ["adam", "ben", "chris", "denis", "eric"]
-        file_types = ["fastq", "fasta", "bam", "bed", "bigbed", "hdf5", "tsv", "wig", "bigwig", "pdb"]
+        file_types = ["fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv", "gz", "tbi", "wig", "bw", "pdb"]
         data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
         compressed = [None, 'gzip', 'zip']
         
@@ -109,7 +109,8 @@ class dmp:
             file_path : str
                 Location of the file in the file system
             file_type : str
-                File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
+                File format (fasta, fastq, bam, bed, bb, wig, bw, hdf5, pdf,
+                txt, tsv, tbi, gz)
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -189,7 +190,8 @@ class dmp:
             file_path : str
                 Location of the file in the file system
             file_type : str
-                File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
+                File format (fasta, fastq, bam, bed, bb, wig, bw, hdf5, pdf,
+                txt, tsv, tbi, gz)
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -238,7 +240,8 @@ class dmp:
             file_path : str
                 Location of the file in the file system
             file_type : str
-                File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
+                File format (fasta, fastq, bam, bed, bb, wig, bw, hdf5, pdf,
+                txt, tsv, tbi, gz)
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -287,7 +290,8 @@ class dmp:
             file_path : str
                 Location of the file in the file system
             file_type : str
-                File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
+                File format (fasta, fastq, bam, bed, bb, wig, bw, hdf5, pdf,
+                txt, tsv, tbi, gz)
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -409,8 +413,8 @@ class dmp:
         file_path : str
             Location of the file in the file system
         file_type : str
-            File format (fasta, fastq, bam, (big)bed, (big)wig, hdf5, pdf, txt,
-            tsv)
+            File format (fasta, fastq, bam, bed, bb, wig, bw, hdf5, pdf, txt,
+            tsv, tbi, gz)
         data_type : str
             The type of information in the file (RNA-seq, ChIP-seq, etc)
         taxon_id : int
