@@ -176,7 +176,7 @@ class rest:
         description: str
             Description defined by the service
         url: str
-            Base URL for the RESET service.
+            Base URL for the REST service.
         status : str
             Service HTTP status code - `up` or `down`
         
@@ -215,4 +215,25 @@ class rest:
         """
         entries = self.db.entries
         entries.update({'name': name}, {'$set': {'status': status}})
+        return 1
+    
+    
+    def update_service_url(self, name, url):
+        """
+        Update the status of the service if it is already present in the db.
+        
+        Parameters
+        ----------
+        name : str
+            Unique name for the service
+        url : str
+            Base URL for the REST service.
+        
+        Returns
+        -------
+        bool
+            `True` when done
+        """
+        entries = self.db.entries
+        entries.update({'name': name}, {'$set': {'url': url}})
         return 1
