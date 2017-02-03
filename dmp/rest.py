@@ -90,7 +90,7 @@ class rest:
         """
         entries = self.db.entries
         result = entries.find_one({'name': name})
-        service = {'name': r["name"], 'url': r["url"].replace('/ping', ''), 'description': r["description"]}
+        service = {'name': result["name"], 'url': result["url"].replace('/ping', ''), 'description': result["description"]}
         return service
     
     
@@ -220,7 +220,7 @@ class rest:
     
     def update_service_url(self, name, url):
         """
-        Update the status of the service if it is already present in the db.
+        Update the url of the service if it is already present in the db.
         
         Parameters
         ----------
