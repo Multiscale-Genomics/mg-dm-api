@@ -10,8 +10,8 @@ API for the management of file locations and users within the MuG VRE.
 
 **Quick Links**: `Source (github) <https://github.com/Multiscale-Genomics/mg-dm-api>`_ - `Documentation (rtd) <https://mg-dm-api.readthedocs.io/>`_
 
-Requirements
-------------
+# Requirements
+
 - Mongo DB 3.2
 - Python 2.7.10+
 - pymongo
