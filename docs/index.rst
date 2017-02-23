@@ -32,7 +32,7 @@ Contents
    :caption: Table of Contents
    :name: mastertoc
    
-   license
    dmp
    rest
+   license
 
