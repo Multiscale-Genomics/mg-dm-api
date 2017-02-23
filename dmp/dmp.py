@@ -109,8 +109,8 @@ class dmp:
             file_path : str
                 Location of the file in the file system
             file_type : str
-                File format (fasta, fastq, bam, bed, bb, wig, bw, hdf5, pdf,
-                txt, tsv, tbi, gz)
+                File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
+                "tsv", "gz", "tbi", "wig", "bw", "pdb")
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -188,7 +188,8 @@ class dmp:
             Identifier to uniquely locate the users files. Can be set to 
             "common" if the files can be shared between users
         file_type : str
-            File format (fasta, fastq, bam, bed, wig, hdf5, pdf, txt, tsv)
+            File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
+            "gz", "tbi", "wig", "bw", "pdb")
         
         Returns
         -------
@@ -196,8 +197,8 @@ class dmp:
             file_path : str
                 Location of the file in the file system
             file_type : str
-                File format (fasta, fastq, bam, bed, bb, wig, bw, hdf5, pdf,
-                txt, tsv, tbi, gz)
+                File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
+                "tsv", "gz", "tbi", "wig", "bw", "pdb")
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -249,8 +250,8 @@ class dmp:
             file_path : str
                 Location of the file in the file system
             file_type : str
-                File format (fasta, fastq, bam, bed, bb, wig, bw, hdf5, pdf,
-                txt, tsv, tbi, gz)
+                File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
+                "tsv", "gz", "tbi", "wig", "bw", "pdb")
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -302,8 +303,8 @@ class dmp:
             file_path : str
                 Location of the file in the file system
             file_type : str
-                File format (fasta, fastq, bam, bed, bb, wig, bw, hdf5, pdf,
-                txt, tsv, tbi, gz)
+                File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
+                "tsv", "gz", "tbi", "wig", "bw", "pdb")
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -434,8 +435,8 @@ class dmp:
         file_path : str
             Location of the file in the file system
         file_type : str
-            File format (fasta, fastq, bam, bed, bb, wig, bw, hdf5, pdf, txt,
-            tsv, tbi, gz)
+            File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
+            "gz", "tbi", "wig", "bw", "pdb")
         data_type : str
             The type of information in the file (RNA-seq, ChIP-seq, etc)
         taxon_id : int
