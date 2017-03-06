@@ -453,7 +453,7 @@ class dmp:
             )
         
         # Check all files ahve a matching Taxon ID
-        if 'taxon_id' not in entry or entry['taxon_id'] = None:
+        if 'taxon_id' not in entry or entry['taxon_id'] == None:
             raise ValueError('Taxon ID must be specified for all entries')
         
         # Require assembly in the meta_data
