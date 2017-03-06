@@ -423,6 +423,49 @@ class dmp:
         return file_id
     
     
+    def validate_file(self, entry):
+        """
+        Validate that the required meta data for a given entry is present. If
+        there is missing data then a ValueError excepetion is raised. This
+        function checks that all required paths are defined and that when
+        various selections are made then the correct matching data is also
+        present
+        
+        Parameters
+        ----------
+        entry : dict
+        
+        Returns
+        -------
+        bool
+            Returns True if there are no errors with the entry
+        
+        If there are issues with the entry then a ValueError is raised.
+        """
+        # Defined list of acepted file types
+        file_types = ["fastq", "fa", "bam", "bed", "bb", "hdf5", "tsv",
+            "gz", "tbi", "wig", "bw", "pdb", "tif", 'lif']
+        
+        # Check all files match the defined types
+        if  'file_type' not in entry or entry['file_type'] == "" or entry['file_type'] not in file_type:
+            raise ValueError(
+                "File type must be one of the valid file types: " + file_types
+            )
+        
+        # Check all files ahve a matching Taxon ID
+        if 'taxon_id' not in entry or entry['taxon_id'] = None:
+            raise ValueError('Taxon ID must be specified for all entries')
+        
+        # Require assembly in the meta_data
+        if entry['file_type'] in ["fa", "bam", "bed", "bb", "hdf5", "tbi", "wig", "bw"]:
+            if 'meta_data' not in entry or 'assembly' not in entry['meta_data']:
+                raise ValueError(
+                    'Matching assembly ID is required within the meta_data field'
+                )
+        
+        return True
+    
+    
     def set_file(self, user_id, file_path, file_type = "", data_type = "", taxon_id = "", compressed=None, source_id = [], meta_data = {}, **kwargs):
         """
         Adds a file to the data management API.
@@ -436,7 +479,7 @@ class dmp:
             Location of the file in the file system
         file_type : str
             File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
-            "gz", "tbi", "wig", "bw", "pdb")
+            "gz", "tbi", "wig", "bw", "pdb", tif, lif)
         data_type : str
             The type of information in the file (RNA-seq, ChIP-seq, etc)
         taxon_id : int
@@ -448,10 +491,10 @@ class dmp:
         meta_data : dict
             Dictionary object containing the extra data related to the 
             generation of the file or describing the way it was processed
-        assembly : string
-            Dependent paramenter. If the sequence has been aligned at some point
-            during the production of this file then the assembly must be
-            recorded.
+            assembly : string
+                Dependent paramenter. If the sequence has been aligned at some
+                point during the production of this file then the assembly must
+                be recorded.
         
         Returns
         -------
@@ -474,7 +517,7 @@ class dmp:
 
         Meta data about the file can also be included to provide extra information about the file, origins or how it was generated:
         
-        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, None, meta_data={'downloaded_from' : 'http://www.', })
+        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, None, meta_data={'assembly' : 'GCA_0000nnnn', 'downloaded_from' : 'http://www.', })
         """
         
         entry = {
@@ -489,6 +532,8 @@ class dmp:
             "creation_time" : datetime.datetime.utcnow()
         }
         entry.update(kwargs)
+        
+        validate_file(entry)
         
         entries = self.db.entries
         entry_id = entries.insert_one(entry).inserted_id
