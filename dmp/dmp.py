@@ -434,6 +434,26 @@ class dmp:
         Parameters
         ----------
         entry : dict
+            user_id : str
+                Identifier to uniquely locate the users files. Can be set to 
+                "common" if the files can be shared between users
+            file_path : str
+                Location of the file in the file system
+            file_type : str
+                File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
+                "gz", "tbi", "wig", "bw", "pdb", tif, lif)
+            data_type : str
+                The type of information in the file (RNA-seq, ChIP-seq, etc)
+            taxon_id : int
+                Taxon ID that the species that the file has been derived from
+            compressed : str
+                Type of compression (None, gzip, zip)
+            source_id : list
+                List of IDs of files that were processed to generate this file
+            meta_data : dict
+                Dictionary object containing the extra data related to the 
+                generation of the file or describing the way it was processed
+                assembly : string
         
         Returns
         -------
@@ -442,6 +462,14 @@ class dmp:
         
         If there are issues with the entry then a ValueError is raised.
         """
+        # Check the user_id is not empty:
+        if 'user_id' not in entry or entry['user_id'] == None or entry['user_id'] == '':
+            raise ValueError('User ID must be specified for all entries')
+        
+        # Check the file_id is not empty:
+        if 'file_path' not in entry or entry['file_path'] == None or entry['file_path'] == '':
+            raise ValueError('User ID must be specified for all entries')
+        
         # Defined list of acepted file types
         file_types = ["fastq", "fa", "bam", "bed", "bb", "hdf5", "tsv",
             "gz", "tbi", "wig", "bw", "pdb", "tif", 'lif']
