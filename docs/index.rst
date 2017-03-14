@@ -6,10 +6,6 @@
 Welcome to MuG DMP API's documentation!
 =======================================
 
-API for the management of file locations and users within the MuG VRE.
-
-Contents
---------
 .. toctree::
    :caption: Table of Contents
    :name: mastertoc
@@ -19,3 +15,9 @@ Contents
    rest
    license
 
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
