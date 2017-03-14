@@ -13,6 +13,7 @@ Welcome to MuG DMP API's documentation!
    install
    dmp
    rest
+   readers
    license
 
 Indices and tables
