@@ -1,8 +1,6 @@
 Requirements and Installation
 =============================
 
-`Source (github) <https://github.com/Multiscale-Genomics/mg-process-fastq>`_
-
 Requirements
 ------------
 
