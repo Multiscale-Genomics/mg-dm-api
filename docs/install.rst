@@ -22,12 +22,14 @@ Python Modules
 Installation
 ------------
 Directly from GitHub:
+
 .. code-block:: none
    :linenos:
 
    git clone https://github.com/Multiscale-Genomics/mg-dm-api.git
 
 Using pip:
+
 .. code-block:: none
    :linenos:
 
