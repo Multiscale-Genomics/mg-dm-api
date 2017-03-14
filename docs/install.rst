@@ -17,6 +17,8 @@ Python Modules
 
 - pymongo
 - mongomock
+- h5py
+- numpy
 
 
 Installation

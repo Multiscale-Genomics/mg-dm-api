@@ -1,3 +1,5 @@
 pymongo>=3.3
 mongomock
 ConfigParser
+h5py
+numpy
