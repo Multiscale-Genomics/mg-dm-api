@@ -1,9 +1,9 @@
-``dmp`` --- ``rest``
-============================================
+Data Management RESTful API
+===========================
 
 .. automodule:: dmp.rest
    
-   RESTful Monitor
-   ----------------------
+   Methods
+   -------
    .. autoclass:: dmp.rest.rest
       :members:

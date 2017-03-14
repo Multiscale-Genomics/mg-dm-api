@@ -519,6 +519,7 @@ class dmp:
         meta_data : dict
             Dictionary object containing the extra data related to the 
             generation of the file or describing the way it was processed
+            
             assembly : string
                 Dependent paramenter. If the sequence has been aligned at some
                 point during the production of this file then the assembly must
@@ -539,7 +540,7 @@ class dmp:
            da = dmp()
            unique_file_id = da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, None)
         
-        If the is the processed result of 1 or more files then these can be specified using the file_id:
+        If there is a processed result of 1 or more files then these can be specified using the file_id:
 
         >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, None, source_id=[1, 2])
 

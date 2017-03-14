@@ -1,9 +1,9 @@
-``dmp`` --- ``dmp``
-============================================
+Data Management Plan API
+========================
 
 .. automodule:: dmp.dmp
    
-   Data Management Plan
-   ----------------
+   Methods
+   -------
    .. autoclass:: dmp.dmp.dmp
       :members:
