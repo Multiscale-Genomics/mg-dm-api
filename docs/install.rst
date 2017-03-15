@@ -17,6 +17,7 @@ Python Modules
 - mongomock
 - h5py
 - numpy
+- pyBigWig
 
 
 Installation
