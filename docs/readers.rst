@@ -24,3 +24,5 @@ Custom Reader APIs
 
    BigWig Files
    ============
+   .. autoclass:: reader.bigwig.bigwig
+      :members:

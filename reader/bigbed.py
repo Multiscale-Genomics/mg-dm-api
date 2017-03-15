@@ -25,7 +25,7 @@ class bigbed:
     BigBed files. All required information should be passed to this class.
     """
     
-    test_file = '../sample_coords.hdf5'
+    test_file = '../sample.bb'
     
     
     def __init__(self, user_id = 'test', file_id = '', resolution = None):
@@ -115,7 +115,7 @@ class bigbed:
 
         bed_array = []
         for feature in bb_features:
-            row = [chr_id, feature[0], feature[1])] + feature[3].split("\t")
+            row = [chr_id, feature[0], feature[1]] + feature[3].split("\t")
             bed_array.append(row)
 
         return bed_array

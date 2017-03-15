@@ -19,7 +19,7 @@ import os, json, pyBigWig
 from dmp import dmp
 
 
-class bigbed:
+class bigwig:
     """
     Class related to handling the functions for interacting directly with the
     BigBed files. All required information should be passed to this class.
