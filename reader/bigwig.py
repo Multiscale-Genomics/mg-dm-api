@@ -92,8 +92,11 @@ class bigwig:
         Parameters
         ----------
         chr_id : str
+            Chromosome name
         start : int
+            Start of the region to query
         end : int
+            End of the region to query
         format : string (OPTIONAL)
             `wig` format returning the whole file as a string is the default
             option. `list` will return the wig rows but as a list of lists.
