@@ -15,3 +15,12 @@ Custom Reader APIs
    ---------------------
    .. autoclass:: reader.hdf5_coord.coord
       :members:
+
+
+   BigBed Files
+   ============
+   .. autoclass:: reader.bigbed.bigbed
+      :members:
+
+   BigWig Files
+   ============
