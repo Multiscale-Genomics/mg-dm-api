@@ -9,6 +9,7 @@ Welcome to MuG DMP API's documentation!
 .. toctree::
    :caption: Table of Contents
    :name: mastertoc
+   :maxdepth: 2
    
    install
    dmp
