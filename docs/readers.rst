@@ -35,3 +35,8 @@ Custom Reader APIs
    ============
    .. autoclass:: reader.bigwig.bigwig
       :members:
+
+   Tabix Files
+   ============
+   .. autoclass:: reader.tabix_reader.tabix
+      :members:
