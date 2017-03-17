@@ -76,7 +76,7 @@ class bigwig:
     
     def get_header(self):
         """
-        Get the bigBed header
+        Get the bigWig header
 
         Returns
         -------
