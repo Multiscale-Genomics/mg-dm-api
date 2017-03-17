@@ -48,7 +48,7 @@ class bigwig:
         
         self.test_file = '../sample.bw'
         
-        # Open the bigbed file
+        # Open the bigwig file
         if user_id == 'test':
             resource_path = os.path.join(os.path.dirname(__file__), self.test_file)
             self.f = pyBigWig.open(resource_path, "r")
