@@ -485,7 +485,7 @@ class dmp:
             "gz", "tbi", "wig", "bw", "pdb", "tif", 'lif']
         
         # Check all files match the defined types
-        if  'file_type' not in entry or entry['file_type'] == "" or entry['file_type'] not in file_type:
+        if  'file_type' not in entry or entry['file_type'] == "" or entry['file_type'] not in file_types:
             raise ValueError(
                 "File type must be one of the valid file types: " + file_types
             )
