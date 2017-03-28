@@ -70,7 +70,7 @@ class dmp:
     
     def _test_loading_dataset(self):
         users = ["adam", "ben", "chris", "denis", "eric"]
-        file_types = ["fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv", "gz", "tbi", "wig", "bw", "pdb"]
+        file_types = ["fastq", "fa", "bam", "bed", "bb", "hdf5", "tsv", "gz", "tbi", "wig", "bw", "pdb"]
         data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
         compressed = [None, 'gzip', 'zip']
         
@@ -485,6 +485,7 @@ class dmp:
             "gz", "tbi", "wig", "bw", "pdb", "tif", 'lif']
         
         # Check all files match the defined types
+        print(entry)
         if  'file_type' not in entry or entry['file_type'] == "" or entry['file_type'] not in file_types:
             raise ValueError(
                 "File type must be one of the valid file types: " + file_types
