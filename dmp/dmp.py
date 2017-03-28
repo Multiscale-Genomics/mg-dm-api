@@ -84,11 +84,11 @@ class dmp:
             dt = random.choice(data_types)
             z  = random.choice(compressed)
             f = '/tmp/test/' + dt + '/test_' + str(i) + '.' + ft
-            file_id = self.set_file(u, f, ft, dt, 9606, z)
+            file_id = self.set_file(u, f, ft, dt, 9606, z, meta_data={'assembly' : 'GCA_0123456789'})
             
             if dt == 'RNA-seq' and ft == 'fastq' and random.choice([0,1]) == 1:
                  f = '/tmp/test/' + dt + '/test_' + str(i) + '.bam'
-                 self.set_file(u, f, 'bam', dt, 9606, None, [file_id])
+                 self.set_file(u, f, 'bam', dt, 9606, None, [file_id], meta_data={'assembly' : 'GCA_0123456789'})
     
     
     def get_file_by_id(self, user_id, file_id, rest = False):
@@ -496,7 +496,6 @@ class dmp:
         
         # Require assembly in the meta_data
         if entry['file_type'] in ["fa", "bam", "bed", "bb", "hdf5", "tbi", "wig", "bw"]:
-            print(entry)
             if 'meta_data' not in entry or 'assembly' not in entry['meta_data']:
                 raise ValueError(
                     'Matching assembly ID is required within the meta_data field'
