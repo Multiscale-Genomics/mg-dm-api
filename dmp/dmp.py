@@ -70,7 +70,7 @@ class dmp:
     
     def _test_loading_dataset(self):
         users = ["adam", "ben", "chris", "denis", "eric"]
-        file_types = ["fastq", "fa", "bam", "bed", "bb", "hdf5", "tsv", "gz", "tbi", "wig", "bw", "pdb"]
+        file_types = ["fastq", "fa", "fasta", "bam", "bed", "bb", "hdf5", "tsv", "gz", "tbi", "wig", "bw", "pdb"]
         data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
         compressed = [None, 'gzip', 'zip']
         
@@ -481,7 +481,7 @@ class dmp:
             raise ValueError('User ID must be specified for all entries')
         
         # Defined list of acepted file types
-        file_types = ["fastq", "fa", "bam", "bed", "bb", "hdf5", "tsv",
+        file_types = ["fastq", "fa", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
             "gz", "tbi", "wig", "bw", "pdb", "tif", 'lif']
         
         # Check all files match the defined types
@@ -496,7 +496,7 @@ class dmp:
             raise ValueError('Taxon ID must be specified for all entries')
         
         # Require assembly in the meta_data
-        if entry['file_type'] in ["fa", "bam", "bed", "bb", "hdf5", "tbi", "wig", "bw"]:
+        if entry['file_type'] in ["fa", "fasta", "bam", "bed", "bb", "hdf5", "tbi", "wig", "bw"]:
             if 'meta_data' not in entry or 'assembly' not in entry['meta_data']:
                 raise ValueError(
                     'Matching assembly ID is required within the meta_data field'

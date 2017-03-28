@@ -3,7 +3,7 @@ import random
 from dmp import dmp
 
 users = ["adam", "ben", "chris", "denis", "eric"]
-file_types = ["fastq", "fa", "bam", "bed", "hdf5", "tsv", "wig", "pdb"]
+file_types = ["fastq", "fa", "fasta", "bam", "bed", "hdf5", "tsv", "wig", "pdb"]
 data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
 compressed = [None, 'gzip', 'zip']
 
