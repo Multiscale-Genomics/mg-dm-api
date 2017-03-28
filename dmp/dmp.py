@@ -341,6 +341,16 @@ class dmp:
         """
         Private function for getting all parents on a file_id. This function
         reursively goes up the tree of parents to get a full history.
+
+        Parameters
+        ----------
+        file_id : str
+            File ID for leafe file
+
+        Returns
+        -------
+        file_ids : list
+            List of parent file_ids
         """
         entries = self.db.entries
         file_obj = entries.find_one({'_id': ObjectId(file_id)}, {"source_id" : 1})
@@ -480,7 +490,7 @@ class dmp:
                 "File type must be one of the valid file types: " + file_types
             )
         
-        # Check all files ahve a matching Taxon ID
+        # Check all files have a matching Taxon ID
         if 'taxon_id' not in entry or entry['taxon_id'] == None:
             raise ValueError('Taxon ID must be specified for all entries')
         
@@ -562,7 +572,7 @@ class dmp:
         }
         entry.update(kwargs)
         
-        validate_file(entry)
+        self.validate_file(entry)
         
         entries = self.db.entries
         entry_id = entries.insert_one(entry).inserted_id
