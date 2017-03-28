@@ -76,7 +76,7 @@ class dmp:
         
         resource_package = __name__
         resource_path = os.path.join(os.path.dirname(__file__), 'rao2014.hdf5')
-        file_id = self.set_file("rao", resource_path, "hdf5", "HiC", 9606, None)
+        file_id = self.set_file("rao", resource_path, "hdf5", "HiC", 9606, meta_data={'assembly' : 'GCA_0123456789'})
         
         for i in range(10):
             u = random.choice(users)
@@ -496,6 +496,7 @@ class dmp:
         
         # Require assembly in the meta_data
         if entry['file_type'] in ["fa", "bam", "bed", "bb", "hdf5", "tbi", "wig", "bw"]:
+            print(entry)
             if 'meta_data' not in entry or 'assembly' not in entry['meta_data']:
                 raise ValueError(
                     'Matching assembly ID is required within the meta_data field'
