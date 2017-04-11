@@ -70,7 +70,7 @@ class dmp:
     
     def _test_loading_dataset(self):
         users = ["adam", "ben", "chris", "denis", "eric"]
-        file_types = ["fastq", "fa", "fasta", "bam", "bed", "bb", "hdf5", "tsv", "gz", "tbi", "wig", "bw", "pdb"]
+        file_types = ["fastq", "fa", "fasta", "bam", "bed", "bb", "hdf5", "tsv", "gz", "tbi", "wig", "bw", "pdb", "prmtop", "trj", "dcd"]
         data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
         compressed = [None, 'gzip', 'zip']
         
@@ -111,7 +111,7 @@ class dmp:
             file_type : str
                 File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
                 "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "tif", 'lif')
+                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd")
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -191,7 +191,7 @@ class dmp:
         file_type : str
             File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
             "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb", "ann", "bwt",
-            "pac", "sa", "tif", 'lif')
+            "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd")
         
         Returns
         -------
@@ -201,7 +201,7 @@ class dmp:
             file_type : str
                 File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
                 "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "tif", 'lif')
+                "ann", "bwt", "pac", "sa", "tif", 'lif', "trj", "dcd")
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -255,7 +255,7 @@ class dmp:
             file_type : str
                 File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
                 "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "tif", 'lif')
+                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd")
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -309,7 +309,7 @@ class dmp:
             file_type : str
                 File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
                 "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "tif", 'lif')
+                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd")
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -457,7 +457,7 @@ class dmp:
             file_type : str
                 File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
                 "gz", "tbi", "wig", "bw", "pdb", "tif", "lif", "gem", "bt2",
-                "amb", "ann", "bwt", "pac", "sa")
+                "amb", "ann", "bwt", "pac", "sa", "prmtop", "trj", "dcd")
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -489,7 +489,7 @@ class dmp:
         # Defined list of acepted file types
         file_types = ["fastq", "fa", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
             "gz", "tbi", "wig", "bw", "pdb", "tif", 'lif', "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa"]
+                "ann", "bwt", "pac", "sa", "prmtop", "trj", "dcd"]
         
         # Check all files match the defined types
         print(entry)
@@ -526,7 +526,7 @@ class dmp:
         file_type : str
             File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
             "gz", "tbi", "wig", "bw", "pdb", "tif", "lif", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa")
+                "ann", "bwt", "pac", "sa", "trj", "dcd")
         data_type : str
             The type of information in the file (RNA-seq, ChIP-seq, etc)
         taxon_id : int
