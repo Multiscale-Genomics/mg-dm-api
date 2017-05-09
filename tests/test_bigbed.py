@@ -18,6 +18,7 @@ limitations under the License.
 
 import pyBigWig
 import random
+import pytest
 
 #bb = pyBigWig.open("DRR000386.sorted.filtered.bigBed", "r")
 #chrom = list(bb.chroms().keys())
@@ -30,21 +31,22 @@ import random
 #bb.close()
 #print(str(out_of_range) + " out of " + str(len(e)))
 
-chr_list = [1,2,3,4,5,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,'X','Y']
+def test_bigbed():
+    chr_list = [1,2,3,4,5,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,'X','Y']
 
-for i in range(1000):
-    chromosome = random.choice(chr_list)
-    start = random.randint(1,45000000)
-    end = start + 1000000
-    fid = []
-    for i in range(10):
-        bb = pyBigWig.open("DRR000386.sorted.filtered.bigBed", "r")
-        e = bb.entries(str(chromosome), start, end)
-        if e != None and len(e) > 0:
-            fid.append("DRR000386.bed")
-        bb.close()
-    #output = ""
-    #for i in e:
-    #    output += "X\t" + str(i[0]) + "\t" + str(i[1]) + "\t" + i[2] + "\n"
+    for i in range(1000):
+        chromosome = random.choice(chr_list)
+        start = random.randint(1,45000000)
+        end = start + 1000000
+        fid = []
+        for i in range(10):
+            bb = pyBigWig.open("DRR000386.sorted.filtered.bigBed", "r")
+            e = bb.entries(str(chromosome), start, end)
+            if e != None and len(e) > 0:
+                fid.append("DRR000386.bed")
+            bb.close()
+        #output = ""
+        #for i in e:
+        #    output += "X\t" + str(i[0]) + "\t" + str(i[1]) + "\t" + i[2] + "\n"
     
     

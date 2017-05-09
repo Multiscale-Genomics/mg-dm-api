@@ -77,6 +77,15 @@ class dmp:
         resource_package = __name__
         resource_path = os.path.join(os.path.dirname(__file__), 'rao2014.hdf5')
         file_id = self.set_file("rao", resource_path, "hdf5", "HiC", 9606, meta_data={'assembly' : 'GCA_0123456789'})
+
+        for u in users:
+            dt = 'RNA-seq'
+            f = '/tmp/test/' + dt + '/test_rna-seq.fastq'
+            ft = "fastq"
+            z = None
+            file_id = self.set_file(u, f, ft, dt, 9606, None, [], meta_data={'assembly' : 'GCA_0123456789'})
+            f = '/tmp/test/' + dt + '/test_rna-seq.bam'
+            self.set_file(u, f, 'bam', dt, 9606, None, [file_id], meta_data={'assembly' : 'GCA_0123456789'})
         
         for i in range(10):
             u = random.choice(users)
@@ -87,8 +96,8 @@ class dmp:
             file_id = self.set_file(u, f, ft, dt, 9606, z, meta_data={'assembly' : 'GCA_0123456789'})
             
             if dt == 'RNA-seq' and ft == 'fastq' and random.choice([0,1]) == 1:
-                 f = '/tmp/test/' + dt + '/test_' + str(i) + '.bam'
-                 self.set_file(u, f, 'bam', dt, 9606, None, [file_id], meta_data={'assembly' : 'GCA_0123456789'})
+                f = '/tmp/test/' + dt + '/test_' + str(i) + '.bam'
+                self.set_file(u, f, 'bam', dt, 9606, None, [file_id], meta_data={'assembly' : 'GCA_0123456789'})
     
     
     def get_file_by_id(self, user_id, file_id, rest = False):
@@ -369,7 +378,7 @@ class dmp:
         return parent_files
     
     
-    def get_file_history(self, file_id):
+    def get_file_history(self, file_id = None):
         """
         Returns the full path of file_ids from the current file to the original
         file(s)
@@ -404,6 +413,10 @@ class dmp:
         These IDs can then be requested to ruturn the meta data and locations
         with the `get_file_by_id` method.
         """
+        
+        if file_id == None:
+            return []
+        
         unique_data = [list(x) for x in set(tuple(x) for x in self._get_file_parents(file_id))]
         return unique_data
     
