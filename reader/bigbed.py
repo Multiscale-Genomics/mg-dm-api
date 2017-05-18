@@ -19,7 +19,7 @@ import os, json, pyBigWig
 from dmp import dmp
 
 
-class bigbed:
+class bigbed_reader:
     """
     Class related to handling the functions for interacting directly with the
     BigBed files. All required information should be passed to this class.
@@ -46,7 +46,8 @@ class bigbed:
             resolution has been set then all functions are callable.
         """
         
-        self.test_file = '../sample.bb'
+        # Only has chr 19
+        self.test_file = '../tests/data/sample.bb'
         
         # Open the bigbed file
         if user_id == 'test':
@@ -57,6 +58,21 @@ class bigbed:
             da = dmp(cnf_loc)
             file_obj = da.get_file_by_id(user_id, file_id)
             self.f = pyBigWig.open(file_obj['file_path'], 'r')
+
+    def close(self):
+        """
+        Tidy function to close file handles
+        
+        Example
+        -------
+        .. code-block:: python
+           :linenos:
+           
+           from reader.bigbed import bigbed_reader
+           bbr = bigbed_reader('test')
+           bbr.close()
+        """
+        self.f.close()
 
     def get_chromosomes(self):
         """
@@ -70,7 +86,7 @@ class bigbed:
 
         """
 
-        return f.chroms()
+        return self.f.chroms()
 
     def get_header(self):
         """
@@ -80,7 +96,7 @@ class bigbed:
         -------
         header : dict
         """
-        return f.header()
+        return self.f.header()
 
     def get_range(self, chr_id, start, end, format="bed"):
         """
@@ -106,12 +122,19 @@ class bigbed:
             List of lists of each row for the bed file format
 
         """
-        bb_features = self.f.entries(chr_id, start, end)
+        
+        try:
+            bb_features = self.f.entries(str(chr_id), start, end)
+        except:
+            return []
+
+        if bb_features == None:
+            return []
 
         if format == "bed":
             bed_array = []
             for feature in bb_features:
-                row = chr_id + "\t" + str(feature[0]) + "\t" + str(feature[1]) + "\t" + feature[2]
+                row = str(chr_id) + "\t" + str(feature[0]) + "\t" + str(feature[1]) + "\t" + feature[2]
                 bed_array.append(row)
 
             return "\n".join(bed_array)

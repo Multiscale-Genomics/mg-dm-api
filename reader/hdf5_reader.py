@@ -27,9 +27,6 @@ class hdf5_reader:
     HDF5 files. All required information should be passed to this class.
     """
     
-    test_file = '../region_idx.hdf5'
-    user_id = 'test_user'
-    
     def __init__(self, user_id = 'test'):
         """
         Initialise the module and 
@@ -51,7 +48,7 @@ class hdf5_reader:
            h5r = hdf5_reader('test')
         """
         
-        self.test_file = 'region_idx.hdf5'
+        self.test_file = '../tests/data/region_idx.hdf5'
         self.user_id = 'test_user'
         
         # Open the hdf5 file
@@ -101,7 +98,7 @@ class hdf5_reader:
            h5r = hdf5_reader('test')
            h5r.assemblies()
         """
-        return [asm for asm in self.f[self.user_id] if asm != 'meta']
+        return [asm for asm in self.f if asm != 'meta']
     
     
     def get_chromosomes(self, assembly):
@@ -128,9 +125,9 @@ class hdf5_reader:
            asm = h5r.assemblies()
            chr_list = h5r.get_chromosomes(asm[0])
         """
-        grp = self.f[str(self.user_id)][assembly]
+        grp = self.f[assembly]
         cid = list(np.nonzero(grp['chromosomes']))
-        return [ cset[i] for i in cid[0] ]
+        return [ grp['chromosomes'][i] for i in cid[0] ]
     
     
     def get_files(self, assembly):
@@ -158,9 +155,14 @@ class hdf5_reader:
            asm = h5r.assemblies()
            file_list = h5r.get_files(asm[0])
         """
-        grp = self.f[str(self.user_id)][assembly]
-        fid = list(np.nonzero(grp['files']))
-        return [ fset[i] for i in fid[0] ]
+        grp = self.f[assembly]
+        fid1 = list(np.nonzero(grp['files'][0]))
+        fid1k = list(np.nonzero(grp['files'][1]))
+
+        return {
+            1    : [ grp['files'][i] for i in fid1[0] ],
+            1000 : [ grp['files'][i] for i in fid1k[0] ]
+        }
     
     
     def get_regions(self, assembly, chromosome_id, start, end):
@@ -197,17 +199,22 @@ class hdf5_reader:
         file_idx = self.get_files(assembly)
         chrom_idx = self.get_chromosomes(assembly)
         
-        grp = self.f[str(self.user_id)][assembly]
-        dset = grp['data']
+        grp = self.f[assembly]
+        dset1 = grp['data1']
+        dset1k = grp['data1k']
         
         c = str(chromosome_id)
         s = int(start)
         e = int(end)
         
         #chr X file X position
-        dnp = dset[chrom_idx.index(c),:,s:e]
+        dnp1  = dset1[chrom_idx.index(c),:,s:e]
+        dnp1k = dset1k[chrom_idx.index(c),:,s:e]
         f_idx = []
-        for i in range(len(dnp)):
-            if np.any(dnp[i]) == True:
-                f_idx.append(file_idx[i])
+        for i in range(len(dnp1)):
+            if np.any(dnp1[i]) == True:
+                f_idx.append(file_idx[1][i])
+        for i in range(len(dnp1k)):
+            if np.any(dnp1k[i]) == True:
+                f_idx.append(file_idx[1000][i])
         return f_idx

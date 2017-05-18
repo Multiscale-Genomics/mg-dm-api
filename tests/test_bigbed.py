@@ -16,7 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-import pyBigWig
+#import pyBigWig
+from reader.bigbed import bigbed_reader
 import random
 import pytest
 
@@ -32,21 +33,40 @@ import pytest
 #print(str(out_of_range) + " out of " + str(len(e)))
 
 def test_bigbed():
-    chr_list = [1,2,3,4,5,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,'X','Y']
+    chr_list = [19]
 
-    for i in range(1000):
+    for i in range(10):
         chromosome = random.choice(chr_list)
         start = random.randint(1,45000000)
         end = start + 1000000
-        fid = []
-        for i in range(10):
-            bb = pyBigWig.open("DRR000386.sorted.filtered.bigBed", "r")
-            e = bb.entries(str(chromosome), start, end)
-            if e != None and len(e) > 0:
-                fid.append("DRR000386.bed")
-            bb.close()
-        #output = ""
-        #for i in e:
-        #    output += "X\t" + str(i[0]) + "\t" + str(i[1]) + "\t" + i[2] + "\n"
+        bbr = bigbed_reader('test')
+        
+        # Mouse
+        #file_ids = h5r.get_regions('GCA_000001635.7', chromosome, start, end)
+        file_ids = bbr.get_range(chromosome, start, end)
+        
+        # Human
+        #file_ids = h5r.get_regions('GCA_000001405.22', chromosome, start, end)
+        
+        #print(str(chromosome), str(start), str(end), str(file_ids))
+        bbr.close()
+
+    #for i in range(10):
+    #    chromosome = random.choice(chr_list)
+    #    start = random.randint(1,60000000)
+    #    end = start + 100000
+    #    fid = []
+    #    for i in range(10):
+    #        bb = pyBigWig.open("DRR000386.bb", "r")
+    #        try:
+    #            e = bb.entries(str(chromosome), start, end)
+    #            if e != None and len(e) > 0:
+    #                fid.append("DRR000386.bed")
+    #        except:
+    #            print('No results')
+    #        bb.close()
+    #    #output = ""
+    #    #for i in e:
+    #    #    output += "X\t" + str(i[0]) + "\t" + str(i[1]) + "\t" + i[2] + "\n"
     
     
