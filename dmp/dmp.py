@@ -508,7 +508,7 @@ class dmp:
         print(entry)
         if  'file_type' not in entry or entry['file_type'] == "" or entry['file_type'] not in file_types:
             raise ValueError(
-                "File type must be one of the valid file types: " + file_types
+                "File type must be one of the valid file types: " + ','.join(file_types)
             )
         
         # Check all files have a matching Taxon ID
