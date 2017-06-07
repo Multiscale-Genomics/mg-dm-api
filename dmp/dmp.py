@@ -599,3 +599,67 @@ class dmp:
         entries = self.db.entries
         entry_id = entries.insert_one(entry).inserted_id
         return str(entry_id)
+
+
+    def add_file_metadata(self, file_id, key, value):
+        """
+        Add a key value pair to the meta data for a file
+
+        This way a user is able to add extra information to the meta data to
+        better describe the file.
+
+        Parameters
+        ----------
+        file_id : str
+            ID of the file. This is the value returned when a file is loaded
+            into the DMP or is the `_id` for a given file when the files have
+            been retrieved.
+        key : str
+            Unique key for the identification of the extra meta data. If the key
+            matches a value already in the meta data then it over-writes the
+            current value.
+        value
+            Value to be stored for the given key. This can be a str, int, list
+            or dict.
+
+        Returns
+        -------
+        str
+            This is an id for that file within the system and can be used for
+            tracing this file and where it is used and where it has come from.
+        """
+
+        entries = self.db.entries
+        metadata = entries.find_one({'_id': ObjectId(file_id)}, {"meta_data" : 1})
+        metadata['meta_data'][str(key)] = value
+        entries.update({'_id': ObjectId(file_id)}, {'$set' : {'meta_data' : metadata['meta_data']}})
+
+        return file_id
+
+
+    def remove_file_metadata(self, file_id, key):
+        """
+        Remove a key value pair from the meta data for a given file
+
+        Parameters
+        ----------
+        file_id : str
+            ID of the file. This is the value returned when a file is loaded
+            into the DMP or is the `_id` for a given file when the files have
+            been retrieved.
+        key : str
+            Unique key for the identification of the extra meta data to be
+            removed
+        Returns
+        -------
+        str
+            This is an id for that file within the system and can be used for
+            tracing this file and where it is used and where it has come from.
+        """
+
+        entries = self.db.entries
+        metadata = entries.find_one({'_id': ObjectId(file_id)}, {"meta_data" : 1})
+        del metadata['meta_data'][key]
+        entries.update({'_id': ObjectId(file_id)}, {'$set' : {'meta_data' : metadata['meta_data']}})
+
+        return file_id
