@@ -21,11 +21,11 @@ from dmp import dmp
 
 def test_files_by_user():
 
-	users = ["adam", "ben", "chris", "denis", "eric"]
+    users = ["adam", "ben", "chris", "denis", "eric"]
 
-	da = dmp(test=True)
+    da = dmp(test=True)
 
-	for u in users:
-	    results = da.get_files_by_user(u)
-	    print(u, len(results))
-	    assert type(results) == type([])
+    for u in users:
+        results = da.get_files_by_user(u)
+        print(u, len(results))
+        assert type(results) == type([])
