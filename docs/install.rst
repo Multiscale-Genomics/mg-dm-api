@@ -36,4 +36,17 @@ Using pip:
    :linenos:
 
    pip install git+https://github.com/Multiscale-Genomics/mg-dm-api.git
-   
+
+
+Documentation
+-------------
+
+To build the documentation:
+
+.. code-block:: none
+   :linenos:
+
+   pip install Sphinx
+   pip install sphinx-autobuild
+   cd docs
+   make html
