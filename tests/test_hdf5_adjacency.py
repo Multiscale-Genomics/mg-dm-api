@@ -25,6 +25,8 @@ def test_range():
     Test the range function
     """
     hdf5_handle = adjacency('test', '', 10000)
-    x = hdf5_handle.get_range('chr1', 100000, 200000, limit_chr='chr2')
-    assert 'results' in x
-    assert len(x['results']) > 0
+    results = hdf5_handle.get_range('chr1', 100000, 200000, limit_chr='chr2')
+
+    results_count = len(results['results'])
+    assert 'results' in results
+    assert results_count > 0
