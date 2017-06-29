@@ -22,6 +22,7 @@ import pytest
 
 # 286sec ==> 0.286sec per query
 
+@pytest.mark.underdeverlopment
 def test_hdf5():
     chr_list = [1,2,3,4,5,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,'X','Y']
     #chr_list = [1,10,11,12,13]
@@ -31,16 +32,13 @@ def test_hdf5():
         start = random.randint(1,45000000)
         end = start + 1000000
         h5r = hdf5_reader('test')
-        
+
         # Mouse
         #file_ids = h5r.get_regions('GCA_000001635.7', chromosome, start, end)
         file_ids = h5r.get_regions('GRCm38', chromosome, start, end)
-        
+
         # Human
         #file_ids = h5r.get_regions('GCA_000001405.22', chromosome, start, end)
-        
+
         #print(str(chromosome), str(start), str(end), str(file_ids))
         h5r.close()
-        
-    
-
