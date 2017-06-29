@@ -234,7 +234,7 @@ class rest:
         """
         entries = self.db.entries
         entries.update({'name': name}, {'$set': {'status': status}})
-        return 1
+        return True
 
 
     def update_service_url(self, name, url):
@@ -255,4 +255,4 @@ class rest:
         """
         entries = self.db.entries
         entries.update({'name': name}, {'$set': {'url': url}})
-        return 1
+        return True
