@@ -49,10 +49,10 @@ class adjacency:
         if user_id == 'test':
             #resource_package = __name__
             #resource_path = os.path.join(os.path.dirname(__file__), 'rao2014.hdf5')
-            resource_path = os.path.join(
-                os.path.dirname(__file__),
-                '../tests/data/sample_adjacency.hdf5'
-            )
+            #resource_path = os.path.join(
+            #    os.path.dirname(__file__),
+            #    '../tests/data/sample_adjacency.hdf5'
+            #)
             resource_path = '/tmp/sample_adjacency.hdf5'
             if os.path.isfile(resource_path) is False:
                 gsa = GenerateSampleAdjacency()
