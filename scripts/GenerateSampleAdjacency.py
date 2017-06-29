@@ -57,7 +57,8 @@ class GenerateSampleAdjacency(object):
         d_size = sum([c[1] for c in chromosomes])
 
         # Create the HDF5 file
-        filename = os.path.join(os.path.dirname(__file__), "../tests/data/sample_adjacency.hdf5")
+        #filename = os.path.join(os.path.dirname(__file__), "../tests/data/sample_adjacency.hdf5")
+        filename = "/tmp/sample_adjacency.hdf5"
         hdf5_handle = h5py.File(filename, "w")
 
         for resolution in resolutions:
