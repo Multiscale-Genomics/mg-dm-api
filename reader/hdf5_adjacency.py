@@ -53,6 +53,7 @@ class adjacency:
                 os.path.dirname(__file__),
                 '../tests/data/sample_adjacency.hdf5'
             )
+            resource_path = '/tmp/sample_adjacency.hdf5'
             if os.path.isfile(resource_path) is False:
                 gsa = GenerateSampleAdjacency()
                 gsa.main()
