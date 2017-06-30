@@ -62,9 +62,8 @@ def get_region_ids(hdf5_handle, more_than_1=False):
             }
 
     return None
-            
 
-#@pytest.mark.underdeverlopment
+
 def test_resolutions():
     """
     Test to get a list of the available resolutions that models have been
@@ -74,7 +73,7 @@ def test_resolutions():
     results = hdf5_handle.get_resolutions()
 
     results_count = len(results)
-    
+
     assert results_count > 0
 
 def test_set_resolution():
@@ -130,7 +129,7 @@ def test_get_regions():
     hdf5_handle.set_resolution(int(results[0]))
 
     results = get_region_ids(hdf5_handle)
-    
+
     print('Get Regions:', len(results))
     assert results is not None
 
