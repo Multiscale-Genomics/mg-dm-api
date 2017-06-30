@@ -14,9 +14,6 @@
    limitations under the License.
 """
 
-from .hdf5_adjacency import adjacency
-from .hdf5_coord import coord
-
-__author__  = 'Mark McDowall'
+__author__ = 'Mark McDowall'
 __version__ = '0.0'
 __license__ = 'Apache 2.0'
