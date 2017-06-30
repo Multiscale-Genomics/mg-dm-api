@@ -33,7 +33,7 @@ class coord:
 
     def __init__(self, user_id='test', file_id='', resolution=None):
         """
-        Initialise the module and define default values
+        Initialise the module and set the required base parameters
 
         Parameters
         ----------
@@ -49,6 +49,7 @@ class coord:
         """
 
         self.test_file = '../sample_coords.hdf5'
+        self.file_handle = None
 
         # Open the hdf5 file
         if user_id == 'test':
@@ -56,8 +57,8 @@ class coord:
             self.file_handle = h5py.File(resource_path, "r")
         else:
             cnf_loc = os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
-            dm_api = dmp(cnf_loc)
-            file_obj = dm_api.get_file_by_id(user_id, file_id)
+            dm_handle = dmp(cnf_loc)
+            file_obj = dm_handle.get_file_by_id(user_id, file_id)
             self.file_handle = h5py.File(file_obj['file_path'], 'r')
 
         self.resolution = resolution
@@ -167,9 +168,9 @@ class coord:
             chr_id = self.mpgrp[str(region)].attrs['chromosome']
 
         regions = {}
-        for reg in self.mpgrp:
-            if self.mpgrp[str(reg)].attrs['chromosome'] == chr_id:
-                regions[reg] = self.mpgrp[str(reg)].attrs['start']
+        for region_id in self.mpgrp:
+            if self.mpgrp[str(region_id)].attrs['chromosome'] == chr_id:
+                regions[region_id] = self.mpgrp[str(region_id)].attrs['start']
         return sorted(regions, key=lambda k: regions[k])
 
 
@@ -269,7 +270,11 @@ class coord:
         if self.resolution is None:
             return {}
 
-        return list(set([self.mpgrp[region_id].attrs['chromosome'].decode('utf-8') for region_id in self.mpgrp.keys()]))
+        return list(
+            set(
+                [self.mpgrp[region_id].attrs['chromosome'].decode('utf-8') for region_id in self.mpgrp.keys()]
+            )
+        )
 
 
     def get_regions(self, chr_id, start, end):
