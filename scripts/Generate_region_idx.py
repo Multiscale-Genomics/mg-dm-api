@@ -96,7 +96,7 @@ for i in range(10):
     
     loaded = False
     
-    with open(fi_name, 'r') as fi
+    with open(fi_name, 'r') as fi:
         for line in fi:
             line = line.strip()
             l = line.split("\t")
