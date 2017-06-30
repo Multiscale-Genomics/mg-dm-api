@@ -37,7 +37,7 @@ def test_bigbed():
     """
 
     """
-    
+
     chr_list = [19]
 
     for i in range(10):
@@ -45,14 +45,14 @@ def test_bigbed():
         start = random.randint(1,45000000)
         end = start + 1000000
         bbr = bigbed_reader('test')
-        
+
         # Mouse
         #file_ids = h5r.get_regions('GCA_000001635.7', chromosome, start, end)
         file_ids = bbr.get_range(chromosome, start, end)
-        
+
         # Human
         #file_ids = h5r.get_regions('GCA_000001405.22', chromosome, start, end)
-        
+
         #print(str(chromosome), str(start), str(end), str(file_ids))
         bbr.close()
 
@@ -73,5 +73,3 @@ def test_bigbed():
     #    #output = ""
     #    #for i in e:
     #    #    output += "X\t" + str(i[0]) + "\t" + str(i[1]) + "\t" + i[2] + "\n"
-    
-    

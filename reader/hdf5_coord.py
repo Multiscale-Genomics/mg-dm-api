@@ -20,6 +20,7 @@ import h5py
 import numpy as np
 
 from dmp import dmp
+from scripts.GenerateSampleCoords import GenerateSampleCoords
 
 
 class coord:
@@ -27,9 +28,6 @@ class coord:
     Class related to handling the functions for interacting directly with the
     HDF5 files. All required information should be passed to this class.
     """
-
-    test_file = '../sample_coords.hdf5'
-
 
     def __init__(self, user_id='test', file_id='', resolution=None):
         """
@@ -48,13 +46,14 @@ class coord:
             resolution has been set then all functions are callable.
         """
 
-        self.test_file = '../sample_coords.hdf5'
         self.file_handle = None
 
         # Open the hdf5 file
         if user_id == 'test':
-            resource_path = os.path.join(os.path.dirname(__file__), self.test_file)
-            self.file_handle = h5py.File(resource_path, "r")
+            resource_path = '/tmp/sample_coords.hdf5'
+            if os.path.isfile(resource_path) is False:
+                gsa = GenerateSampleCoords()
+                gsa.main()
         else:
             cnf_loc = os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
             dm_handle = dmp(cnf_loc)
