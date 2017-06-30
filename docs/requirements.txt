@@ -3,4 +3,3 @@ mongomock
 ConfigParser
 h5py
 numpy
-pyBigWig
