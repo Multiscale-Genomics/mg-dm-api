@@ -17,7 +17,7 @@ setup(
     
     install_requires = [
         'pymongo>=3.3', 'mongomock>=3.7', 'configparser', 'numpy', 'h5py',
-        'pyBigWig', 'pytest'
+        'pytest'
     ],
 
     tests_require=[
