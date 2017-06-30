@@ -54,6 +54,7 @@ class coord:
             if os.path.isfile(resource_path) is False:
                 gsa = GenerateSampleCoords()
                 gsa.main()
+            self.file_handle = h5py.File('/tmp/sample_coords.hdf5', 'r')
         else:
             cnf_loc = os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
             dm_handle = dmp(cnf_loc)
@@ -122,13 +123,35 @@ class coord:
             Level of resolution
         """
 
-        self.resolution = resolution
+        self.resolution = int(resolution)
 
         self.grp = self.file_handle[str(resolution)]
         self.meta = self.grp['meta']
         self.mpgrp = self.meta['model_params']
         self.clusters = self.meta['clusters']
         self.centroids = self.meta['centroids']
+
+        dset = self.grp['data']
+
+        if 'dependencies' in dset.attrs:
+            self.dependencies = json.loads(dset.attrs['dependencies'])
+        else:
+            self.dependencies = []
+
+        if 'TADbit_meta' in dset.attrs:
+            self.meta_data = json.loads(dset.attrs['TADbit_meta'])
+        else:
+            self.meta_data = {}
+
+        if 'hic_data' in dset.attrs:
+            self.hic_data = json.loads(dset.attrs['hic_data'])
+        else:
+            self.hic_data = {}
+
+        if 'restraints' in dset.attrs:
+            self.restraints = json.loads(dset.attrs['restraints'])
+        else:
+            self.restraints = {}
 
 
     def get_resolution(self):
