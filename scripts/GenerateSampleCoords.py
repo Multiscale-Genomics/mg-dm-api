@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 """
 Copyright 2017 EMBL-European Bioinformatics Institute
@@ -21,7 +21,7 @@ import random
 import h5py
 import numpy as np
 
-class GenerateSampleCoords():
+class GenerateSampleCoords(object):
     """
     Generate a sample 3D models file if one does not exist
     """
