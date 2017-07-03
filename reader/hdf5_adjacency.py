@@ -19,7 +19,7 @@ import h5py
 import numpy as np
 
 from dmp import dmp
-from scripts.GenerateSampleAdjacency import GenerateSampleAdjacency
+from dm_generator.GenerateSampleAdjacency import GenerateSampleAdjacency
 
 class adjacency:
     """

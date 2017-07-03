@@ -20,7 +20,7 @@ import h5py
 import numpy as np
 
 from dmp import dmp
-from scripts.GenerateSampleCoords import GenerateSampleCoords
+from dm_generator.GenerateSampleCoords import GenerateSampleCoords
 
 
 class coord:
