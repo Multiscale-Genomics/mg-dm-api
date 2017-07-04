@@ -27,7 +27,7 @@ from pymongo import MongoClient, ReadPreference
 from bson.objectid import ObjectId
 
 
-class dmp:
+class dmp(object): # pylint: disable=invalid-name
     """
     API for management of files within the VRE
     """
@@ -45,7 +45,7 @@ class dmp:
         if test is True:
             import mongomock
             self.client = mongomock.MongoClient()
-            self.db = self.client["dmp"]
+            self.db = self.client["dmp"] # pylint: disable=invalid-name
             self._test_loading_dataset()
         else:
             host = config.get("dmp", "host")
@@ -127,7 +127,7 @@ class dmp:
                     meta_data={'assembly' : 'GCA_0123456789'})
 
 
-    def get_file_by_id(self, user_id, file_id, rest=False):
+    def get_file_by_id(self, user_id, file_id):
         """
         Returns files data based on the unique_id for a given file
 
@@ -500,7 +500,8 @@ class dmp:
         return file_id
 
 
-    def validate_file(self, entry):
+    @staticmethod
+    def validate_file(entry):
         """
         Validate that the required meta data for a given entry is present. If
         there is missing data then a ValueError excepetion is raised. This
@@ -558,7 +559,11 @@ class dmp:
 
         # Check all files match the defined types
         print(entry)
-        if  'file_type' not in entry or entry['file_type'] == "" or entry['file_type'] not in file_types:
+        if  (
+                'file_type' not in entry or
+                entry['file_type'] == "" or
+                entry['file_type'] not in file_types
+        ):
             raise ValueError(
                 "File type must be one of the valid file types: " + ','.join(file_types)
             )
@@ -577,7 +582,10 @@ class dmp:
         return True
 
 
-    def set_file(self, user_id, file_path, file_type="", data_type="", taxon_id="", compressed=None, source_id=[], meta_data={}, **kwargs):
+    def set_file( # pylint: disable=too-many-arguments
+            self, user_id, file_path, file_type="", data_type="", taxon_id="",
+            compressed=None, source_id=None, meta_data=None, **kwargs
+        ):
         """
         Adds a file to the data management API.
 
@@ -622,17 +630,22 @@ class dmp:
 
            from dmp import dmp
            da = dmp()
-           unique_file_id = da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, None)
+           unique_file_id = da.set_file(
+               'user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, None)
 
         If there is a processed result of 1 or more files then these can be
         specified using the file_id:
 
-        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, None, source_id=[1, 2])
+        >>> da.set_file(
+            'user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, None,
+            source_id=[1, 2])
 
         Meta data about the file can also be included to provide extra
         information about the file, origins or how it was generated:
 
-        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq', 9606, None, meta_data={'assembly' : 'GCA_0000nnnn', 'downloaded_from' : 'http://www.', })
+        >>> da.set_file('user1', '/tmp/example_file.fastq', 'fastq', 'RNA-seq',
+            9606, None, meta_data={'assembly' : 'GCA_0000nnnn',
+            'downloaded_from' : 'http://www.', })
         """
 
         entry = {

@@ -30,9 +30,10 @@ class GenerateSampleAdjacency(object):
         Function to generate a matrix of size n with random integers to populate the
         grid
         """
+        total_size = size*size
         rand_matrix = np.reshape(
             np.random.choice(
-                [0, 1], size*size, p=[0.9, 0.1]
+                [0, 1], total_size, p=[0.9, 0.1]
             ),
             (size, size)
         )

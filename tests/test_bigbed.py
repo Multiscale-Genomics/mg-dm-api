@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+import random
 #import pyBigWig
 from reader.bigbed import bigbed_reader
-import random
-import pytest
+import pytest # pylint: disable=unused-import
 
 #bb = pyBigWig.open("DRR000386.sorted.filtered.bigBed", "r")
 #chrom = list(bb.chroms().keys())
@@ -40,9 +40,9 @@ def test_bigbed():
 
     chr_list = [19]
 
-    for i in range(10):
+    for i in range(10): # pylint: disable=unused-variable
         chromosome = random.choice(chr_list)
-        start = random.randint(1,45000000)
+        start = random.randint(1, 45000000)
         end = start + 1000000
         bbr = bigbed_reader('test')
 

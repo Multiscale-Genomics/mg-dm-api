@@ -14,9 +14,9 @@
    limitations under the License.
 """
 
-from dmp import dmp
-from dmp import rest
+#from dmp import dmp
+#from dmp import rest
 
-__author__  = 'Mark McDowall'
+__author__ = 'Mark McDowall'
 __version__ = '0.0'
 __license__ = 'Apache 2.0'

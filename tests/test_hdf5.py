@@ -2,10 +2,10 @@
 
 """
 .. Copyright 2017 EMBL-European Bioinformatics Institute
- 
+
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at 
+   You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
@@ -16,14 +16,19 @@
    limitations under the License.
 """
 
-from reader.hdf5_reader import hdf5_reader
 import random
-import pytest
+
+from reader.hdf5_reader import hdf5_reader
+import pytest # pylint: disable=unused-import
 
 # 286sec ==> 0.286sec per query
 
 @pytest.mark.underdeverlopment
 def test_hdf5():
+    """
+    Test for retrieving lists of files that have features within a defined
+    genomic range
+    """
     chr_list = [1,2,3,4,5,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,'X','Y']
     #chr_list = [1,10,11,12,13]
 

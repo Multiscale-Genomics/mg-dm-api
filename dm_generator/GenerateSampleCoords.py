@@ -21,12 +21,13 @@ import random
 import h5py
 import numpy as np
 
-class GenerateSampleCoords(object):
+class GenerateSampleCoords(object): # pylint: disable=too-few-public-methods
     """
     Generate a sample 3D models file if one does not exist
     """
 
-    def main(self):
+    @staticmethod
+    def main(): # pylint: disable=too-many-locals,too-many-statements
         """
         Main Function
         """
@@ -84,13 +85,13 @@ class GenerateSampleCoords(object):
             clustergrps = clustersgrp.create_group(str(uuid))
             ch_size = len(clusters_hierarchy)
             for cluster in range(ch_size):
-                clustersds = clustergrps.create_dataset(
+                clustersds = clustergrps.create_dataset( # pylint: disable=unused-variable
                     str(cluster),
                     data=clusters_hierarchy[cluster],
                     chunks=True,
                     compression="gzip"
                 )
-            centroidsds = centroidsgrp.create_dataset(
+            centroidsds = centroidsgrp.create_dataset( # pylint: disable=unused-variable
                 str(uuid),
                 data=centroids,
                 chunks=True,

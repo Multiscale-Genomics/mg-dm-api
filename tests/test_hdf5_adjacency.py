@@ -16,7 +16,7 @@
 
 from __future__ import print_function
 
-import pytest
+import pytest # pylint: disable=unused-import
 
 from reader.hdf5_adjacency import adjacency
 

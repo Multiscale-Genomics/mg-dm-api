@@ -15,7 +15,7 @@
 """
 
 import random
-import pytest
+import pytest # pylint: disable=unused-import
 
 from dmp import dmp
 
