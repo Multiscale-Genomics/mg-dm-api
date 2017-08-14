@@ -1,5 +1,6 @@
 """
-.. Copyright 2017 EMBL-European Bioinformatics Institute
+.. See the NOTICE file distributed with this work for additional information
+   regarding copyright ownership.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,9 +14,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 """
-
-#from dmp import dmp
-#from dmp import rest
 
 __author__ = 'Mark McDowall'
 __version__ = '0.0'
