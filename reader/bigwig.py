@@ -1,5 +1,6 @@
 """
-.. Copyright 2017 EMBL-European Bioinformatics Institute
+.. See the NOTICE file distributed with this work for additional information
+   regarding copyright ownership.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -24,19 +25,19 @@ class bigwig_reader:
     Class related to handling the functions for interacting directly with the
     BigBed files. All required information should be passed to this class.
     """
-    
+
     test_file = '../sample.bw'
-    
-    
+
+
     def __init__(self, user_id = 'test', file_id = '', resolution = None):
         """
-        Initialise the module and 
-        
+        Initialise the module and
+
         Parameters
         ----------
         user_id : str
-            Identifier to uniquely locate the users files. Can be set to 
-            "common" if the files can be shared between users or 'test' for a 
+            Identifier to uniquely locate the users files. Can be set to
+            "common" if the files can be shared between users or 'test' for a
             dummy file
         file_id : str
             Location of the file in the file system
@@ -45,9 +46,9 @@ class bigwig_reader:
             get_resolutions() and set_resolutions() can be called. Once the
             resolution has been set then all functions are callable.
         """
-        
+
         self.test_file = '../sample.bw'
-        
+
         # Open the bigwig file
         if user_id == 'test':
             resource_path = os.path.join(os.path.dirname(__file__), self.test_file)
@@ -58,7 +59,7 @@ class bigwig_reader:
             file_obj = da.get_file_by_id(user_id, file_id)
             self.f = pyBigWig.open(file_obj['file_path'], 'r')
 
-    
+
     def get_chromosomes(self):
         """
         List the chromosome names and lengths
@@ -73,7 +74,7 @@ class bigwig_reader:
 
         return f.chroms()
 
-    
+
     def get_header(self):
         """
         Get the bigWig header
@@ -84,7 +85,7 @@ class bigwig_reader:
         """
         return f.header()
 
-    
+
     def get_range(self, chr_id, start, end, format="wig"):
         """
         Get entries in a given range
