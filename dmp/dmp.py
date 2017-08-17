@@ -98,13 +98,19 @@ class dmp(object): # pylint: disable=invalid-name
         )
 
         file_id = self.set_file(
-            "test", os.path.join(resource_path, 'tests/data/sample_3D_models.hdf5'),
+            "test", os.path.join(resource_path, 'tests/data/sample.bb'),
+            "bigbed", "RNA-seq", 9606,
+            meta_data={'assembly' : 'GCA_0123456789'}
+        )
+
+        file_id = self.set_file(
+            "test", '/tmp/sample_coords.hdf5',
             "hdf5", "HiC", 9606,
             meta_data={'assembly' : 'GCA_0123456789'}
         )
 
         file_id = self.set_file(
-            "test", os.path.join(resource_path, 'tests/data/sample_adjacency.hdf5'),
+            "test", '/tmp/sample_adjacency.hdf5',
             "hdf5", "HiC", 9606,
             meta_data={'assembly' : 'GCA_0123456789'}
         )
