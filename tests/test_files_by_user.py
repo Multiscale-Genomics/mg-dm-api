@@ -22,7 +22,7 @@ def test_files_by_user():
     """
     Test retrieving lists of files for all known test users.
     """
-    users = ["adam", "ben", "chris", "denis", "eric"]
+    users = ["adam", "ben", "chris", "denis", "eric", "test"]
 
     dm_handle = dmp(test=True)
 

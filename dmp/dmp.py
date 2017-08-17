@@ -91,7 +91,7 @@ class dmp(object): # pylint: disable=invalid-name
         data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
         compressed = [None, 'gzip', 'zip']
 
-        resource_path = os.path.dirname(__file__), 'rao2014.hdf5'
+        resource_path = os.path.dirname(__file__)
         file_id = self.set_file(
             "rao", os.path.join(resource_path, 'rao2014.hdf5'), "hdf5", "HiC", 9606,
             meta_data={'assembly' : 'GCA_0123456789'}
@@ -99,7 +99,7 @@ class dmp(object): # pylint: disable=invalid-name
 
         file_id = self.set_file(
             "test", os.path.join(resource_path, 'tests/data/sample.bb'),
-            "bigbed", "RNA-seq", 9606,
+            "bb", "RNA-seq", 9606,
             meta_data={'assembly' : 'GCA_0123456789'}
         )
 

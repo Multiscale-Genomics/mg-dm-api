@@ -48,7 +48,9 @@ def get_region_ids(hdf5_handle, more_than_1=False):
     chromosome = -1
     while chromosome < len(chromosomes):
         chromosome += 1
+        print("get_region_ids - Chromosome:", chromosomes[chromosome])
         region_ids = hdf5_handle.get_regions(chromosomes[chromosome], 0, 300000000)
+        print("get_region_ids - region_ids:", chromosomes[chromosome])
         if len(region_ids) > 1 and more_than_1 is True:
             return {
                 'chromosome' : chromosomes[chromosome],
@@ -108,6 +110,8 @@ def test_get_chromosome_01():
     Test that the list of chromosomes has values when the resolution is
     specified
     """
+    print("test_get_chromosome_01")
+
     hdf5_handle = coord('test', '')
     results = hdf5_handle.get_resolutions()
 
@@ -115,7 +119,7 @@ def test_get_chromosome_01():
 
     chromosomes = hdf5_handle.get_chromosomes()
 
-    print('Chromosomes:', chromosomes)
+    print("\tChromosomes:", chromosomes)
 
     assert chromosomes > 0
 
@@ -124,59 +128,67 @@ def test_get_regions():
     Test that there are regions returned when querying a given chromosome with a
     start and end value
     """
+    print("test_get_regions")
+
     hdf5_handle = coord('test', '')
     results = hdf5_handle.get_resolutions()
     hdf5_handle.set_resolution(int(results[0]))
 
     results = get_region_ids(hdf5_handle)
 
-    print('Get Regions:', len(results))
+    print('\tGet Regions:', len(results))
     assert results is not None
 
 def test_get_region_order():
     """
     Test the ordering of models given a chromosome, start and end parameter
     """
+    print("test_get_region_order")
+
     hdf5_handle = coord('test', '')
     results = hdf5_handle.get_resolutions()
     hdf5_handle.set_resolution(int(results[0]))
 
     region_ids = get_region_ids(hdf5_handle, True)
 
-    print('Region Order:', region_ids)
+    print('\tRegion Order:', region_ids)
     results = hdf5_handle.get_region_order(region_ids['chromosome'], region_ids['region_ids'][0])
 
-    print('Region Order:', results)
+    print('\tRegion Order:', results)
     assert results is not None
 
 def test_object_data():
     """
     Test getting the header data for the JSON object
     """
+    print("test_object_data")
+
     hdf5_handle = coord('test', '')
     results = hdf5_handle.get_resolutions()
     hdf5_handle.set_resolution(int(results[0]))
 
-    region_ids = get_region_ids(hdf5_handle)
+    region_ids = get_region_ids(hdf5_handle, True)
 
     results = hdf5_handle.get_object_data(region_ids['region_ids'][0])
 
-    print('Object Data:', results)
+    print('\tObject Data:', results)
     assert 'assembly' in results
 
 def test_clusters():
     """
     Test getting the list of clusters
     """
+    print("test_clusters")
+
     hdf5_handle = coord('test', '')
     results = hdf5_handle.get_resolutions()
     hdf5_handle.set_resolution(int(results[0]))
 
-    region_ids = get_region_ids(hdf5_handle)
+    region_ids = get_region_ids(hdf5_handle, True)
 
     results = hdf5_handle.get_clusters(region_ids['region_ids'][0])
 
-    print('Clusters:', results)
+    print('\tClusters:', results)
     cluster_count = len(results)
     assert cluster_count == 4
 
@@ -184,15 +196,17 @@ def test_centroids():
     """
     Test getting the list of centroids
     """
+    print("test_centroids")
+
     hdf5_handle = coord('test', '')
     results = hdf5_handle.get_resolutions()
     hdf5_handle.set_resolution(int(results[0]))
 
-    region_ids = get_region_ids(hdf5_handle)
+    region_ids = get_region_ids(hdf5_handle, True)
 
     results = hdf5_handle.get_centroids(region_ids['region_ids'][0])
 
-    print('Centroids:', results)
+    print('\tCentroids:', results)
     centroid_count = len(results)
     assert centroid_count == 5
 
@@ -200,15 +214,17 @@ def test_get_models():
     """
     Test getting the list of models for a given region
     """
+    print("test_get_models")
+
     hdf5_handle = coord('test', '')
     results = hdf5_handle.get_resolutions()
     hdf5_handle.set_resolution(int(results[0]))
 
-    region_ids = get_region_ids(hdf5_handle)
+    region_ids = get_region_ids(hdf5_handle, True)
 
     results = hdf5_handle.get_models(region_ids['region_ids'][0])
 
-    print('Models:', len(results))
+    print('\tModels:', len(results))
     models_count = len(results)
     assert models_count == 1000
 
@@ -216,14 +232,16 @@ def test_get_model():
     """
     Test getting a model for a given region and model ID
     """
+    print("test_get_model")
+
     hdf5_handle = coord('test', '')
     results = hdf5_handle.get_resolutions()
     hdf5_handle.set_resolution(int(results[0]))
 
-    region_ids = get_region_ids(hdf5_handle)
+    region_ids = get_region_ids(hdf5_handle, True)
 
     models = hdf5_handle.get_models(region_ids['region_ids'][0])
     results = hdf5_handle.get_model(region_ids['region_ids'][0], models[0])
 
-    print('Model:', results[0]['object'])
+    print('\tModel:', results[0]['object'])
     assert 'object' in results[0]
