@@ -24,19 +24,19 @@ class bigbed_reader:
     Class related to handling the functions for interacting directly with the
     BigBed files. All required information should be passed to this class.
     """
-    
+
     test_file = '../sample.bb'
-    
-    
+
+
     def __init__(self, user_id = 'test', file_id = '', resolution = None):
         """
-        Initialise the module and 
-        
+        Initialise the module and
+
         Parameters
         ----------
         user_id : str
-            Identifier to uniquely locate the users files. Can be set to 
-            "common" if the files can be shared between users or 'test' for a 
+            Identifier to uniquely locate the users files. Can be set to
+            "common" if the files can be shared between users or 'test' for a
             dummy file
         file_id : str
             Location of the file in the file system
@@ -45,10 +45,10 @@ class bigbed_reader:
             get_resolutions() and set_resolutions() can be called. Once the
             resolution has been set then all functions are callable.
         """
-        
+
         # Only has chr 19
         self.test_file = '../tests/data/sample.bb'
-        
+
         # Open the bigbed file
         if user_id == 'test':
             resource_path = os.path.join(os.path.dirname(__file__), self.test_file)
@@ -62,12 +62,12 @@ class bigbed_reader:
     def close(self):
         """
         Tidy function to close file handles
-        
+
         Example
         -------
         .. code-block:: python
            :linenos:
-           
+
            from reader.bigbed import bigbed_reader
            bbr = bigbed_reader('test')
            bbr.close()
@@ -122,7 +122,7 @@ class bigbed_reader:
             List of lists of each row for the bed file format
 
         """
-        
+
         try:
             bb_features = self.f.entries(str(chr_id), start, end)
         except:
