@@ -28,7 +28,7 @@ class bigbed_reader:
     test_file = '../sample.bb'
 
 
-    def __init__(self, user_id = 'test', file_id = '', resolution = None):
+    def __init__(self, file_path=''):
         """
         Initialise the module and
 
@@ -40,24 +40,13 @@ class bigbed_reader:
             dummy file
         file_id : str
             Location of the file in the file system
-        resolution : int (Optional)
-            Level of resolution. This is optional, but only the functions
-            get_resolutions() and set_resolutions() can be called. Once the
-            resolution has been set then all functions are callable.
         """
 
         # Only has chr 19
         self.test_file = '../tests/data/sample.bb'
 
         # Open the bigbed file
-        if user_id == 'test':
-            resource_path = os.path.join(os.path.dirname(__file__), self.test_file)
-            self.f = pyBigWig.open(resource_path, "r")
-        else:
-            cnf_loc=os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
-            da = dmp(cnf_loc)
-            file_obj = da.get_file_by_id(user_id, file_id)
-            self.f = pyBigWig.open(file_obj['file_path'], 'r')
+        self.f = pyBigWig.open(file_path, 'r')
 
     def close(self):
         """
@@ -123,8 +112,9 @@ class bigbed_reader:
 
         """
 
+        print("GET RANGE:", str(chr_id), int(start), int(end), format)
         try:
-            bb_features = self.f.entries(str(chr_id), start, end)
+            bb_features = self.f.entries(str(chr_id), int(start), int(end))
         except:
             return []
 
@@ -137,7 +127,7 @@ class bigbed_reader:
                 row = str(chr_id) + "\t" + str(feature[0]) + "\t" + str(feature[1]) + "\t" + feature[2]
                 bed_array.append(row)
 
-            return "\n".join(bed_array)
+            return "\n".join(bed_array) + "\n"
 
         bed_array = []
         for feature in bb_features:
