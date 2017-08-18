@@ -15,6 +15,8 @@
    limitations under the License.
 """
 
+from __future__ import print_function, unicode_literals
+
 import random
 import pytest # pylint: disable=unused-import
 
@@ -26,7 +28,6 @@ def test_files_by_type():
     """
     users = ["adam", "ben", "chris", "denis", "eric"]
     file_types = ["fastq", "fasta", "bam", "bed", "hdf5", "tsv", "wig", "pdb"]
-    #data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
 
     dm_handle = dmp(test=True)
 
@@ -35,3 +36,19 @@ def test_files_by_type():
         file_type = random.choice(file_types)
         results = dm_handle.get_files_by_file_type(user, file_type)
         assert isinstance(results, type([])) is True
+
+def test_files_by_type_rest():
+    """
+    Test the retrieval of files for users by file type
+    """
+    users = ["adam", "ben", "chris", "denis", "eric"]
+    file_types = ["fastq", "fasta", "bam", "bed", "hdf5", "tsv", "wig", "pdb"]
+
+    dm_handle = dmp(test=True)
+
+    for i in range(10): # pylint: disable=unused-variable
+        user = random.choice(users)
+        file_type = random.choice(file_types)
+        results = dm_handle.get_files_by_file_type(user, file_type, True)
+        for result in results:
+            assert 'file_path' not in result

@@ -15,6 +15,8 @@
    limitations under the License.
 """
 
+from __future__ import print_function
+
 import pytest # pylint: disable=unused-import
 
 from dmp import dmp
@@ -31,3 +33,16 @@ def test_files_by_user():
         results = dm_handle.get_files_by_user(user)
         print(user, len(results))
         assert isinstance(results, type([])) is True
+
+def test_files_by_user_rest():
+    """
+    Test retrieving lists of files for all known test users.
+    """
+    users = ["adam", "ben", "chris", "denis", "eric", "test"]
+
+    dm_handle = dmp(test=True)
+
+    for user in users:
+        results = dm_handle.get_files_by_user(user, True)
+        for result in results:
+            assert 'file_path' not in result

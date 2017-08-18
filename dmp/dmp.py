@@ -15,7 +15,7 @@
    limitations under the License.
 """
 
-from __future__ import print_function
+from __future__ import print_function, unicode_literals
 
 import datetime
 import os
@@ -223,24 +223,31 @@ class dmp(object): # pylint: disable=invalid-name
         """
         entries = self.db.entries
         files = []
-        results = entries.find(
-            {"user_id" : user_id},
-            {
-                "file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
-                "source_id" : 1, "meta_data" : 1, "creation_time" : 1
-            }
-        )
+
+        if rest is True:
+            results = entries.find(
+                {"user_id" : user_id},
+                {
+                    "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
+                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                }
+            )
+        else:
+            results = entries.find(
+                {"user_id" : user_id},
+                {
+                    "file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
+                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                }
+            )
         for entry in results:
-            if rest is True:
-                file_path = str(entry["file_path"]).split("/")
-                entry["file_path"] = "/".join([self.ftp_root, str(entry["_id"])] + file_path[-2:])
             entry["_id"] = str(entry["_id"])
             entry["creation_time"] = str(entry["creation_time"])
             files.append(entry)
         return files
 
 
-    def get_files_by_file_type(self, user_id, file_type):
+    def get_files_by_file_type(self, user_id, file_type, rest=False):
         """
         Get a list of the file dictionary objects given a `user_id` and
         `file_type`
@@ -289,14 +296,33 @@ class dmp(object): # pylint: disable=invalid-name
         """
         entries = self.db.entries
         files = []
-        for entry in entries.find({"user_id" : user_id, "file_type" : file_type}):
+
+        if rest is True:
+            results = entries.find(
+                {"user_id" : user_id, "file_type" : file_type},
+                {
+                    "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
+                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                }
+            )
+        else:
+            results = entries.find(
+                {"user_id" : user_id, "file_type" : file_type},
+                {
+                    "file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
+                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                }
+            )
+
+        for entry in results:
             entry["_id"] = str(entry["_id"])
             entry["creation_time"] = str(entry["creation_time"])
             files.append(entry)
+
         return files
 
 
-    def get_files_by_data_type(self, user_id, data_type):
+    def get_files_by_data_type(self, user_id, data_type, rest=False):
         """
         Get a list of the file dictionary objects given a `user_id` and
         `data_type`
@@ -343,21 +369,32 @@ class dmp(object): # pylint: disable=invalid-name
         """
         entries = self.db.entries
         files = []
-        results = entries.find(
-            {"user_id" : user_id, "data_type" : data_type},
-            {
-                "file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
-                "source_id" : 1, "meta_data" : 1, "creation_time" : 1
-            }
-        )
+
+        if rest is True:
+            results = entries.find(
+                {"user_id" : user_id, "data_type" : data_type},
+                {
+                    "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
+                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                }
+            )
+        else:
+            results = entries.find(
+                {"user_id" : user_id, "data_type" : data_type},
+                {
+                    "file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
+                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                }
+            )
         for entry in results:
             entry["_id"] = str(entry["_id"])
             entry["creation_time"] = str(entry["creation_time"])
             files.append(entry)
+
         return files
 
 
-    def get_files_by_taxon_id(self, user_id, taxon_id):
+    def get_files_by_taxon_id(self, user_id, taxon_id, rest=False):
         """
         Get a list of the file dictionary objects given a `user_id` and
         `taxon_id`
@@ -404,21 +441,33 @@ class dmp(object): # pylint: disable=invalid-name
         """
         entries = self.db.entries
         files = []
-        results = entries.find(
-            {"user_id" : user_id, "taxon_id" : taxon_id},
-            {
-                "file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
-                "source_id" : 1, "meta_data" : 1, "creation_time" : 1
-            }
-        )
+
+        if rest is True:
+            results = entries.find(
+                {"user_id" : user_id, "taxon_id" : taxon_id},
+                {
+                    "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
+                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                }
+            )
+        else:
+            results = entries.find(
+                {"user_id" : user_id, "taxon_id" : taxon_id},
+                {
+                    "file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
+                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                }
+            )
+
         for entry in results:
             entry["_id"] = str(entry["_id"])
             entry["creation_time"] = str(entry["creation_time"])
             files.append(entry)
+
         return files
 
 
-    def _get_file_parents(self, file_id):
+    def _get_file_parents(self, user_id, file_id):
         """
         Private function for getting all parents on a file_id. This function
         reursively goes up the tree of parents to get a full history.
@@ -434,19 +483,22 @@ class dmp(object): # pylint: disable=invalid-name
             List of parent file_ids
         """
         entries = self.db.entries
-        file_obj = entries.find_one({'_id': ObjectId(file_id)}, {"source_id" : 1})
+        file_obj = entries.find_one(
+            {'user_id' : user_id, '_id': ObjectId(file_id)}, {"source_id" : 1}
+        )
 
         parent_files = []
-        source_count = len(file_obj['source_id'])
-        if source_count > 0:
-            for source_id in file_obj['source_id']:
-                parent_files.append([file_id, str(source_id)])
-                parent_files += self._get_file_parents(source_id)
+        if file_obj['source_id']:
+            source_count = len(file_obj['source_id'])
+            if source_count > 0:
+                for source_id in file_obj['source_id']:
+                    parent_files.append([file_id, str(source_id)])
+                    parent_files += self._get_file_parents(user_id, source_id)
 
         return parent_files
 
 
-    def get_file_history(self, file_id=None):
+    def get_file_history(self, user_id, file_id):
         """
         Returns the full path of file_ids from the current file to the original
         file(s)
@@ -482,10 +534,7 @@ class dmp(object): # pylint: disable=invalid-name
         with the `get_file_by_id` method.
         """
 
-        if file_id is None:
-            return []
-
-        unique_data = [list(x) for x in set(tuple(x) for x in self._get_file_parents(file_id))]
+        unique_data = [list(x) for x in set(tuple(x) for x in self._get_file_parents(user_id, file_id))]
         return unique_data
 
 
@@ -577,7 +626,6 @@ class dmp(object): # pylint: disable=invalid-name
         ]
 
         # Check all files match the defined types
-        print(entry)
         if  (
                 'file_type' not in entry or
                 entry['file_type'] == "" or

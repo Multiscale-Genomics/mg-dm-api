@@ -15,6 +15,8 @@
    limitations under the License.
 """
 
+from __future__ import print_function
+
 import pytest # pylint: disable=unused-import
 
 from dmp import dmp
@@ -23,9 +25,12 @@ def test_history():
     """
     Test getting the history of a file.
     """
-    #users = ["adam", "ben", "chris", "denis", "eric"]
+    users = ["adam", "ben", "chris", "denis", "eric"]
     dm_handle = dmp(test=True)
 
-    history = dm_handle.get_file_history()
+    for user in users:
+        results = dm_handle.get_files_by_file_type(user, 'bam')
 
-    assert isinstance(history, type([])) is True
+        for result in results:
+            history = dm_handle.get_file_history(user, result['_id'])
+            assert isinstance(history, list) is True
