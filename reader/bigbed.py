@@ -15,7 +15,9 @@
    limitations under the License.
 """
 
-import os, json, pyBigWig
+from __future__ import print_function
+
+import pyBigWig
 
 from dmp import dmp
 
@@ -42,9 +44,6 @@ class bigbed_reader:
         file_id : str
             Location of the file in the file system
         """
-
-        # Only has chr 19
-        self.test_file = '../tests/data/sample.bb'
 
         # Open the bigbed file
         self.f = pyBigWig.open(file_path, 'r')
@@ -88,7 +87,7 @@ class bigbed_reader:
         """
         return self.f.header()
 
-    def get_range(self, chr_id, start, end, format="bed"):
+    def get_range(self, chr_id, start, end, file_type="bed"):
         """
         Get entries in a given range
 
@@ -100,7 +99,7 @@ class bigbed_reader:
             Start of the region to query
         end : int
             End of the region to query
-        format : string (OPTIONAL)
+        file_type : string (OPTIONAL)
             `bed` format returning the whole file as a string is the default
             option. `list` will return the bed rows but as a list of lists.
 
@@ -113,16 +112,16 @@ class bigbed_reader:
 
         """
 
-        print("GET RANGE:", str(chr_id), int(start), int(end), format)
+        print("GET RANGE:", str(chr_id), int(start), int(end), file_type)
         try:
             bb_features = self.f.entries(str(chr_id), int(start), int(end))
-        except:
-            return []
+        except RuntimeError:
+            bb_features = []
 
-        if bb_features == None:
-            return []
+        if bb_features is None:
+            bb_features = []
 
-        if format == "bed":
+        if file_type == "bed":
             bed_array = []
             for feature in bb_features:
                 row = str(chr_id) + "\t" + str(feature[0]) + "\t" + str(feature[1]) + "\t" + feature[2]
@@ -132,7 +131,7 @@ class bigbed_reader:
 
         bed_array = []
         for feature in bb_features:
-            row = [chr_id, feature[0], feature[1]] + feature[3].split("\t")
+            row = [chr_id, feature[0], feature[1]] + feature[2].split("\t")
             bed_array.append(row)
 
         return bed_array

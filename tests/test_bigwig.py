@@ -15,11 +15,11 @@
    limitations under the License.
 """
 
-from reader.bigbed import bigbed_reader
+from reader.bigwig import bigwig_reader
 import pytest # pylint: disable=unused-import
 
 @pytest.mark.underdeverlopment
-def test_bigbed():
+def test_bigwig():
     """
     Testing the bigbed reader
     """
@@ -27,12 +27,10 @@ def test_bigbed():
     chromosome = 19
     start = 3000000
     end = 3001000
-    bbr = bigbed_reader('tests/data/sample.bb')
+    bwr = bigwig_reader('tests/data/sample.bw')
 
-    bed_str = bbr.get_range(chromosome, start, end, 'bed')
-    assert isinstance(bed_str, str)
-    assert len(bed_str) == 208
+    wig_str = bwr.get_range(chromosome, start, end, 'wig')
+    assert isinstance(wig_str, str)
 
-    bed_obj = bbr.get_range(chromosome, start, end, 'json')
-    assert isinstance(bed_obj, list)
-    assert len(bed_obj) == 5
+    wig_obj = bwr.get_range(chromosome, start, end, 'json')
+    assert len(wig_obj) == 999

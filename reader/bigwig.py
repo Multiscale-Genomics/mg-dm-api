@@ -29,7 +29,7 @@ class bigwig_reader:
     test_file = '../sample.bw'
 
 
-    def __init__(self, user_id = 'test', file_id = '', resolution = None):
+    def __init__(self, file_path=''):
         """
         Initialise the module and
 
@@ -47,17 +47,8 @@ class bigwig_reader:
             resolution has been set then all functions are callable.
         """
 
-        self.test_file = '../sample.bw'
-
         # Open the bigwig file
-        if user_id == 'test':
-            resource_path = os.path.join(os.path.dirname(__file__), self.test_file)
-            self.f = pyBigWig.open(resource_path, "r")
-        else:
-            cnf_loc=os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
-            da = dmp(cnf_loc)
-            file_obj = da.get_file_by_id(user_id, file_id)
-            self.f = pyBigWig.open(file_obj['file_path'], 'r')
+        self.f = pyBigWig.open(file_path, 'r')
 
 
     def get_chromosomes(self):
@@ -72,7 +63,7 @@ class bigwig_reader:
 
         """
 
-        return f.chroms()
+        return self.f.chroms()
 
 
     def get_header(self):
@@ -83,10 +74,10 @@ class bigwig_reader:
         -------
         header : dict
         """
-        return f.header()
+        return self.f.header()
 
 
-    def get_range(self, chr_id, start, end, format="wig"):
+    def get_range(self, chr_id, start, end, file_type="wig"):
         """
         Get entries in a given range
 
@@ -110,12 +101,12 @@ class bigwig_reader:
             List of lists of each row for the wig file format
 
         """
-        bw_features = self.f.intervals(chr_id, start, end)
+        bw_features = self.f.intervals(str(chr_id), int(start), int(end))
 
-        if format == "wig":
+        if file_type == "wig":
             wig_array = []
             for feature in bw_features:
-                wig_array.append("\t".join(feature))
+                wig_array.append("\t".join([str(i) for i in feature]))
 
             return "\n".join(wig_array)
 
