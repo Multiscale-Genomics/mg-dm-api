@@ -1,6 +1,6 @@
 # mg-dm-api
 
-[![Documentation Status](https://readthedocs.org/projects/mg-dm-api/badge/?version=latest)](http://mg-dm-api.readthedocs.org/en/latest/) [![Build Status](https://travis-ci.org/Multiscale-Genomics/mg-dm-api.svg?branch=master)](https://travis-ci.org/Multiscale-Genomics/mg-dm-api)
+[![Documentation Status](https://readthedocs.org/projects/mg-dm-api/badge/?version=latest)](http://mg-dm-api.readthedocs.org/en/latest/) [![Build Status](https://travis-ci.org/Multiscale-Genomics/mg-dm-api.svg?branch=master)](https://travis-ci.org/Multiscale-Genomics/mg-dm-api) [![Code Health](https://landscape.io/github/Multiscale-Genomics/mg-dm-api/master/landscape.svg?style=flat)](https://landscape.io/github/Multiscale-Genomics/mg-dm-api/master)
 
 API for the management of file locations and users within the MuG VRE.
 
@@ -36,8 +36,8 @@ Requires a file with the name `dmp.cnf` with the following parameters to define 
 [dmp]
 host = localhost
 port = 27017
-user = 
-pass = 
+user =
+pass =
 db = dmp
 ftp_root = ftp://ftp.<url_root>
 ```
