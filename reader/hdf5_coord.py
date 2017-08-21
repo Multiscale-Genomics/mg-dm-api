@@ -24,7 +24,7 @@ from dmp import dmp
 from dm_generator.GenerateSampleCoords import GenerateSampleCoords
 
 
-class coord:
+class coord(object): # pylint: disable=invalid-name
     """
     Class related to handling the functions for interacting directly with the
     HDF5 files. All required information should be passed to this class.

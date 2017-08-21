@@ -22,7 +22,7 @@ import numpy as np
 from dmp import dmp
 from dm_generator.GenerateSampleAdjacency import GenerateSampleAdjacency
 
-class adjacency:
+class adjacency(object): # pylint: disable=invalid-name
     """
     Class related to handling the functions for interacting directly with the
     HDF5 files. All required information should be passed to this class.

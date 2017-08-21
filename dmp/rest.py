@@ -22,7 +22,7 @@ import configparser
 import pymongo
 from pymongo import MongoClient, ReadPreference
 
-class rest:
+class rest(object): # pylint: disable=invalid-name
     """
     API for management of files within the VRE
     """

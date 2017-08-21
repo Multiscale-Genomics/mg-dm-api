@@ -15,19 +15,13 @@
    limitations under the License.
 """
 
-import os, json, pyBigWig
+import pyBigWig
 
-from dmp import dmp
-
-
-class bigwig_reader:
+class bigwig_reader(object): # pylint: disable=invalid-name
     """
     Class related to handling the functions for interacting directly with the
     BigBed files. All required information should be passed to this class.
     """
-
-    test_file = '../sample.bw'
-
 
     def __init__(self, file_path=''):
         """

@@ -15,12 +15,14 @@
    limitations under the License.
 """
 
-import os, json, pysam
+import os
+import pysam
+import pyBigWig
 
 from dmp import dmp
 
 
-class tabix:
+class tabix(object): # pylint: disable=invalid-name
     """
     Class related to handling the functions for interacting directly with the
     BigBed files. All required information should be passed to this class.
@@ -30,7 +32,7 @@ class tabix:
     test_file_tbi = '../sample.gff3.gz.tbi'
 
 
-    def __init__(self, user_id = 'test', file_id = '', resolution = None):
+    def __init__(self, user_id, file_id=''):
         """
         Initialise the module and
 
@@ -48,17 +50,13 @@ class tabix:
             resolution has been set then all functions are callable.
         """
 
-        self.test_file_gz = '../sample.gff3.gz'
-        self.test_file_tbi = '../sample.gff3.gz.tbi'
-
         # Open the bigwig file
         if user_id == 'test':
-            resource_path = os.path.join(os.path.dirname(__file__), self.test_file)
             self.f = pysam.TabixFile(self.test_file_gz)
         else:
             cnf_loc=os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
-            da = dmp(cnf_loc)
-            file_obj = da.get_file_by_id(user_id, file_id)
+            dm_handle = dmp(cnf_loc)
+            file_obj = dm_handle.get_file_by_id(user_id, file_id)
             self.f = pyBigWig.open(file_obj['file_path'], 'r')
 
 
@@ -87,7 +85,7 @@ class tabix:
 
         """
         gff3_array = []
-        for feature in tbi.fetch(chr_id, start, end):
+        for feature in self.f.fetch(chr_id, start, end):
             gff3_array.append("\t".join(feature))
 
         if format == 'gff3':
