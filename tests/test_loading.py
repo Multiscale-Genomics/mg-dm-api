@@ -21,25 +21,35 @@ import pytest # pylint: disable=unused-import
 from dmp import dmp
 
 def test_loading():
+    """
+    Test the loading of new files into the MongoDB
+    """
+
     users = ["adam", "ben", "chris", "denis", "eric"]
     file_types = ["fastq", "fa", "fasta", "bam", "bed", "hdf5", "tsv", "wig", "pdb"]
     data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
     compressed = [None, 'gzip', 'zip']
 
-    da = dmp(test=True)
+    dm_handle = dmp(test=True)
 
     for i in range(10):
-        u = random.choice(users)
-        ft = random.choice(file_types)
-        dt = random.choice(data_types)
-        z  = random.choice(compressed)
-        f = '/tmp/test/' + dt + '/test_' + str(i) + '.' + ft
-        file_id = da.set_file(u, f, ft, dt, 9606, z, meta_data={'assembly' : 'GCA_0123456789'})
+        user_id = random.choice(users)
+        file_type = random.choice(file_types)
+        data_type = random.choice(data_types)
+        zipped = random.choice(compressed)
+        file_loc = '/tmp/test/' + data_type + '/test_' + str(i) + '.' + file_type
+        file_id = dm_handle.set_file(
+            user_id, file_loc, file_type, data_type, 9606, zipped,
+            meta_data={'assembly' : 'GCA_0123456789'}
+        )
 
-        if dt == 'RNA-seq' and ft == 'fastq' and random.choice([0,1]) == 1:
-             f = '/tmp/test/' + dt + '/test_' + str(i) + '.bam'
-             da.set_file(u, f, 'bam', dt, 9606, None, [file_id], meta_data={'assembly' : 'GCA_0123456789'})
+        if data_type == 'RNA-seq' and file_type == 'fastq' and random.choice([0, 1]) == 1:
+            file_loc = '/tmp/test/' + data_type + '/test_' + str(i) + '.bam'
+            dm_handle.set_file(
+                user_id, file_loc, 'bam', data_type, 9606, None, [file_id],
+                meta_data={'assembly' : 'GCA_0123456789'}
+            )
 
-    for u in users:
-        results = da.get_files_by_user(u)
-        print(u, len(results))
+    for user_id in users:
+        results = dm_handle.get_files_by_user(user_id)
+        print(user_id, len(results))
