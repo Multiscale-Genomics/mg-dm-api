@@ -43,7 +43,7 @@ class bigbed_reader(object): # pylint: disable=invalid-name
         """
 
         # Open the bigbed file
-        self.f = pyBigWig.open(file_path, 'r')
+        self.file_handle = pyBigWig.open(file_path, 'r')
 
     def close(self):
         """
@@ -58,7 +58,7 @@ class bigbed_reader(object): # pylint: disable=invalid-name
            bbr = bigbed_reader('test')
            bbr.close()
         """
-        self.f.close()
+        self.file_handle.close()
 
     def get_chromosomes(self):
         """
@@ -72,7 +72,7 @@ class bigbed_reader(object): # pylint: disable=invalid-name
 
         """
 
-        return self.f.chroms()
+        return self.file_handle.chroms()
 
     def get_header(self):
         """
@@ -82,7 +82,7 @@ class bigbed_reader(object): # pylint: disable=invalid-name
         -------
         header : dict
         """
-        return self.f.header()
+        return self.file_handle.header()
 
     def get_range(self, chr_id, start, end, file_type="bed"):
         """
@@ -111,7 +111,7 @@ class bigbed_reader(object): # pylint: disable=invalid-name
 
         print("GET RANGE:", str(chr_id), int(start), int(end), file_type)
         try:
-            bb_features = self.f.entries(str(chr_id), int(start), int(end))
+            bb_features = self.file_handle.entries(str(chr_id), int(start), int(end))
         except RuntimeError:
             bb_features = []
 
@@ -121,7 +121,8 @@ class bigbed_reader(object): # pylint: disable=invalid-name
         if file_type == "bed":
             bed_array = []
             for feature in bb_features:
-                row = str(chr_id) + "\t" + str(feature[0]) + "\t" + str(feature[1]) + "\t" + feature[2]
+                row = str(chr_id) + "\t" + str(feature[0]) + "\t"
+                row += str(feature[1]) + "\t" + feature[2]
                 bed_array.append(row)
 
             return "\n".join(bed_array) + "\n"

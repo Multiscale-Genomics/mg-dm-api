@@ -42,7 +42,7 @@ class bigwig_reader(object): # pylint: disable=invalid-name
         """
 
         # Open the bigwig file
-        self.f = pyBigWig.open(file_path, 'r')
+        self.file_handle = pyBigWig.open(file_path, 'r')
 
 
     def get_chromosomes(self):
@@ -57,7 +57,7 @@ class bigwig_reader(object): # pylint: disable=invalid-name
 
         """
 
-        return self.f.chroms()
+        return self.file_handle.chroms()
 
 
     def get_header(self):
@@ -68,7 +68,7 @@ class bigwig_reader(object): # pylint: disable=invalid-name
         -------
         header : dict
         """
-        return self.f.header()
+        return self.file_handle.header()
 
 
     def get_range(self, chr_id, start, end, file_type="wig"):
@@ -95,7 +95,7 @@ class bigwig_reader(object): # pylint: disable=invalid-name
             List of lists of each row for the wig file format
 
         """
-        bw_features = self.f.intervals(str(chr_id), int(start), int(end))
+        bw_features = self.file_handle.intervals(str(chr_id), int(start), int(end))
 
         if file_type == "wig":
             wig_array = []

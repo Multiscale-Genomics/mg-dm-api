@@ -52,15 +52,15 @@ class tabix(object): # pylint: disable=invalid-name
 
         # Open the bigwig file
         if user_id == 'test':
-            self.f = pysam.TabixFile(self.test_file_gz)
+            self.file_handle = pysam.TabixFile(self.test_file_gz)
         else:
-            cnf_loc=os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
+            cnf_loc = os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
             dm_handle = dmp(cnf_loc)
             file_obj = dm_handle.get_file_by_id(user_id, file_id)
-            self.f = pyBigWig.open(file_obj['file_path'], 'r')
+            self.file_handle = pyBigWig.open(file_obj['file_path'], 'r')
 
 
-    def get_range(self, chr_id, start, end, format="gff3"):
+    def get_range(self, chr_id, start, end, file_type="gff3"):
         """
         Get entries in a given range
 
@@ -85,10 +85,10 @@ class tabix(object): # pylint: disable=invalid-name
 
         """
         gff3_array = []
-        for feature in self.f.fetch(chr_id, start, end):
+        for feature in self.file_handle.fetch(chr_id, start, end):
             gff3_array.append("\t".join(feature))
 
-        if format == 'gff3':
+        if file_type == 'gff3':
             return "\n".join(gff3_array)
 
         return gff3_array

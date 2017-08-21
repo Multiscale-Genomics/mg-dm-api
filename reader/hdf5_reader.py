@@ -29,7 +29,7 @@ class hdf5_reader(object): # pylint: disable=invalid-name
     HDF5 files. All required information should be passed to this class.
     """
 
-    def __init__(self, user_id='test'):
+    def __init__(self, user_id='test', file_id=''):
         """
         Initialise the module and set default values
 
@@ -61,8 +61,8 @@ class hdf5_reader(object): # pylint: disable=invalid-name
         else:
             self.user_id = user_id
             cnf_loc=os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
-            da = dmp(cnf_loc)
-            file_obj = da.get_file_by_id(user_id, file_id)
+            dm_handle = dmp(cnf_loc)
+            file_obj = dm_handle.get_file_by_id(user_id, file_id)
             self.file_handle = h5py.File(file_obj['file_path'], 'r')
 
 
