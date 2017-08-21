@@ -38,7 +38,7 @@ class rest(object): # pylint: disable=invalid-name
         if test is True:
             import mongomock
             self.client = mongomock.MongoClient()
-            self.db = self.client["rest"]
+            self.db_handle = self.client["rest"]
             self._test_loading_dataset()
         else:
             host = config.get("rest", "host")
@@ -51,15 +51,15 @@ class rest(object): # pylint: disable=invalid-name
                 self.client = MongoClient(
                     host, port, read_preference=ReadPreference.SECONDARY_PREFERRED)
                 self.client.admin.authenticate(user, password)
-                self.db = self.client[db_name]
+                self.db_handle = self.client[db_name]
             except RuntimeError:
                 err = sys.exc_info()[0]
                 print("Error: %s" % err)
                 sys.exit(1)
 
-        self.entries = self.db.entries
-        self.db.entries.create_index([('name', pymongo.ASCENDING)], unique=True)
-        self.db.entries.create_index([('status', pymongo.ASCENDING)], unique=False)
+        self.entries = self.db_handle.entries
+        self.db_handle.entries.create_index([('name', pymongo.ASCENDING)], unique=True)
+        self.db_handle.entries.create_index([('status', pymongo.ASCENDING)], unique=False)
 
 
     def _test_loading_dataset(self):
@@ -92,7 +92,7 @@ class rest(object): # pylint: disable=invalid-name
             status: str
                 Service HTTP status code - `up` or `down`
         """
-        entries = self.db.entries
+        entries = self.db_handle.entries
         result = entries.find_one({'name': name})
         service = {
             'name': result["name"],
@@ -112,7 +112,7 @@ class rest(object): # pylint: disable=invalid-name
             List of dict objects for each service
         """
         services = []
-        entries = self.db.entries
+        entries = self.db_handle.entries
         results = entries.find()
         for result in results:
             services.append({
@@ -133,7 +133,7 @@ class rest(object): # pylint: disable=invalid-name
             List of dict objects for each service
         """
         services = []
-        entries = self.db.entries
+        entries = self.db_handle.entries
         results = entries.find({'status': 'up'}, {'name': 1, 'url': 1, 'description': 1})
         for result in results:
             services.append({
@@ -154,7 +154,7 @@ class rest(object): # pylint: disable=invalid-name
             List of dict objects for each service
         """
         services = []
-        entries = self.db.entries
+        entries = self.db_handle.entries
         results = entries.find({'status': 'down'}, {'name': 1, 'url': 1, 'description': 1})
         for result in results:
             services.append({
@@ -178,7 +178,7 @@ class rest(object): # pylint: disable=invalid-name
         -------
 
         """
-        entries = self.db.entries
+        entries = self.db_handle.entries
         file_obj = entries.find_one({'name': name}, {'name': 1})
         if file_obj is None:
             return False
@@ -212,7 +212,7 @@ class rest(object): # pylint: disable=invalid-name
             "status"      : status,
         }
 
-        entries = self.db.entries
+        entries = self.db_handle.entries
         entry_id = entries.insert_one(entry).inserted_id
         return str(entry_id)
 
@@ -233,7 +233,7 @@ class rest(object): # pylint: disable=invalid-name
         bool
             `True` when done
         """
-        entries = self.db.entries
+        entries = self.db_handle.entries
         entries.update({'name': name}, {'$set': {'status': status}})
         return True
 
@@ -254,6 +254,6 @@ class rest(object): # pylint: disable=invalid-name
         bool
             `True` when done
         """
-        entries = self.db.entries
+        entries = self.db_handle.entries
         entries.update({'name': name}, {'$set': {'url': url}})
         return True
