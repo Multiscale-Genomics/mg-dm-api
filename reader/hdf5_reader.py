@@ -162,8 +162,8 @@ class hdf5_reader(object): # pylint: disable=invalid-name
         fid1k = list(np.nonzero(grp['files'][1]))
 
         return {
-            1    : [grp['files'][i] for i in fid1[0]],
-            1000 : [grp['files'][i] for i in fid1k[0]]
+            1: [grp['files'][i] for i in fid1[0]],
+            1000: [grp['files'][i] for i in fid1k[0]]
         }
 
 

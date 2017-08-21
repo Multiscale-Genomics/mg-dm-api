@@ -48,12 +48,12 @@ class adjacency(object): # pylint: disable=invalid-name
         self.file_id = file_id
 
         if user_id == 'test':
-            #resource_package = __name__
-            #resource_path = os.path.join(os.path.dirname(__file__), 'rao2014.hdf5')
-            #resource_path = os.path.join(
-            #    os.path.dirname(__file__),
-            #    '../tests/data/sample_adjacency.hdf5'
-            #)
+            # resource_package = __name__
+            # resource_path = os.path.join(os.path.dirname(__file__), 'rao2014.hdf5')
+            # resource_path = os.path.join(
+            #     os.path.dirname(__file__),
+            #     '../tests/data/sample_adjacency.hdf5'
+            # )
             resource_path = '/tmp/sample_adjacency.hdf5'
             if os.path.isfile(resource_path) is False:
                 gsa = GenerateSampleAdjacency()
@@ -69,7 +69,7 @@ class adjacency(object): # pylint: disable=invalid-name
             file_obj = dm_handle.get_file_by_id(user_id, file_id)
             self.hdf5_handle = h5py.File(file_obj["file_path"], "r")
 
-        self.resolutions = map(int, self.hdf5_handle.keys())
+        self.resolutions = [int(i) for i in self.hdf5_handle.keys()]
 
         if resolution is None:
             self.dset = self.hdf5_handle[str(self.resolutions[0])]
@@ -121,9 +121,9 @@ class adjacency(object): # pylint: disable=invalid-name
         """
 
         return {
-            "chromosomes" : [list(c) for c in self.dset.attrs["chromosomes"]],
-            "chr_param"   : self.chr_param,
-            "resolutions" : self.resolutions}
+            "chromosomes": [list(c) for c in self.dset.attrs["chromosomes"]],
+            "chr_param": self.chr_param,
+            "resolutions": self.resolutions}
 
     def get_resolution(self):
         """
@@ -261,22 +261,22 @@ class adjacency(object): # pylint: disable=invalid-name
         r_index = np.transpose(np.nonzero(result))
         log_text.append(
             {
-                "coord" : {
-                    "x0" : (x_pos+xy_offset),
-                    "x1" : (y_pos+xy_offset)
+                "coord": {
+                    "x0": (x_pos+xy_offset),
+                    "x1": (y_pos+xy_offset)
                 },
-                "r_index" : len(r_index),
+                "r_index": len(r_index),
                 "param": {
-                    "start" : start,
-                    "x" : x_pos,
-                    "end" : end,
-                    "y" : y_pos,
-                    "xy_offset" : xy_offset,
-                    "resolution" : self.resolution,
-                    "chr_id" : chr_id,
-                    "startB" : start2,
-                    "endB" : end2,
-                    "limit_chr" : limit_chr
+                    "start": start,
+                    "x": x_pos,
+                    "end": end,
+                    "y": y_pos,
+                    "xy_offset": xy_offset,
+                    "resolution": self.resolution,
+                    "chr_id": chr_id,
+                    "startB": start2,
+                    "endB": end2,
+                    "limit_chr": limit_chr
                 },
                 'chr_param': self.chr_param
             }
@@ -291,13 +291,13 @@ class adjacency(object): # pylint: disable=invalid-name
                 y_start = (i[1]-self.chr_param[y_chr]["bins"][self.resolution][1])*int(self.resolution)
 
             entry = {
-                "chrA" : chr_id,
-                "startA" : x_start,
-                "chrB" : y_chr,
-                "startB" : y_start,
-                "value" : int(result[i[0], i[1]]),
-                "pos_x" : i[0]+x_pos+xy_offset,
-                "pos_y" : i[1]
+                "chrA": chr_id,
+                "startA": x_start,
+                "chrB": y_chr,
+                "startB": y_start,
+                "value": int(result[i[0], i[1]]),
+                "pos_x": i[0]+x_pos+xy_offset,
+                "pos_y": i[1]
             }
             if no_links is None:
                 entry['_links'] = {'self': value_url + "?user_id=" + str(self.user_id) + "&file_id=" + str(self.file_id) + "&res=" + str(self.resolution) + "&pos_x=" + str(i[0]+x_pos+xy_offset) + "&pos_y=" + str(i[1])}

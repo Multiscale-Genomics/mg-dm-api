@@ -206,10 +206,10 @@ class rest(object): # pylint: disable=invalid-name
             Entry ID
         """
         entry = {
-            "name"        : name,
-            "description" : description,
-            "url"         : url,
-            "status"      : status,
+            "name": name,
+            "description": description,
+            "url": url,
+            "status": status,
         }
 
         entries = self.db_handle.entries

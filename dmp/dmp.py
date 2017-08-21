@@ -95,25 +95,25 @@ class dmp(object): # pylint: disable=invalid-name
         resource_path = os.path.dirname(__file__)
         file_id = self.set_file(
             "rao", os.path.join(resource_path, 'rao2014.hdf5'), "hdf5", "HiC", 9606,
-            meta_data={'assembly' : 'GCA_0123456789'}
+            meta_data={'assembly': 'GCA_0123456789'}
         )
 
         file_id = self.set_file(
             "test", os.path.join(resource_path, '/tmp/sample.bb'),
             "bb", "RNA-seq", 9606,
-            meta_data={'assembly' : 'GCA_0123456789'}
+            meta_data={'assembly': 'GCA_0123456789'}
         )
 
         file_id = self.set_file(
             "test", '/tmp/sample_coords.hdf5',
             "hdf5", "HiC", 9606,
-            meta_data={'assembly' : 'GCA_0123456789'}
+            meta_data={'assembly': 'GCA_0123456789'}
         )
 
         file_id = self.set_file(
             "test", '/tmp/sample_adjacency.hdf5',
             "hdf5", "HiC", 9606,
-            meta_data={'assembly' : 'GCA_0123456789'}
+            meta_data={'assembly': 'GCA_0123456789'}
         )
 
         for user in users:
@@ -123,11 +123,11 @@ class dmp(object): # pylint: disable=invalid-name
             zipped = None
             file_id = self.set_file(
                 user, file_handle, file_type, data_type, 9606, None, [],
-                meta_data={'assembly' : 'GCA_0123456789'})
+                meta_data={'assembly': 'GCA_0123456789'})
             file_handle = '/tmp/test/' + data_type + '/test_rna-seq.bam'
             self.set_file(
                 user, file_handle, 'bam', data_type, 9606, None, [file_id],
-                meta_data={'assembly' : 'GCA_0123456789'})
+                meta_data={'assembly': 'GCA_0123456789'})
 
         for i in range(10):
             user = random.choice(users)
@@ -137,13 +137,13 @@ class dmp(object): # pylint: disable=invalid-name
             file_handle = '/tmp/test/' + data_type + '/test_' + str(i) + '.' + file_type
             file_id = self.set_file(
                 user, file_handle, file_type, data_type, 9606, zipped,
-                meta_data={'assembly' : 'GCA_0123456789'})
+                meta_data={'assembly': 'GCA_0123456789'})
 
             if data_type == 'RNA-seq' and file_type == 'fastq' and random.choice([0, 1]) == 1:
                 file_handle = '/tmp/test/' + data_type + '/test_' + str(i) + '.bam'
                 self.set_file(
                     user, file_handle, 'bam', data_type, 9606, None, [file_id],
-                    meta_data={'assembly' : 'GCA_0123456789'})
+                    meta_data={'assembly': 'GCA_0123456789'})
 
 
     def get_file_by_id(self, user_id, file_id):
@@ -226,18 +226,18 @@ class dmp(object): # pylint: disable=invalid-name
 
         if rest is True:
             results = entries.find(
-                {"user_id" : user_id},
+                {"user_id": user_id},
                 {
-                    "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
-                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                    "file_type": 1, "data_type": 1, "taxon_id": 1,
+                    "source_id": 1, "meta_data": 1, "creation_time": 1
                 }
             )
         else:
             results = entries.find(
-                {"user_id" : user_id},
+                {"user_id": user_id},
                 {
-                    "file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
-                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                    "file_path": 1, "file_type": 1, "data_type": 1, "taxon_id": 1,
+                    "source_id": 1, "meta_data": 1, "creation_time": 1
                 }
             )
         for entry in results:
@@ -299,18 +299,18 @@ class dmp(object): # pylint: disable=invalid-name
 
         if rest is True:
             results = entries.find(
-                {"user_id" : user_id, "file_type" : file_type},
+                {"user_id": user_id, "file_type": file_type},
                 {
-                    "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
-                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                    "file_type": 1, "data_type": 1, "taxon_id": 1,
+                    "source_id": 1, "meta_data": 1, "creation_time": 1
                 }
             )
         else:
             results = entries.find(
-                {"user_id" : user_id, "file_type" : file_type},
+                {"user_id": user_id, "file_type": file_type},
                 {
-                    "file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
-                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                    "file_path": 1, "file_type": 1, "data_type": 1, "taxon_id": 1,
+                    "source_id": 1, "meta_data": 1, "creation_time": 1
                 }
             )
 
@@ -372,18 +372,18 @@ class dmp(object): # pylint: disable=invalid-name
 
         if rest is True:
             results = entries.find(
-                {"user_id" : user_id, "data_type" : data_type},
+                {"user_id": user_id, "data_type": data_type},
                 {
-                    "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
-                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                    "file_type": 1, "data_type": 1, "taxon_id": 1,
+                    "source_id": 1, "meta_data": 1, "creation_time": 1
                 }
             )
         else:
             results = entries.find(
-                {"user_id" : user_id, "data_type" : data_type},
+                {"user_id": user_id, "data_type": data_type},
                 {
-                    "file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
-                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                    "file_path": 1, "file_type": 1, "data_type": 1, "taxon_id": 1,
+                    "source_id": 1, "meta_data": 1, "creation_time": 1
                 }
             )
         for entry in results:
@@ -444,18 +444,18 @@ class dmp(object): # pylint: disable=invalid-name
 
         if rest is True:
             results = entries.find(
-                {"user_id" : user_id, "taxon_id" : taxon_id},
+                {"user_id": user_id, "taxon_id": taxon_id},
                 {
-                    "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
-                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                    "file_type": 1, "data_type": 1, "taxon_id": 1,
+                    "source_id": 1, "meta_data": 1, "creation_time": 1
                 }
             )
         else:
             results = entries.find(
-                {"user_id" : user_id, "taxon_id" : taxon_id},
+                {"user_id": user_id, "taxon_id": taxon_id},
                 {
-                    "file_path" : 1, "file_type" : 1, "data_type" : 1, "taxon_id" : 1,
-                    "source_id" : 1, "meta_data" : 1, "creation_time" : 1
+                    "file_path": 1, "file_type": 1, "data_type": 1, "taxon_id": 1,
+                    "source_id": 1, "meta_data": 1, "creation_time": 1
                 }
             )
 
@@ -484,7 +484,7 @@ class dmp(object): # pylint: disable=invalid-name
         """
         entries = self.db_handle.entries
         file_obj = entries.find_one(
-            {'user_id' : user_id, '_id': ObjectId(file_id)}, {"source_id" : 1}
+            {'user_id': user_id, '_id': ObjectId(file_id)}, {"source_id": 1}
         )
 
         parent_files = []
@@ -716,15 +716,15 @@ class dmp(object): # pylint: disable=invalid-name
         """
 
         entry = {
-            "user_id"       : user_id,
-            "file_path"     : file_path,
-            "file_type"     : file_type,
-            "data_type"     : data_type,
-            "taxon_id"      : taxon_id,
-            "compressed"    : compressed,
-            "source_id"     : source_id,
-            "meta_data"     : meta_data,
-            "creation_time" : datetime.datetime.utcnow()
+            "user_id": user_id,
+            "file_path": file_path,
+            "file_type": file_type,
+            "data_type": data_type,
+            "taxon_id": taxon_id,
+            "compressed": compressed,
+            "source_id": source_id,
+            "meta_data": meta_data,
+            "creation_time": datetime.datetime.utcnow()
         }
         entry.update(kwargs)
 
@@ -764,9 +764,9 @@ class dmp(object): # pylint: disable=invalid-name
         """
 
         entries = self.db_handle.entries
-        metadata = entries.find_one({'_id': ObjectId(file_id)}, {"meta_data" : 1})
+        metadata = entries.find_one({'_id': ObjectId(file_id)}, {"meta_data": 1})
         metadata['meta_data'][str(key)] = value
-        entries.update({'_id': ObjectId(file_id)}, {'$set' : {'meta_data' : metadata['meta_data']}})
+        entries.update({'_id': ObjectId(file_id)}, {'$set': {'meta_data': metadata['meta_data']}})
 
         return file_id
 
@@ -792,8 +792,8 @@ class dmp(object): # pylint: disable=invalid-name
         """
 
         entries = self.db_handle.entries
-        metadata = entries.find_one({'_id': ObjectId(file_id)}, {"meta_data" : 1})
+        metadata = entries.find_one({'_id': ObjectId(file_id)}, {"meta_data": 1})
         del metadata['meta_data'][key]
-        entries.update({'_id': ObjectId(file_id)}, {'$set' : {'meta_data' : metadata['meta_data']}})
+        entries.update({'_id': ObjectId(file_id)}, {'$set': {'meta_data': metadata['meta_data']}})
 
         return file_id
