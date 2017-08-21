@@ -52,7 +52,7 @@ class rest:
                     host, port, read_preference=ReadPreference.SECONDARY_PREFERRED)
                 self.client.admin.authenticate(user, password)
                 self.db = self.client[db_name]
-            except:
+            except RuntimeError:
                 err = sys.exc_info()[0]
                 print("Error: %s" % err)
                 sys.exit(1)

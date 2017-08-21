@@ -28,9 +28,6 @@ class bigbed_reader:
     BigBed files. All required information should be passed to this class.
     """
 
-    test_file = '../sample.bb'
-
-
     def __init__(self, file_path=''):
         """
         Initialise the module and

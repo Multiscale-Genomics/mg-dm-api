@@ -63,7 +63,7 @@ class dmp(object): # pylint: disable=invalid-name
                 )
                 self.client.admin.authenticate(user, password)
                 self.db = self.client[dmp_db]
-            except:
+            except RuntimeError:
                 error = sys.exc_info()[0]
                 print("Error: %s" % error)
                 sys.exit(1)
