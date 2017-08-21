@@ -46,7 +46,7 @@ class dmp(object): # pylint: disable=invalid-name
         if test is True:
             import mongomock
             self.client = mongomock.MongoClient()
-            self.db = self.client["dmp"] # pylint: disable=invalid-name
+            self.db_handle = self.client["dmp"]
             self._test_loading_dataset()
         else:
             host = config.get("dmp", "host")
@@ -62,23 +62,23 @@ class dmp(object): # pylint: disable=invalid-name
                     read_preference=ReadPreference.SECONDARY_PREFERRED
                 )
                 self.client.admin.authenticate(user, password)
-                self.db = self.client[dmp_db]
+                self.db_handle = self.client[dmp_db]
             except RuntimeError:
                 error = sys.exc_info()[0]
                 print("Error: %s" % error)
                 sys.exit(1)
 
-        self.entries = self.db.entries
-        self.db.entries.create_index(
+        self.entries = self.db_handle.entries
+        self.db_handle.entries.create_index(
             [('user_id', pymongo.ASCENDING)],
             unique=False, background=True)
-        self.db.entries.create_index(
+        self.db_handle.entries.create_index(
             [('user_id', pymongo.ASCENDING), ('file_type', pymongo.ASCENDING)],
             unique=False, background=True)
-        self.db.entries.create_index(
+        self.db_handle.entries.create_index(
             [('user_id', pymongo.ASCENDING), ('data_type', pymongo.ASCENDING)],
             unique=False, background=True)
-        self.db.entries.create_index(
+        self.db_handle.entries.create_index(
             [('user_id', pymongo.ASCENDING), ('taxon_id', pymongo.ASCENDING)],
             unique=False, background=True)
 
@@ -190,7 +190,7 @@ class dmp(object): # pylint: disable=invalid-name
            da = dmp()
            da.get_file_by_id(<unique_file_id>)
         """
-        entries = self.db.entries
+        entries = self.db_handle.entries
         file_obj = entries.find_one({'_id': ObjectId(file_id), 'user_id': user_id})
         file_obj["_id"] = str(file_obj["_id"])
         file_obj["creation_time"] = str(file_obj["creation_time"])
@@ -221,7 +221,7 @@ class dmp(object): # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_user(<user_id>)
         """
-        entries = self.db.entries
+        entries = self.db_handle.entries
         files = []
 
         if rest is True:
@@ -294,7 +294,7 @@ class dmp(object): # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_file_type(<user_id>, <file_type>)
         """
-        entries = self.db.entries
+        entries = self.db_handle.entries
         files = []
 
         if rest is True:
@@ -367,7 +367,7 @@ class dmp(object): # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_data_type(<user_id>, <data_type>)
         """
-        entries = self.db.entries
+        entries = self.db_handle.entries
         files = []
 
         if rest is True:
@@ -439,7 +439,7 @@ class dmp(object): # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_taxon_id(<user_id>, <taxon_id>)
         """
-        entries = self.db.entries
+        entries = self.db_handle.entries
         files = []
 
         if rest is True:
@@ -482,7 +482,7 @@ class dmp(object): # pylint: disable=invalid-name
         file_ids : list
             List of parent file_ids
         """
-        entries = self.db.entries
+        entries = self.db_handle.entries
         file_obj = entries.find_one(
             {'user_id' : user_id, '_id': ObjectId(file_id)}, {"source_id" : 1}
         )
@@ -564,7 +564,7 @@ class dmp(object): # pylint: disable=invalid-name
            da = dmp()
            da.remove_file(<file_id>)
         """
-        self.db.entries.delete_one({'_id': ObjectId(file_id)})
+        self.db_handle.entries.delete_one({'_id': ObjectId(file_id)})
         return file_id
 
 
@@ -730,7 +730,7 @@ class dmp(object): # pylint: disable=invalid-name
 
         self.validate_file(entry)
 
-        entries = self.db.entries
+        entries = self.db_handle.entries
         entry_id = entries.insert_one(entry).inserted_id
         return str(entry_id)
 
@@ -763,7 +763,7 @@ class dmp(object): # pylint: disable=invalid-name
             tracing this file and where it is used and where it has come from.
         """
 
-        entries = self.db.entries
+        entries = self.db_handle.entries
         metadata = entries.find_one({'_id': ObjectId(file_id)}, {"meta_data" : 1})
         metadata['meta_data'][str(key)] = value
         entries.update({'_id': ObjectId(file_id)}, {'$set' : {'meta_data' : metadata['meta_data']}})
@@ -791,7 +791,7 @@ class dmp(object): # pylint: disable=invalid-name
             tracing this file and where it is used and where it has come from.
         """
 
-        entries = self.db.entries
+        entries = self.db_handle.entries
         metadata = entries.find_one({'_id': ObjectId(file_id)}, {"meta_data" : 1})
         del metadata['meta_data'][key]
         entries.update({'_id': ObjectId(file_id)}, {'$set' : {'meta_data' : metadata['meta_data']}})
