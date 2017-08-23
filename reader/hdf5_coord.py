@@ -23,7 +23,6 @@ import numpy as np
 from dmp import dmp
 from dm_generator.GenerateSampleCoords import GenerateSampleCoords
 
-
 class coord(object): # pylint: disable=invalid-name
     """
     Class related to handling the functions for interacting directly with the
@@ -93,13 +92,11 @@ class coord(object): # pylint: disable=invalid-name
             else:
                 self.restraints = {}
 
-
     def close(self):
         """
         Tidy function to close file handles
         """
         self.file_handle.close()
-
 
     def get_resolutions(self):
         """
@@ -112,7 +109,6 @@ class coord(object): # pylint: disable=invalid-name
         """
 
         return [res for res in self.file_handle]
-
 
     def set_resolution(self, resolution):
         """
@@ -154,7 +150,6 @@ class coord(object): # pylint: disable=invalid-name
         else:
             self.restraints = {}
 
-
     def get_resolution(self):
         """
         List the current level of rseolution
@@ -166,7 +161,6 @@ class coord(object): # pylint: disable=invalid-name
         """
 
         return self.resolution
-
 
     def get_region_order(self, chr_id=None, region=None):
         """
@@ -196,7 +190,6 @@ class coord(object): # pylint: disable=invalid-name
                 regions[region_id] = self.mpgrp[str(region_id)].attrs['start']
         return sorted(regions, key=lambda k: regions[k])
 
-
     def get_object_data(self, region_id):
         """
         Prepare the object header data structure ready for printing
@@ -219,26 +212,25 @@ class coord(object): # pylint: disable=invalid-name
         dset = self.grp['data']
 
         return {
-            'title' : dset.attrs['title'].decode('utf-8'),
-            'experimentType' : dset.attrs['experimentType'].decode('utf-8'),
-            'species' : dset.attrs['species'].decode('utf-8'),
-            'project' : dset.attrs['project'].decode('utf-8'),
-            'identifier' : dset.attrs['identifier'].decode('utf-8'),
-            'assembly' : dset.attrs['assembly'].decode('utf-8'),
-            'cellType' : dset.attrs['cellType'].decode('utf-8'),
-            'resolution' : dset.attrs['resolution'].decode('utf-8'),
-            'datatype' : dset.attrs['datatype'].decode('utf-8'),
-            'components' : dset.attrs['components'].decode('utf-8'),
-            'source' : dset.attrs['source'].decode('utf-8'),
-            'chromEnd' : [np.asscalar(mpds.attrs['end'])],
-            'end' : np.asscalar(mpds.attrs['end']),
-            'chromStart' : [np.asscalar(mpds.attrs['start'])],
-            'start' : np.asscalar(mpds.attrs['start']),
-            'chrom' : mpds.attrs['chromosome'].decode('utf-8'),
-            'dependencies' : self.dependencies,
-            'uuid' : region_id,
+            'title': dset.attrs['title'].decode('utf-8'),
+            'experimentType': dset.attrs['experimentType'].decode('utf-8'),
+            'species': dset.attrs['species'].decode('utf-8'),
+            'project': dset.attrs['project'].decode('utf-8'),
+            'identifier': dset.attrs['identifier'].decode('utf-8'),
+            'assembly': dset.attrs['assembly'].decode('utf-8'),
+            'cellType': dset.attrs['cellType'].decode('utf-8'),
+            'resolution': dset.attrs['resolution'].decode('utf-8'),
+            'datatype': dset.attrs['datatype'].decode('utf-8'),
+            'components': dset.attrs['components'].decode('utf-8'),
+            'source': dset.attrs['source'].decode('utf-8'),
+            'chromEnd': [np.asscalar(mpds.attrs['end'])],
+            'end': np.asscalar(mpds.attrs['end']),
+            'chromStart': [np.asscalar(mpds.attrs['start'])],
+            'start': np.asscalar(mpds.attrs['start']),
+            'chrom': mpds.attrs['chromosome'].decode('utf-8'),
+            'dependencies': self.dependencies,
+            'uuid': region_id,
         }
-
 
     def get_clusters(self, region_id):
         """
@@ -261,7 +253,6 @@ class coord(object): # pylint: disable=invalid-name
             clusters.append([np.asscalar(x) for x in clustersgrp[str(i)][:]])
         return clusters
 
-
     def get_centroids(self, region_id):
         """
         List the centroid models for each cluster
@@ -278,7 +269,6 @@ class coord(object): # pylint: disable=invalid-name
         centroids = [np.asscalar(x) for x in self.centroids[region_id]]
 
         return centroids
-
 
     def get_chromosomes(self):
         """
@@ -298,7 +288,6 @@ class coord(object): # pylint: disable=invalid-name
                 [self.mpgrp[region_id].attrs['chromosome'].decode('utf-8') for region_id in self.mpgrp.keys()]
             )
         )
-
 
     def get_regions(self, chr_id, start, end):
         """
@@ -324,7 +313,6 @@ class coord(object): # pylint: disable=invalid-name
 
         return [region_id for region_id in self.mpgrp.keys() if self.mpgrp[region_id].attrs['start'] < end and self.mpgrp[region_id].attrs['end'] > start and self.mpgrp[region_id].attrs['chromosome'].decode('utf-8') == chr_id]
 
-
     def get_models(self, region_id):
         """
         List all models for a given region
@@ -342,7 +330,6 @@ class coord(object): # pylint: disable=invalid-name
         model_param_ds = self.mpgrp[str(region_id)]
 
         return model_param_ds[:, :]
-
 
     def get_model(self, region_id, model_ids=None, page=0, mpp=10):
         """
@@ -420,8 +407,8 @@ class coord(object): # pylint: disable=invalid-name
 
             models.append(
                 {
-                    "ref" : str(mid),
-                    "data" : list([str(x) for coords in model for x in coords])
+                    "ref": str(mid),
+                    "data": list([str(x) for coords in model for x in coords])
                 }
             )
 
@@ -431,18 +418,18 @@ class coord(object): # pylint: disable=invalid-name
         centroids = self.get_centroids(str(region_id))
 
         model_json = {
-            "metadata"   : self.meta_data,
-            "object"     : object_data,
-            "models"     : models,
-            "clusters"   : clusters,
-            "centroids"  : centroids,
-            "restraints" : self.restraints,
-            "hic_data"   : self.hic_data,
+            "metadata": self.meta_data,
+            "object": object_data,
+            "models": models,
+            "clusters": clusters,
+            "centroids": centroids,
+            "restraints": self.restraints,
+            "hic_data": self.hic_data,
         }
 
         model_meta = {
-            "model_count" : model_count,
-            "page_count" : int(page_count)
+            "model_count": model_count,
+            "page_count": int(page_count)
         }
 
         return (model_json, model_meta)

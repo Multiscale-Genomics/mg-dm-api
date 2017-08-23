@@ -643,7 +643,10 @@ class dmp(object): # pylint: disable=invalid-name
             raise ValueError('Taxon ID must be specified for all entries')
 
         # Require assembly in the meta_data
-        if entry['file_type'] in ["fa", "fasta", "bam", "bed", "bb", "hdf5", "tbi", "wig", "bw", "gff3"]:
+        assembly_required_file_types = [
+            "fa", "fasta", "bam", "bed", "bb", "hdf5", "tbi", "wig", "bw", "gff3"
+        ]
+        if entry['file_type'] in assembly_required_file_types:
             if 'meta_data' not in entry or 'assembly' not in entry['meta_data']:
                 raise ValueError(
                     'Matching assembly ID is required within the meta_data field'
