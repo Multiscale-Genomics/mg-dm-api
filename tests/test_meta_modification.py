@@ -19,7 +19,7 @@ import pytest # pylint: disable=unused-import
 
 from dmp import dmp
 
-def test_files_by_user(capsys):
+def test_files_by_user():
     """
     Test that it is possible to add and then remove a piece of meta data from
     a pre-existing file within the DM API.

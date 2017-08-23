@@ -19,7 +19,7 @@ import pytest # pylint: disable=unused-import
 
 from dmp import dmp
 
-def test_files_by_user(capsys):
+def test_files_by_user():
     """
     Test to determine that a user has N files and that removing a file reduces
     those stored within the API has reduced by 1.
