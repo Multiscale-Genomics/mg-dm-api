@@ -87,7 +87,7 @@ class dmp(object): # pylint: disable=invalid-name
         users = ["adam", "ben", "chris", "denis", "eric"]
         file_types = [
             "fastq", "fa", "fasta", "bam", "bed", "bb", "hdf5", "tsv", "gz",
-            "tbi", "wig", "bw", "pdb", "prmtop", "trj", "dcd"
+            "tbi", "wig", "bw", "pdb", "prmtop", "trj", "dcd", "gff3"
         ]
         data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
         compressed = [None, 'gzip', 'zip']
@@ -166,7 +166,8 @@ class dmp(object): # pylint: disable=invalid-name
             file_type : str
                 File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
                 "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd")
+                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd",
+                "gff3")
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -260,7 +261,7 @@ class dmp(object): # pylint: disable=invalid-name
         file_type : str
             File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
             "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb", "ann", "bwt",
-            "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd")
+            "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd", "gff3")
 
         Returns
         -------
@@ -270,7 +271,7 @@ class dmp(object): # pylint: disable=invalid-name
             file_type : str
                 File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
                 "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "tif", 'lif', "trj", "dcd")
+                "ann", "bwt", "pac", "sa", "tif", 'lif', "trj", "dcd", "gff3")
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -343,7 +344,8 @@ class dmp(object): # pylint: disable=invalid-name
             file_type : str
                 File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
                 "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd")
+                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd",
+                "gff3")
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -415,7 +417,8 @@ class dmp(object): # pylint: disable=invalid-name
             file_type : str
                 File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
                 "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd")
+                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd",
+                "gff3")
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -588,7 +591,7 @@ class dmp(object): # pylint: disable=invalid-name
             file_type : str
                 File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
                 "gz", "tbi", "wig", "bw", "pdb", "tif", "lif", "gem", "bt2",
-                "amb", "ann", "bwt", "pac", "sa", "prmtop", "trj", "dcd")
+                "amb", "ann", "bwt", "pac", "sa", "prmtop", "trj", "dcd", "gff3")
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -622,7 +625,7 @@ class dmp(object): # pylint: disable=invalid-name
         file_types = [
             "fastq", "fa", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
             "gz", "tbi", "wig", "bw", "pdb", "tif", 'lif', "gem", "bt2", "amb",
-            "ann", "bwt", "pac", "sa", "prmtop", "trj", "dcd"
+            "ann", "bwt", "pac", "sa", "prmtop", "trj", "dcd", "gff3"
         ]
 
         # Check all files match the defined types
@@ -640,7 +643,7 @@ class dmp(object): # pylint: disable=invalid-name
             raise ValueError('Taxon ID must be specified for all entries')
 
         # Require assembly in the meta_data
-        if entry['file_type'] in ["fa", "fasta", "bam", "bed", "bb", "hdf5", "tbi", "wig", "bw"]:
+        if entry['file_type'] in ["fa", "fasta", "bam", "bed", "bb", "hdf5", "tbi", "wig", "bw", "gff3"]:
             if 'meta_data' not in entry or 'assembly' not in entry['meta_data']:
                 raise ValueError(
                     'Matching assembly ID is required within the meta_data field'
@@ -666,7 +669,7 @@ class dmp(object): # pylint: disable=invalid-name
         file_type : str
             File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
             "gz", "tbi", "wig", "bw", "pdb", "tif", "lif", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "trj", "dcd")
+                "ann", "bwt", "pac", "sa", "trj", "dcd", "gff3")
         data_type : str
             The type of information in the file (RNA-seq, ChIP-seq, etc)
         taxon_id : int
