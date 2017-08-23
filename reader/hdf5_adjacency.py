@@ -92,7 +92,6 @@ class adjacency(object): # pylint: disable=invalid-name
 
         return [res for res in self.hdf5_handle]
 
-
     def set_resolution(self, resolution):
         """
         Set, or change, the resolution level
@@ -235,18 +234,24 @@ class adjacency(object): # pylint: disable=invalid-name
         end2 = 0
         if limit_chr != None:
             if limit_start != None and limit_end != None:
-                start2 = int(np.floor(float(limit_start)/float(self.resolution)))
-                end2 = int(np.ceil(float(limit_end)/float(self.resolution)))
+                start2 = int(np.floor(float(limit_start) / float(self.resolution)))
+                end2 = int(np.ceil(float(limit_end) / float(self.resolution)))
                 xy2_offset = self.chr_param[limit_chr]["bins"][self.resolution][1]
 
-                result = dset[(x_pos+xy_offset):(y_pos+xy_offset), (start2+xy2_offset):(end2+xy2_offset)]
+                result = dset[
+                    (x_pos + xy_offset):(y_pos + xy_offset),
+                    (start2 + xy2_offset):(end2 + xy2_offset)
+                ]
             else:
                 start2 = self.chr_param[limit_chr]["bins"][self.resolution][1]
                 end2 = start2 + self.chr_param[limit_chr]["bins"][self.resolution][0]
 
-                result = dset[(x_pos+xy_offset):(y_pos+xy_offset), start2:end2]
+                result = dset[
+                    (x_pos + xy_offset):(y_pos + xy_offset),
+                    start2:end2
+                ]
         else:
-            result = dset[(x_pos+xy_offset):(y_pos+xy_offset), :]
+            result = dset[(x_pos + xy_offset):(y_pos + xy_offset), :]
 
         # Iterate through slice and extract results greater than zero
         results = []
@@ -256,8 +261,8 @@ class adjacency(object): # pylint: disable=invalid-name
         log_text.append(
             {
                 "coord": {
-                    "x0": (x_pos+xy_offset),
-                    "x1": (y_pos+xy_offset)
+                    "x0": (x_pos + xy_offset),
+                    "x1": (y_pos + xy_offset)
                 },
                 "r_index": len(r_index),
                 "param": {
@@ -277,12 +282,12 @@ class adjacency(object): # pylint: disable=invalid-name
         )
 
         for i in r_index:
-            x_start = ((i[0]+x_pos)*int(self.resolution))
-            y_chr = self.get_chromosome_from_array_index(i[1]+start2)
+            x_start = ((i[0] + x_pos) * int(self.resolution))
+            y_chr = self.get_chromosome_from_array_index(i[1] + start2)
             if limit_chr != None:
-                y_start = (i[1]+start2)*int(self.resolution)
+                y_start = (i[1] + start2) * int(self.resolution)
             else:
-                y_start = (i[1]-self.chr_param[y_chr]["bins"][self.resolution][1])*int(self.resolution)
+                y_start = (i[1] - self.chr_param[y_chr]["bins"][self.resolution][1]) * int(self.resolution)
 
             entry = {
                 "chrA": chr_id,
@@ -290,7 +295,7 @@ class adjacency(object): # pylint: disable=invalid-name
                 "chrB": y_chr,
                 "startB": y_start,
                 "value": int(result[i[0], i[1]]),
-                "pos_x": i[0]+x_pos+xy_offset,
+                "pos_x": i[0] + x_pos + xy_offset,
                 "pos_y": i[1]
             }
             if no_links is None:
@@ -298,7 +303,6 @@ class adjacency(object): # pylint: disable=invalid-name
             results.append(entry)
 
         return {"log": log_text, "results": results}
-
 
     def get_value(self, bin_i, bin_j):
         """
@@ -348,11 +352,11 @@ class adjacency(object): # pylint: disable=invalid-name
 
             # Calculate the number of bins for a chromosome and then join with
             # the offset values for the start in the array
-            bin_s = [int(np.ceil(int(chromosome[1])/float(y))) for y in bin_sizes]
+            bin_s = [int(np.ceil(int(chromosome[1]) / float(y))) for y in bin_sizes]
             bin_c = dict(
                 zip(
                     bin_sizes,
-                    [[bin_s[j], bin_count[j], bin_s[j]+bin_count[j]] for j in range(len(bin_count))]
+                    [[bin_s[j], bin_count[j], bin_s[j] + bin_count[j]] for j in range(len(bin_count))]
                 )
             )
 
@@ -362,7 +366,7 @@ class adjacency(object): # pylint: disable=invalid-name
             }
 
             # Calculate the new offset values.
-            bin_count = [bin_count[i]+bin_s[i] for i in range(len(bin_count))]
+            bin_count = [bin_count[i] + bin_s[i] for i in range(len(bin_count))]
 
         total_bin_count = dict(
             zip(
@@ -373,7 +377,6 @@ class adjacency(object): # pylint: disable=invalid-name
         chr_param["meta"] = {"genomeSize": genome_len, "totalBinCount": total_bin_count}
 
         return chr_param
-
 
     def get_chromosome_from_array_index(self, index):
         """
