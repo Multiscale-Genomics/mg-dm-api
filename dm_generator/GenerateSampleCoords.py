@@ -17,12 +17,15 @@
    limitations under the License.
 """
 
+from __future__ import print_function
+
 import json
 import random
 import h5py
 import numpy as np
 
-class GenerateSampleCoords(object): # pylint: disable=too-few-public-methods
+class GenerateSampleCoords(object):  # pylint: disable=too-few-public-methods
+
     """
     Generate a sample 3D models file if one does not exist
     """
@@ -81,18 +84,18 @@ class GenerateSampleCoords(object): # pylint: disable=too-few-public-methods
                 dset.attrs['datatype'] = 'datatype'
                 dset.attrs['components'] = 'components'
                 dset.attrs['source'] = 'source'
-                dset.attrs['dependencies'] = json.dumps({'test' : 'test'})
+                dset.attrs['dependencies'] = json.dumps({'test': 'test'})
 
             clustergrps = clustersgrp.create_group(str(uuid))
             ch_size = len(clusters_hierarchy)
             for cluster in range(ch_size):
-                clustersds = clustergrps.create_dataset( # pylint: disable=unused-variable
+                clustergrps.create_dataset(
                     str(cluster),
                     data=clusters_hierarchy[cluster],
                     chunks=True,
                     compression="gzip"
                 )
-            centroidsds = centroidsgrp.create_dataset( # pylint: disable=unused-variable
+            centroidsgrp.create_dataset(
                 str(uuid),
                 data=centroids,
                 chunks=True,
@@ -105,7 +108,7 @@ class GenerateSampleCoords(object): # pylint: disable=too-few-public-methods
 
             model_size = random.randint(500, 2000)
 
-            dset.resize((current_size+model_size, 1000, 3))
+            dset.resize((current_size + model_size, 1000, 3))
 
             dnp = np.zeros([model_size, 1000, 3], dtype='int32')
 
@@ -127,12 +130,12 @@ class GenerateSampleCoords(object): # pylint: disable=too-few-public-methods
             model_param_ds = mpgrp.create_dataset(str(uuid), data=model_param)
 
             model_param_ds.attrs['i'] = current_size
-            model_param_ds.attrs['j'] = current_size+model_size
+            model_param_ds.attrs['j'] = current_size + model_size
             model_param_ds.attrs['chromosome'] = random.choice(chromosomes)
             model_param_ds.attrs['start'] = start
             model_param_ds.attrs['end'] = end
 
-            dset[current_size:current_size+model_size, 0:1000, 0:3] += dnp
+            dset[current_size:current_size + model_size, 0:1000, 0:3] += dnp
 
             hdf5_handle.close()
 
