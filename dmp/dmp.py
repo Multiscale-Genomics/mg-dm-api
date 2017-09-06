@@ -477,6 +477,9 @@ class dmp(object): # pylint: disable=invalid-name
 
         Parameters
         ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to
+            "common" if the files can be shared between users
         file_id : str
             File ID for leafe file
 
@@ -510,6 +513,9 @@ class dmp(object): # pylint: disable=invalid-name
 
         Parameters
         ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to
+            "common" if the files can be shared between users
         file_id : str
             ID of the file. This is the value returned when a file is loaded
             into the DMP or is the `_id` for a given file when the files have
@@ -541,13 +547,16 @@ class dmp(object): # pylint: disable=invalid-name
         return unique_data
 
 
-    def remove_file(self, file_id):
+    def remove_file(self, user_id, file_id):
         """
         Removes a single file from the directory. Returns the ID of the file
         that was removed
 
         Parameters
         ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to
+            "common" if the files can be shared between users
         file_id : str
             ID of the file. This is the value returned when a file is loaded
             into the DMP or is the `_id` for a given file when the files have
@@ -567,7 +576,7 @@ class dmp(object): # pylint: disable=invalid-name
            da = dmp()
            da.remove_file(<file_id>)
         """
-        self.db_handle.entries.delete_one({'_id': ObjectId(file_id)})
+        self.db_handle.entries.delete_one({'user_id': user_id, '_id': ObjectId(file_id)})
         return file_id
 
 
@@ -741,7 +750,7 @@ class dmp(object): # pylint: disable=invalid-name
         return str(entry_id)
 
 
-    def add_file_metadata(self, file_id, key, value):
+    def add_file_metadata(self, user_id, file_id, key, value):
         """
         Add a key value pair to the meta data for a file
 
@@ -750,6 +759,9 @@ class dmp(object): # pylint: disable=invalid-name
 
         Parameters
         ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to
+            "common" if the files can be shared between users
         file_id : str
             ID of the file. This is the value returned when a file is loaded
             into the DMP or is the `_id` for a given file when the files have
@@ -770,19 +782,28 @@ class dmp(object): # pylint: disable=invalid-name
         """
 
         entries = self.db_handle.entries
-        metadata = entries.find_one({'_id': ObjectId(file_id)}, {"meta_data": 1})
+        metadata = entries.find_one(
+            {'user_id': user_id, '_id': ObjectId(file_id)},
+            {"meta_data": 1}
+        )
         metadata['meta_data'][str(key)] = value
-        entries.update({'_id': ObjectId(file_id)}, {'$set': {'meta_data': metadata['meta_data']}})
+        entries.update(
+            {'_id': ObjectId(file_id)},
+            {'$set': {'meta_data': metadata['meta_data']}}
+        )
 
         return file_id
 
 
-    def remove_file_metadata(self, file_id, key):
+    def remove_file_metadata(self, user_id, file_id, key):
         """
         Remove a key value pair from the meta data for a given file
 
         Parameters
         ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to
+            "common" if the files can be shared between users
         file_id : str
             ID of the file. This is the value returned when a file is loaded
             into the DMP or is the `_id` for a given file when the files have
@@ -798,8 +819,14 @@ class dmp(object): # pylint: disable=invalid-name
         """
 
         entries = self.db_handle.entries
-        metadata = entries.find_one({'_id': ObjectId(file_id)}, {"meta_data": 1})
+        metadata = entries.find_one(
+            {'user_id': user_id, '_id': ObjectId(file_id)},
+            {"meta_data": 1}
+        )
         del metadata['meta_data'][key]
-        entries.update({'_id': ObjectId(file_id)}, {'$set': {'meta_data': metadata['meta_data']}})
+        entries.update(
+            {'user_id': user_id, '_id': ObjectId(file_id)},
+            {'$set': {'meta_data': metadata['meta_data']}}
+        )
 
         return file_id

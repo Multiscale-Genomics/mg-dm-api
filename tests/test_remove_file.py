@@ -33,7 +33,7 @@ def test_files_by_user():
 
     original_number_of_files = len(results)
 
-    dm_handle.remove_file(results[0]['_id'])
+    dm_handle.remove_file(user, results[0]['_id'])
     results = dm_handle.get_files_by_user(user)
 
     assert original_number_of_files-1 == len(results)

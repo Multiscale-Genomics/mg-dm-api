@@ -31,10 +31,10 @@ def test_files_by_user():
     results = dm_handle.get_files_by_user(user)
     assert isinstance(results, type([])) is True
 
-    file_id = dm_handle.add_file_metadata(results[0]['_id'], 'test', 'An example string')
+    file_id = dm_handle.add_file_metadata(user, results[0]['_id'], 'test', 'An example string')
     result = dm_handle.get_file_by_id(user, file_id)
     assert 'test' in result['meta_data'].keys()
 
-    dm_handle.remove_file_metadata(file_id, 'test')
+    dm_handle.remove_file_metadata(user, file_id, 'test')
     result = dm_handle.get_file_by_id(user, file_id)
     assert 'test' not in result['meta_data'].keys()
