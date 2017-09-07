@@ -469,6 +469,79 @@ class dmp(object): # pylint: disable=invalid-name
 
         return files
 
+    def get_files_by_assembly(self, user_id, assembly, rest=False):
+        """
+        Get a list of the file dictionary objects given a `user_id` and
+        `assembly`
+
+        Parameters
+        ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to
+            "common" if the files can be shared between users
+        assembly : str
+            Assembly that the species that the file has been derived from
+
+        Returns
+        -------
+        dict
+            file_path : str
+                Location of the file in the file system
+            file_type : str
+                File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
+                "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
+                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd",
+                "gff3")
+            data_type : str
+                The type of information in the file (RNA-seq, ChIP-seq, etc)
+            taxon_id : int
+                Taxon ID that the species that the file has been derived from
+            compressed : str
+                Type of compression (None, gzip, zip)
+            source_id : list
+                List of IDs of files that were processed to generate this file
+            meta_data : dict
+                Dictionary object containing the extra data related to the
+                generation of the file or describing the way it was processed
+            creation_time : list
+                    Time at which the file was loaded into the system
+
+        Example
+        -------
+        .. code-block:: python
+           :linenos:
+
+           from dmp import dmp
+           da = dmp()
+           da.get_files_by_taxon_id(<user_id>, <taxon_id>)
+        """
+        entries = self.db_handle.entries
+        files = []
+
+        if rest is True:
+            results = entries.find(
+                {"user_id": user_id, "meta_data.assembly": assembly},
+                {
+                    "file_type": 1, "data_type": 1, "taxon_id": 1,
+                    "source_id": 1, "meta_data": 1, "creation_time": 1
+                }
+            )
+        else:
+            results = entries.find(
+                {"user_id": user_id, "meta_data.assembly": assembly},
+                {
+                    "file_path": 1, "file_type": 1, "data_type": 1, "taxon_id": 1,
+                    "source_id": 1, "meta_data": 1, "creation_time": 1
+                }
+            )
+
+        for entry in results:
+            entry["_id"] = str(entry["_id"])
+            entry["creation_time"] = str(entry["creation_time"])
+            files.append(entry)
+
+        return files
+
 
     def _get_file_parents(self, user_id, file_id):
         """
