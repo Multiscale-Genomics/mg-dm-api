@@ -670,10 +670,14 @@ class dmp(object): # pylint: disable=invalid-name
                 "common" if the files can be shared between users
             file_path : str
                 Location of the file in the file system
+            path_type : str
+
             file_type : str
                 File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
                 "gz", "tbi", "wig", "bw", "pdb", "tif", "lif", "gem", "bt2",
                 "amb", "ann", "bwt", "pac", "sa", "prmtop", "trj", "dcd", "gff3")
+            size : int
+                Size of the file in bytes
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -703,6 +707,9 @@ class dmp(object): # pylint: disable=invalid-name
         if 'file_path' not in entry or entry['file_path'] is None or entry['file_path'] == '':
             raise ValueError('User ID must be specified for all entries')
 
+        if entry['path_type'] not in ['file', 'dir', 'link']:
+            raise ValueError('Path type must be of value file|dir|link')
+
         # Defined list of acepted file types
         file_types = [
             "fastq", "fa", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
@@ -719,6 +726,9 @@ class dmp(object): # pylint: disable=invalid-name
             raise ValueError(
                 "File type must be one of the valid file types: " + ','.join(file_types)
             )
+
+        if isinstance(entry['size'], int) is False:
+            raise TypeError('Size must be an integer')
 
         # Check all files have a matching Taxon ID
         if 'taxon_id' not in entry or entry['taxon_id'] is None:
@@ -738,8 +748,8 @@ class dmp(object): # pylint: disable=invalid-name
 
 
     def set_file( # pylint: disable=too-many-arguments
-            self, user_id, file_path, file_type="", data_type="", taxon_id="",
-            compressed=None, source_id=None, meta_data=None, **kwargs
+            self, user_id, file_path, path_type, file_type="", size=0, parent_dir="", data_type="",
+            taxon_id="", compressed=None, source_id=None, meta_data=None, **kwargs
         ):
         """
         Adds a file to the data management API.
@@ -751,10 +761,16 @@ class dmp(object): # pylint: disable=invalid-name
             "common" if the files can be shared between users
         file_path : str
             Location of the file in the file system
+        path_type : str
+
+        parent_dir : str
+            _id of the parent directory
         file_type : str
             File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
             "gz", "tbi", "wig", "bw", "pdb", "tif", "lif", "gem", "bt2", "amb",
                 "ann", "bwt", "pac", "sa", "trj", "dcd", "gff3")
+        size : int
+            File sizer in bytes
         data_type : str
             The type of information in the file (RNA-seq, ChIP-seq, etc)
         taxon_id : int
@@ -806,7 +822,10 @@ class dmp(object): # pylint: disable=invalid-name
         entry = {
             "user_id": user_id,
             "file_path": file_path,
+            "path_type": path_type,
+            "parent_dir": parent_dir,
             "file_type": file_type,
+            "size": size,
             "data_type": data_type,
             "taxon_id": taxon_id,
             "compressed": compressed,
@@ -814,6 +833,8 @@ class dmp(object): # pylint: disable=invalid-name
             "meta_data": meta_data,
             "creation_time": datetime.datetime.utcnow()
         }
+        date_delta = datetime.timedelta(days=84)
+        entry["meta_data"]["expiration_date"] = entry["creation_time"] + date_delta
         entry.update(kwargs)
 
         self.validate_file(entry)
@@ -900,6 +921,53 @@ class dmp(object): # pylint: disable=invalid-name
         entries.update(
             {'user_id': user_id, '_id': ObjectId(file_id)},
             {'$set': {'meta_data': metadata['meta_data']}}
+        )
+
+        return file_id
+
+    def modify_column(self, user_id, file_id, key, value):
+        """
+        Update a key value pair for the record
+
+        Parameters
+        ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to
+            "common" if the files can be shared between users
+        file_id : str
+            ID of the file. This is the value returned when a file is loaded
+            into the DMP or is the `_id` for a given file when the files have
+            been retrieved.
+        key : str
+            Unique key for the identification of the extra meta data. If the key
+            matches a value already in the meta data then it over-writes the
+            current value.
+        value
+            Value to be stored for the given key. This can be a str, int, list
+            or dict.
+
+        Returns
+        -------
+        str
+            This is an id for that file within the system and can be used for
+            tracing this file and where it is used and where it has come from.
+        """
+        entries = self.db_handle.entries
+        entry = entries.find_one(
+            {'user_id': user_id, '_id': ObjectId(file_id)}
+        )
+        if str(key) in ['size', 'taxon_id']:
+            entry[str(key)] = int(value)
+        else:
+            entry[str(key)] = value
+
+        # Check that the changes are still valid
+        self.validate_file(entry)
+
+        # Update the entry witin the mongodb
+        entries.update(
+            {'user_id': user_id, '_id': ObjectId(file_id)},
+            {'$set': {str(key): entry[str(key)]}}
         )
 
         return file_id
