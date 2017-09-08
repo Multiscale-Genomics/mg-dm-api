@@ -165,11 +165,15 @@ class dmp(object): # pylint: disable=invalid-name
         dict
             file_path : str
                 Location of the file in the file system
+            path_type : str
+
             file_type : str
                 File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
                 "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
                 "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd",
                 "gff3")
+            size : int
+            parent_dir : str
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -200,6 +204,84 @@ class dmp(object): # pylint: disable=invalid-name
         return file_obj
 
 
+    def _get_rows(self, user_id, key=None, value=None, rest=False):
+        """
+        Get a list of the file dictionary objects given a `user_id` and
+        `taxon_id`
+
+        Parameters
+        ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to
+            "common" if the files can be shared between users
+        taxon_id : int
+            Taxon ID that the species that the file has been derived from
+
+        Returns
+        -------
+        dict
+            file_path : str
+                Location of the file in the file system
+            file_type : str
+                File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
+                "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
+                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd",
+                "gff3")
+            data_type : str
+                The type of information in the file (RNA-seq, ChIP-seq, etc)
+            taxon_id : int
+                Taxon ID that the species that the file has been derived from
+            compressed : str
+                Type of compression (None, gzip, zip)
+            source_id : list
+                List of IDs of files that were processed to generate this file
+            meta_data : dict
+                Dictionary object containing the extra data related to the
+                generation of the file or describing the way it was processed
+            creation_time : list
+                    Time at which the file was loaded into the system
+
+        Example
+        -------
+        .. code-block:: python
+           :linenos:
+
+           from dmp import dmp
+           da = dmp()
+           da.get_files_by_taxon_id(<user_id>, <taxon_id>)
+        """
+        entries = self.db_handle.entries
+        files = []
+
+        row_filter = {"user_id": user_id}
+        if key is not None:
+            row_filter[key] = value
+
+        if rest is True:
+            results = entries.find(
+                {"user_id": user_id, key: value},
+                {
+                    "file_type": 1, "size": 1, "data_type": 1, "taxon_id": 1,
+                    "source_id": 1, "meta_data": 1, "creation_time": 1
+                }
+            )
+        else:
+            results = entries.find(
+                {"user_id": user_id, key: value},
+                {
+                    "file_path": 1, "path_type": 1, "file_type": 1, "size": 1,
+                    "parent_dir": 1, "data_type": 1, "taxon_id": 1,
+                    "source_id": 1, "meta_data": 1, "creation_time": 1
+                }
+            )
+
+        for entry in results:
+            entry["_id"] = str(entry["_id"])
+            entry["creation_time"] = str(entry["creation_time"])
+            files.append(entry)
+
+        return files
+
     def get_files_by_user(self, user_id, rest=False):
         """
         Get a list of the file dictionary objects given a `user_id`
@@ -224,30 +306,8 @@ class dmp(object): # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_user(<user_id>)
         """
-        entries = self.db_handle.entries
-        files = []
 
-        if rest is True:
-            results = entries.find(
-                {"user_id": user_id},
-                {
-                    "file_type": 1, "data_type": 1, "taxon_id": 1,
-                    "source_id": 1, "meta_data": 1, "creation_time": 1
-                }
-            )
-        else:
-            results = entries.find(
-                {"user_id": user_id},
-                {
-                    "file_path": 1, "file_type": 1, "data_type": 1, "taxon_id": 1,
-                    "source_id": 1, "meta_data": 1, "creation_time": 1
-                }
-            )
-        for entry in results:
-            entry["_id"] = str(entry["_id"])
-            entry["creation_time"] = str(entry["creation_time"])
-            files.append(entry)
-        return files
+        return self._get_rows(user_id, None, None, rest)
 
 
     def get_files_by_file_type(self, user_id, file_type, rest=False):
@@ -297,32 +357,8 @@ class dmp(object): # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_file_type(<user_id>, <file_type>)
         """
-        entries = self.db_handle.entries
-        files = []
 
-        if rest is True:
-            results = entries.find(
-                {"user_id": user_id, "file_type": file_type},
-                {
-                    "file_type": 1, "data_type": 1, "taxon_id": 1,
-                    "source_id": 1, "meta_data": 1, "creation_time": 1
-                }
-            )
-        else:
-            results = entries.find(
-                {"user_id": user_id, "file_type": file_type},
-                {
-                    "file_path": 1, "file_type": 1, "data_type": 1, "taxon_id": 1,
-                    "source_id": 1, "meta_data": 1, "creation_time": 1
-                }
-            )
-
-        for entry in results:
-            entry["_id"] = str(entry["_id"])
-            entry["creation_time"] = str(entry["creation_time"])
-            files.append(entry)
-
-        return files
+        return self._get_rows(user_id, "file_type", file_type, rest)
 
 
     def get_files_by_data_type(self, user_id, data_type, rest=False):
@@ -371,31 +407,8 @@ class dmp(object): # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_data_type(<user_id>, <data_type>)
         """
-        entries = self.db_handle.entries
-        files = []
 
-        if rest is True:
-            results = entries.find(
-                {"user_id": user_id, "data_type": data_type},
-                {
-                    "file_type": 1, "data_type": 1, "taxon_id": 1,
-                    "source_id": 1, "meta_data": 1, "creation_time": 1
-                }
-            )
-        else:
-            results = entries.find(
-                {"user_id": user_id, "data_type": data_type},
-                {
-                    "file_path": 1, "file_type": 1, "data_type": 1, "taxon_id": 1,
-                    "source_id": 1, "meta_data": 1, "creation_time": 1
-                }
-            )
-        for entry in results:
-            entry["_id"] = str(entry["_id"])
-            entry["creation_time"] = str(entry["creation_time"])
-            files.append(entry)
-
-        return files
+        return self._get_rows(user_id, "data_type", data_type, rest)
 
 
     def get_files_by_taxon_id(self, user_id, taxon_id, rest=False):
@@ -444,32 +457,8 @@ class dmp(object): # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_taxon_id(<user_id>, <taxon_id>)
         """
-        entries = self.db_handle.entries
-        files = []
 
-        if rest is True:
-            results = entries.find(
-                {"user_id": user_id, "taxon_id": taxon_id},
-                {
-                    "file_type": 1, "data_type": 1, "taxon_id": 1,
-                    "source_id": 1, "meta_data": 1, "creation_time": 1
-                }
-            )
-        else:
-            results = entries.find(
-                {"user_id": user_id, "taxon_id": taxon_id},
-                {
-                    "file_path": 1, "file_type": 1, "data_type": 1, "taxon_id": 1,
-                    "source_id": 1, "meta_data": 1, "creation_time": 1
-                }
-            )
-
-        for entry in results:
-            entry["_id"] = str(entry["_id"])
-            entry["creation_time"] = str(entry["creation_time"])
-            files.append(entry)
-
-        return files
+        return self._get_rows(user_id, "taxon_id", taxon_id, rest)
 
     def get_files_by_assembly(self, user_id, assembly, rest=False):
         """
@@ -517,32 +506,8 @@ class dmp(object): # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_taxon_id(<user_id>, <taxon_id>)
         """
-        entries = self.db_handle.entries
-        files = []
 
-        if rest is True:
-            results = entries.find(
-                {"user_id": user_id, "meta_data.assembly": assembly},
-                {
-                    "file_type": 1, "data_type": 1, "taxon_id": 1,
-                    "source_id": 1, "meta_data": 1, "creation_time": 1
-                }
-            )
-        else:
-            results = entries.find(
-                {"user_id": user_id, "meta_data.assembly": assembly},
-                {
-                    "file_path": 1, "file_type": 1, "data_type": 1, "taxon_id": 1,
-                    "source_id": 1, "meta_data": 1, "creation_time": 1
-                }
-            )
-
-        for entry in results:
-            entry["_id"] = str(entry["_id"])
-            entry["creation_time"] = str(entry["creation_time"])
-            files.append(entry)
-
-        return files
+        return self._get_rows(user_id, "meta_data.assembly", assembly, rest)
 
 
     def _get_file_parents(self, user_id, file_id):
