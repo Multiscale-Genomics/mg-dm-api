@@ -24,6 +24,7 @@ import random
 import h5py
 import numpy as np
 
+
 class GenerateSampleCoords(object):  # pylint: disable=too-few-public-methods
 
     """
@@ -138,7 +139,6 @@ class GenerateSampleCoords(object):  # pylint: disable=too-few-public-methods
             dset[current_size:current_size + model_size, 0:1000, 0:3] += dnp
 
             hdf5_handle.close()
-
 
 if __name__ == '__main__':
     GSC = GenerateSampleCoords()
