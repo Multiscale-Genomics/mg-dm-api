@@ -22,7 +22,8 @@ import configparser
 import pymongo
 from pymongo import MongoClient, ReadPreference
 
-class rest(object): # pylint: disable=invalid-name
+
+class rest(object):  # pylint: disable=invalid-name
     """
     API for management of files within the VRE
     """
@@ -61,7 +62,6 @@ class rest(object): # pylint: disable=invalid-name
         self.db_handle.entries.create_index([('name', pymongo.ASCENDING)], unique=True)
         self.db_handle.entries.create_index([('status', pymongo.ASCENDING)], unique=False)
 
-
     def _test_loading_dataset(self):
         self.add_service("service", "Root API service", "/api", "up")
         self.add_service("dmp", "DMP API - Lists static tracks", "/api/dmp", "up")
@@ -69,7 +69,6 @@ class rest(object): # pylint: disable=invalid-name
             "adjacency",
             "Adjacency - API for accessing Hi-C adjacency files",
             "/api/adjacency", "up")
-
 
     def get_service(self, name):
         """
@@ -101,7 +100,6 @@ class rest(object): # pylint: disable=invalid-name
         }
         return service
 
-
     def get_available_services(self):
         """
         List all services
@@ -121,7 +119,6 @@ class rest(object): # pylint: disable=invalid-name
                 'description': result["description"]
             })
         return services
-
 
     def get_up_services(self):
         """
@@ -143,7 +140,6 @@ class rest(object): # pylint: disable=invalid-name
             })
         return services
 
-
     def get_down_services(self):
         """
         List services that are NOT returning HTTP code 200
@@ -164,7 +160,6 @@ class rest(object): # pylint: disable=invalid-name
             })
         return services
 
-
     def is_service(self, name):
         """
         Identify if a service is already present in the registry
@@ -183,7 +178,6 @@ class rest(object): # pylint: disable=invalid-name
         if file_obj is None:
             return False
         return True
-
 
     def add_service(self, name, url, description, status=None):
         """
@@ -216,7 +210,6 @@ class rest(object): # pylint: disable=invalid-name
         entry_id = entries.insert_one(entry).inserted_id
         return str(entry_id)
 
-
     def set_service_status(self, name, status):
         """
         Update the status of the service if it is already present in the db.
@@ -236,7 +229,6 @@ class rest(object): # pylint: disable=invalid-name
         entries = self.db_handle.entries
         entries.update({'name': name}, {'$set': {'status': status}})
         return True
-
 
     def update_service_url(self, name, url):
         """

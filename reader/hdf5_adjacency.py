@@ -306,7 +306,7 @@ class adjacency(object):  # pylint: disable=invalid-name
                 entry['_links'] = {
                     'self': url.format(
                         url_root=value_url, fid=str(self.file_id), res=str(self.resolution),
-                        x=str(i[0]+x_pos+xy_offset), y=str(i[1])
+                        x=str(i[0] + x_pos + xy_offset), y=str(i[1])
                     )
                 }
             results.append(entry)
