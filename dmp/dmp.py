@@ -28,7 +28,7 @@ from pymongo import MongoClient, ReadPreference
 from bson.objectid import ObjectId
 
 
-class dmp(object): # pylint: disable=invalid-name
+class dmp(object):  # pylint: disable=invalid-name
     """
     API for management of files within the VRE
     """
@@ -91,8 +91,8 @@ class dmp(object): # pylint: disable=invalid-name
         ]
         data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
         compressed = [None, 'gzip', 'zip']
-
         resource_path = os.path.dirname(__file__)
+
         file_id = self.set_file(
             "rao", os.path.join(resource_path, 'rao2014.hdf5'),
             "file", "hdf5", 64000, None, "HiC", 9606,
