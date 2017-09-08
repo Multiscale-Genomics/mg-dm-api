@@ -94,25 +94,26 @@ class dmp(object): # pylint: disable=invalid-name
 
         resource_path = os.path.dirname(__file__)
         file_id = self.set_file(
-            "rao", os.path.join(resource_path, 'rao2014.hdf5'), "hdf5", "HiC", 9606,
+            "rao", os.path.join(resource_path, 'rao2014.hdf5'),
+            "file", "hdf5", 64000, None, "HiC", 9606,
             meta_data={'assembly': 'GCA_0123456789'}
         )
 
         file_id = self.set_file(
             "test", os.path.join(resource_path, '/tmp/sample.bb'),
-            "bb", "RNA-seq", 9606,
+            "file", "bb", 64000, None, "RNA-seq", 9606,
             meta_data={'assembly': 'GCA_0123456789'}
         )
 
         file_id = self.set_file(
             "test", '/tmp/sample_coords.hdf5',
-            "hdf5", "HiC", 9606,
+            "file", "hdf5", 64000, None, "HiC", 9606,
             meta_data={'assembly': 'GCA_0123456789'}
         )
 
         file_id = self.set_file(
             "test", '/tmp/sample_adjacency.hdf5',
-            "hdf5", "HiC", 9606,
+            "file", "hdf5", 64000, None, "HiC", 9606,
             meta_data={'assembly': 'GCA_0123456789'}
         )
 
@@ -122,11 +123,11 @@ class dmp(object): # pylint: disable=invalid-name
             file_type = "fastq"
             zipped = None
             file_id = self.set_file(
-                user, file_handle, file_type, data_type, 9606, None, [],
+                user, file_handle, "file", file_type, 64000, None, data_type, 9606, None, [],
                 meta_data={'assembly': 'GCA_0123456789'})
             file_handle = '/tmp/test/' + data_type + '/test_rna-seq.bam'
             self.set_file(
-                user, file_handle, 'bam', data_type, 9606, None, [file_id],
+                user, file_handle, "file", 'bam', 64000, None, data_type, 9606, None, [file_id],
                 meta_data={'assembly': 'GCA_0123456789'})
 
         for i in range(10):
@@ -136,13 +137,14 @@ class dmp(object): # pylint: disable=invalid-name
             zipped = random.choice(compressed)
             file_handle = '/tmp/test/' + data_type + '/test_' + str(i) + '.' + file_type
             file_id = self.set_file(
-                user, file_handle, file_type, data_type, 9606, zipped,
+                user, file_handle, "file", file_type, 64000, None, data_type, 9606, zipped,
                 meta_data={'assembly': 'GCA_0123456789'})
 
             if data_type == 'RNA-seq' and file_type == 'fastq' and random.choice([0, 1]) == 1:
                 file_handle = '/tmp/test/' + data_type + '/test_' + str(i) + '.bam'
                 self.set_file(
-                    user, file_handle, 'bam', data_type, 9606, None, [file_id],
+                    user, file_handle, "file", 'bam', 64000, None,
+                    data_type, 9606, None, [file_id],
                     meta_data={'assembly': 'GCA_0123456789'})
 
 
