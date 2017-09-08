@@ -147,7 +147,6 @@ class dmp(object): # pylint: disable=invalid-name
                     data_type, 9606, None, [file_id],
                     meta_data={'assembly': 'GCA_0123456789'})
 
-
     def get_file_by_id(self, user_id, file_id):
         """
         Returns files data based on the unique_id for a given file
@@ -259,7 +258,7 @@ class dmp(object): # pylint: disable=invalid-name
 
         if rest is True:
             results = entries.find(
-                {"user_id": user_id, key: value},
+                row_filter,
                 {
                     "file_type": 1, "size": 1, "data_type": 1, "taxon_id": 1,
                     "source_id": 1, "meta_data": 1, "creation_time": 1
@@ -267,7 +266,7 @@ class dmp(object): # pylint: disable=invalid-name
             )
         else:
             results = entries.find(
-                {"user_id": user_id, key: value},
+                row_filter,
                 {
                     "file_path": 1, "path_type": 1, "file_type": 1, "size": 1,
                     "parent_dir": 1, "data_type": 1, "taxon_id": 1,
