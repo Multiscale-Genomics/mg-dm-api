@@ -17,8 +17,6 @@
 
 from __future__ import print_function
 
-import pytest # pylint: disable=unused-import
-
 from dmp import dmp
 
 def test_history():

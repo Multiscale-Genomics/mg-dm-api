@@ -17,8 +17,6 @@
 
 from __future__ import print_function
 
-import pytest # pylint: disable=unused-import
-
 from reader.hdf5_coord import coord
 
 def get_region_ids(hdf5_handle, more_than_1=False):

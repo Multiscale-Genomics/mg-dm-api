@@ -18,7 +18,6 @@
 from __future__ import print_function
 
 import random
-import pytest # pylint: disable=unused-import
 
 from dmp import dmp
 
