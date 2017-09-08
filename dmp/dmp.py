@@ -82,7 +82,6 @@ class dmp(object):  # pylint: disable=invalid-name
             [('user_id', pymongo.ASCENDING), ('taxon_id', pymongo.ASCENDING)],
             unique=False, background=True)
 
-
     def _test_loading_dataset(self):
         users = ["adam", "ben", "chris", "denis", "eric"]
         file_types = [
@@ -202,7 +201,6 @@ class dmp(object):  # pylint: disable=invalid-name
         file_obj["creation_time"] = str(file_obj["creation_time"])
         return file_obj
 
-
     def _get_rows(self, user_id, key=None, value=None, rest=False):
         """
         Get a list of the file dictionary objects given a `user_id` and
@@ -305,9 +303,7 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_user(<user_id>)
         """
-
         return self._get_rows(user_id, None, None, rest)
-
 
     def get_files_by_file_type(self, user_id, file_type, rest=False):
         """
@@ -356,9 +352,7 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_file_type(<user_id>, <file_type>)
         """
-
         return self._get_rows(user_id, "file_type", file_type, rest)
-
 
     def get_files_by_data_type(self, user_id, data_type, rest=False):
         """
@@ -406,9 +400,7 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_data_type(<user_id>, <data_type>)
         """
-
         return self._get_rows(user_id, "data_type", data_type, rest)
-
 
     def get_files_by_taxon_id(self, user_id, taxon_id, rest=False):
         """
@@ -456,7 +448,6 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_taxon_id(<user_id>, <taxon_id>)
         """
-
         return self._get_rows(user_id, "taxon_id", taxon_id, rest)
 
     def get_files_by_assembly(self, user_id, assembly, rest=False):
@@ -505,9 +496,7 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_taxon_id(<user_id>, <taxon_id>)
         """
-
         return self._get_rows(user_id, "meta_data.assembly", assembly, rest)
-
 
     def _get_file_parents(self, user_id, file_id):
         """
@@ -541,7 +530,6 @@ class dmp(object):  # pylint: disable=invalid-name
                     parent_files += self._get_file_parents(user_id, source_id)
 
         return parent_files
-
 
     def get_file_history(self, user_id, file_id):
         """
@@ -581,10 +569,8 @@ class dmp(object):  # pylint: disable=invalid-name
         These IDs can then be requested to ruturn the meta data and locations
         with the `get_file_by_id` method.
         """
-
         unique_data = [list(x) for x in set(tuple(x) for x in self._get_file_parents(user_id, file_id))]
         return unique_data
-
 
     def remove_file(self, user_id, file_id):
         """
@@ -617,7 +603,6 @@ class dmp(object):  # pylint: disable=invalid-name
         """
         self.db_handle.entries.delete_one({'user_id': user_id, '_id': ObjectId(file_id)})
         return file_id
-
 
     @staticmethod
     def validate_file(entry):
@@ -712,7 +697,6 @@ class dmp(object):  # pylint: disable=invalid-name
 
         return True
 
-
     def set_file( # pylint: disable=too-many-arguments
             self, user_id, file_path, path_type, file_type="", size=0, parent_dir="", data_type="",
             taxon_id="", compressed=None, source_id=None, meta_data=None, **kwargs
@@ -784,7 +768,6 @@ class dmp(object):  # pylint: disable=invalid-name
             9606, None, meta_data={'assembly' : 'GCA_0000nnnn',
             'downloaded_from' : 'http://www.', })
         """
-
         entry = {
             "user_id": user_id,
             "file_path": file_path,
@@ -808,7 +791,6 @@ class dmp(object):  # pylint: disable=invalid-name
         entries = self.db_handle.entries
         entry_id = entries.insert_one(entry).inserted_id
         return str(entry_id)
-
 
     def add_file_metadata(self, user_id, file_id, key, value):
         """
@@ -840,7 +822,6 @@ class dmp(object):  # pylint: disable=invalid-name
             This is an id for that file within the system and can be used for
             tracing this file and where it is used and where it has come from.
         """
-
         entries = self.db_handle.entries
         entry = entries.find_one(
             {'user_id': user_id, '_id': ObjectId(file_id)}
@@ -856,7 +837,6 @@ class dmp(object):  # pylint: disable=invalid-name
         )
 
         return file_id
-
 
     def remove_file_metadata(self, user_id, file_id, key):
         """
@@ -880,7 +860,6 @@ class dmp(object):  # pylint: disable=invalid-name
             This is an id for that file within the system and can be used for
             tracing this file and where it is used and where it has come from.
         """
-
         entries = self.db_handle.entries
         entry = entries.find_one(
             {'user_id': user_id, '_id': ObjectId(file_id)}
