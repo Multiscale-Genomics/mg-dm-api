@@ -22,7 +22,7 @@ import pyBigWig
 from dmp import dmp
 
 
-class tabix(object): # pylint: disable=invalid-name
+class tabix(object):  # pylint: disable=invalid-name
     """
     Class related to handling the functions for interacting directly with the
     BigBed files. All required information should be passed to this class.
@@ -30,7 +30,6 @@ class tabix(object): # pylint: disable=invalid-name
 
     test_file_gz = '../sample.gff3.gz'
     test_file_tbi = '../sample.gff3.gz.tbi'
-
 
     def __init__(self, user_id, file_id=''):
         """
@@ -58,7 +57,6 @@ class tabix(object): # pylint: disable=invalid-name
             dm_handle = dmp(cnf_loc)
             file_obj = dm_handle.get_file_by_id(user_id, file_id)
             self.file_handle = pyBigWig.open(file_obj['file_path'], 'r')
-
 
     def get_range(self, chr_id, start, end, file_type="gff3"):
         """

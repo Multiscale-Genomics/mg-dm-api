@@ -22,7 +22,7 @@ import pyBigWig
 from dmp import dmp
 
 
-class bigbed_reader(object): # pylint: disable=invalid-name
+class bigbed_reader(object):  # pylint: disable=invalid-name
     """
     Class related to handling the functions for interacting directly with the
     BigBed files. All required information should be passed to this class.

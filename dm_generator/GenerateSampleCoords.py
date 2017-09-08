@@ -32,7 +32,7 @@ class GenerateSampleCoords(object):  # pylint: disable=too-few-public-methods
     """
 
     @staticmethod
-    def main(): # pylint: disable=too-many-locals,too-many-statements
+    def main():  # pylint: disable=too-many-locals,too-many-statements
         """
         Main Function
         """

@@ -569,7 +569,10 @@ class dmp(object):  # pylint: disable=invalid-name
         These IDs can then be requested to ruturn the meta data and locations
         with the `get_file_by_id` method.
         """
-        unique_data = [list(x) for x in set(tuple(x) for x in self._get_file_parents(user_id, file_id))]
+        unique_data = [
+            list(x) for x in set(tuple(x) for x in self._get_file_parents(user_id, file_id))
+        ]
+
         return unique_data
 
     def remove_file(self, user_id, file_id):
@@ -669,7 +672,7 @@ class dmp(object):  # pylint: disable=invalid-name
         ]
 
         # Check all files match the defined types
-        if  (
+        if (
                 'file_type' not in entry or
                 entry['file_type'] == "" or
                 entry['file_type'] not in file_types
@@ -697,10 +700,9 @@ class dmp(object):  # pylint: disable=invalid-name
 
         return True
 
-    def set_file( # pylint: disable=too-many-arguments
+    def set_file(  # pylint: disable=too-many-arguments
             self, user_id, file_path, path_type, file_type="", size=0, parent_dir="", data_type="",
-            taxon_id="", compressed=None, source_id=None, meta_data=None, **kwargs
-        ):
+            taxon_id="", compressed=None, source_id=None, meta_data=None, **kwargs):
         """
         Adds a file to the data management API.
 

@@ -15,8 +15,6 @@
    limitations under the License.
 """
 
-import pytest # pylint: disable=unused-import
-
 from dmp import dmp
 
 def test_files_by_user():

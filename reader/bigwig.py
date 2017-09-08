@@ -17,7 +17,8 @@
 
 import pyBigWig
 
-class bigwig_reader(object): # pylint: disable=invalid-name
+
+class bigwig_reader(object):  # pylint: disable=invalid-name
     """
     Class related to handling the functions for interacting directly with the
     BigBed files. All required information should be passed to this class.
@@ -44,7 +45,6 @@ class bigwig_reader(object): # pylint: disable=invalid-name
         # Open the bigwig file
         self.file_handle = pyBigWig.open(file_path, 'r')
 
-
     def get_chromosomes(self):
         """
         List the chromosome names and lengths
@@ -59,7 +59,6 @@ class bigwig_reader(object): # pylint: disable=invalid-name
 
         return self.file_handle.chroms()
 
-
     def get_header(self):
         """
         Get the bigWig header
@@ -69,7 +68,6 @@ class bigwig_reader(object): # pylint: disable=invalid-name
         header : dict
         """
         return self.file_handle.header()
-
 
     def get_range(self, chr_id, start, end, file_type="wig"):
         """

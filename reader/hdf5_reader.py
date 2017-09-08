@@ -23,7 +23,8 @@ import numpy as np
 
 from dmp import dmp
 
-class hdf5_reader(object): # pylint: disable=invalid-name
+
+class hdf5_reader(object):  # pylint: disable=invalid-name
     """
     Class related to handling the functions for interacting directly with the
     HDF5 files. All required information should be passed to this class.
@@ -60,11 +61,10 @@ class hdf5_reader(object): # pylint: disable=invalid-name
             self.file_handle = h5py.File(resource_path, "r")
         else:
             self.user_id = user_id
-            cnf_loc=os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
+            cnf_loc = os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
             dm_handle = dmp(cnf_loc)
             file_obj = dm_handle.get_file_by_id(user_id, file_id)
             self.file_handle = h5py.File(file_obj['file_path'], 'r')
-
 
     def close(self):
         """
@@ -80,7 +80,6 @@ class hdf5_reader(object): # pylint: disable=invalid-name
            h5r.close()
         """
         self.file_handle.close()
-
 
     def get_assemblies(self):
         """
@@ -101,7 +100,6 @@ class hdf5_reader(object): # pylint: disable=invalid-name
            h5r.assemblies()
         """
         return [asm for asm in self.file_handle if asm != 'meta']
-
 
     def get_chromosomes(self, assembly):
         """
@@ -130,7 +128,6 @@ class hdf5_reader(object): # pylint: disable=invalid-name
         grp = self.file_handle[assembly]
         cid = list(np.nonzero(grp['chromosomes']))
         return [grp['chromosomes'][i] for i in cid[0]]
-
 
     def get_files(self, assembly):
         """
@@ -165,7 +162,6 @@ class hdf5_reader(object): # pylint: disable=invalid-name
             1: [grp['files'][i] for i in fid1[0]],
             1000: [grp['files'][i] for i in fid1k[0]]
         }
-
 
     def get_regions(self, assembly, chromosome_id, start, end):
         """

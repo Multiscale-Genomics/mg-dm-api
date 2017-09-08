@@ -22,7 +22,8 @@ import numpy as np
 from dmp import dmp
 from dm_generator.GenerateSampleAdjacency import GenerateSampleAdjacency
 
-class adjacency(object): # pylint: disable=invalid-name
+
+class adjacency(object):  # pylint: disable=invalid-name
     """
     Class related to handling the functions for interacting directly with the
     HDF5 files. All required information should be passed to this class.
@@ -222,8 +223,8 @@ class adjacency(object): # pylint: disable=invalid-name
         """
 
         # Defines columns to get extracted from the array
-        x_pos = int(np.floor(float(start)/float(self.resolution)))
-        y_pos = int(np.ceil(float(end)/float(self.resolution)))
+        x_pos = int(np.floor(float(start) / float(self.resolution)))
+        y_pos = int(np.ceil(float(end) / float(self.resolution)))
 
         # xy_offset for the chromosome in the super array
         xy_offset = self.chr_param[chr_id]["bins"][self.resolution][1]
@@ -287,7 +288,9 @@ class adjacency(object): # pylint: disable=invalid-name
             if limit_chr != None:
                 y_start = (i[1] + start2) * int(self.resolution)
             else:
-                y_start = (i[1] - self.chr_param[y_chr]["bins"][self.resolution][1]) * int(self.resolution)
+                y_start = (
+                    i[1] - self.chr_param[y_chr]["bins"][self.resolution][1]
+                ) * int(self.resolution)
 
             entry = {
                 "chrA": chr_id,
@@ -299,7 +302,13 @@ class adjacency(object): # pylint: disable=invalid-name
                 "pos_y": i[1]
             }
             if no_links is None:
-                entry['_links'] = {'self': value_url + "?user_id=" + str(self.user_id) + "&file_id=" + str(self.file_id) + "&res=" + str(self.resolution) + "&pos_x=" + str(i[0]+x_pos+xy_offset) + "&pos_y=" + str(i[1])}
+                url = "{url_root}?file_id={fid}&res={res}&pos_x={x}&pos_y={y}"
+                entry['_links'] = {
+                    'self': url.format(
+                        url_root=value_url, fid=str(self.file_id), res=str(self.resolution),
+                        x=str(i[0]+x_pos+xy_offset), y=str(i[1])
+                    )
+                }
             results.append(entry)
 
         return {"log": log_text, "results": results}
