@@ -842,14 +842,17 @@ class dmp(object): # pylint: disable=invalid-name
         """
 
         entries = self.db_handle.entries
-        metadata = entries.find_one(
-            {'user_id': user_id, '_id': ObjectId(file_id)},
-            {"meta_data": 1}
+        entry = entries.find_one(
+            {'user_id': user_id, '_id': ObjectId(file_id)}
         )
-        metadata['meta_data'][str(key)] = value
+        entry['meta_data'][str(key)] = value
+
+        # Check that the changes are still valid
+        self.validate_file(entry)
+
         entries.update(
             {'_id': ObjectId(file_id)},
-            {'$set': {'meta_data': metadata['meta_data']}}
+            {'$set': {'meta_data': entry['meta_data']}}
         )
 
         return file_id
@@ -879,14 +882,17 @@ class dmp(object): # pylint: disable=invalid-name
         """
 
         entries = self.db_handle.entries
-        metadata = entries.find_one(
-            {'user_id': user_id, '_id': ObjectId(file_id)},
-            {"meta_data": 1}
+        entry = entries.find_one(
+            {'user_id': user_id, '_id': ObjectId(file_id)}
         )
-        del metadata['meta_data'][key]
+        del entry['meta_data'][key]
+
+        # Check that the changes are still valid
+        self.validate_file(entry)
+
         entries.update(
             {'user_id': user_id, '_id': ObjectId(file_id)},
-            {'$set': {'meta_data': metadata['meta_data']}}
+            {'$set': {'meta_data': entry['meta_data']}}
         )
 
         return file_id
