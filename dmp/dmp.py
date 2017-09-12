@@ -122,12 +122,12 @@ class dmp(object):  # pylint: disable=invalid-name
             file_type = "fastq"
             zipped = None
             file_id = self.set_file(
-                user, file_handle, "file", file_type, 64000, None, data_type, 9606, None, [],
+                user, file_handle, "file", file_type, 64000, None, data_type, 9606, None, None,
                 meta_data={'assembly': 'GCA_0123456789'})
             file_handle = '/tmp/test/' + data_type + '/test_rna-seq.bam'
             self.set_file(
                 user, file_handle, "file", 'bam', 64000, None, data_type, 9606, None, [file_id],
-                meta_data={'assembly': 'GCA_0123456789'})
+                meta_data={'assembly': 'GCA_0123456789', 'tool': 'bwa_aligner'})
 
         for i in range(10):
             user = random.choice(users)
@@ -144,7 +144,7 @@ class dmp(object):  # pylint: disable=invalid-name
                 self.set_file(
                     user, file_handle, "file", 'bam', 64000, None,
                     data_type, 9606, None, [file_id],
-                    meta_data={'assembly': 'GCA_0123456789'})
+                    meta_data={'assembly': 'GCA_0123456789', 'tool': 'bwa_aligner'})
 
     def get_file_by_id(self, user_id, file_id):
         """
@@ -706,6 +706,12 @@ class dmp(object):  # pylint: disable=invalid-name
             if 'meta_data' not in entry or 'assembly' not in entry['meta_data']:
                 raise ValueError(
                     'Matching assembly ID is required within the meta_data field'
+                )
+
+        if entry['source_id'] is not None:
+            if 'meta_data' not in entry or 'tool' not in entry['meta_data']:
+                raise ValueError(
+                    'Matching Tool name is required within the meta_data field'
                 )
 
         return True
