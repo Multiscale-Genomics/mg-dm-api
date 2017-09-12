@@ -166,10 +166,7 @@ class dmp(object):  # pylint: disable=invalid-name
             path_type : str
 
             file_type : str
-                File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
-                "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd",
-                "gff3")
+                File format (see validate_file)
             size : int
             parent_dir : str
             data_type : str
@@ -220,10 +217,7 @@ class dmp(object):  # pylint: disable=invalid-name
             file_path : str
                 Location of the file in the file system
             file_type : str
-                File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
-                "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd",
-                "gff3")
+                File format (see validate_file)
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -316,9 +310,7 @@ class dmp(object):  # pylint: disable=invalid-name
             Identifier to uniquely locate the users files. Can be set to
             "common" if the files can be shared between users
         file_type : str
-            File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
-            "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb", "ann", "bwt",
-            "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd", "gff3")
+            File format (see validate_file)
 
         Returns
         -------
@@ -326,9 +318,7 @@ class dmp(object):  # pylint: disable=invalid-name
             file_path : str
                 Location of the file in the file system
             file_type : str
-                File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
-                "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "tif", 'lif', "trj", "dcd", "gff3")
+                File format (see validate_file)
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -373,10 +363,7 @@ class dmp(object):  # pylint: disable=invalid-name
             file_path : str
                 Location of the file in the file system
             file_type : str
-                File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
-                "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd",
-                "gff3")
+                File format (see validate_file)
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -421,10 +408,7 @@ class dmp(object):  # pylint: disable=invalid-name
             file_path : str
                 Location of the file in the file system
             file_type : str
-                File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
-                "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd",
-                "gff3")
+                File format (see validate_file)
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -469,10 +453,7 @@ class dmp(object):  # pylint: disable=invalid-name
             file_path : str
                 Location of the file in the file system
             file_type : str
-                File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5",
-                "tsv", "gz", "tbi", "wig", "bw", "pdb", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "tif", 'lif', "prmtop", "trj", "dcd",
-                "gff3")
+                File format (see validate_file)
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -627,9 +608,10 @@ class dmp(object):  # pylint: disable=invalid-name
             path_type : str
 
             file_type : str
-                File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
-                "gz", "tbi", "wig", "bw", "pdb", "tif", "lif", "gem", "bt2",
-                "amb", "ann", "bwt", "pac", "sa", "prmtop", "trj", "dcd", "gff3")
+                File format ("amb", "ann", "bam", "bb", "bed", "bt2", "bw",
+                "bwt", "cpt", "csv", "dcd", "fa", "fasta", "fastq", "gem",
+                "gff3", "gz", "hdf5", "json", 'lif', "pac", "pdb", "pdf", "png",
+                "prmtop", "sa", "tbi", "tif", "tpr", "trj", "tsv", "txt", "wig")
             size : int
                 Size of the file in bytes
             data_type : str
@@ -665,11 +647,41 @@ class dmp(object):  # pylint: disable=invalid-name
             raise ValueError('Path type must be of value file|dir|link')
 
         # Defined list of acepted file types
-        file_types = [
-            "fastq", "fa", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
-            "gz", "tbi", "wig", "bw", "pdb", "tif", 'lif', "gem", "bt2", "amb",
-            "ann", "bwt", "pac", "sa", "prmtop", "trj", "dcd", "gff3"
-        ]
+        file_types = {
+            "amb": ["assembly"],
+            "ann": ["assembly"],
+            "bam": ["assembly"],
+            "bb": ["assembly"],
+            "bed": ["assembly"],
+            "bt2": ["assembly"],
+            "bw": [],
+            "bwt": ["assembly"],
+            "cpt": [],
+            "csv": [],
+            "dcd": [],
+            "fa": [],
+            "fasta": ["assembly"],
+            "fastq": [],
+            "gem": ["assembly"],
+            "gff3": ["assembly"],
+            "gz": [],
+            "hdf5": ["assembly"],
+            "json": [],
+            'lif': [],
+            "pac": ["assembly"],
+            "pdb": [],
+            "pdf": [],
+            "png": [],
+            "prmtop": [],
+            "sa": ["assembly"],
+            "tbi": ["assembly"],
+            "tif": [],
+            "tpr": [],
+            "trj": [],
+            "tsv": [],
+            "txt": [],
+            "wig": ["assembly"]
+        }
 
         # Check all files match the defined types
         if (
@@ -689,10 +701,8 @@ class dmp(object):  # pylint: disable=invalid-name
             raise ValueError('Taxon ID must be specified for all entries')
 
         # Require assembly in the meta_data
-        assembly_required_file_types = [
-            "fa", "fasta", "bam", "bed", "bb", "hdf5", "tbi", "wig", "bw", "gff3"
-        ]
-        if entry['file_type'] in assembly_required_file_types:
+        ft_assembly_required = [k for k in file_types if "assembly" in file_types[k]]
+        if entry['file_type'] in ft_assembly_required:
             if 'meta_data' not in entry or 'assembly' not in entry['meta_data']:
                 raise ValueError(
                     'Matching assembly ID is required within the meta_data field'
@@ -718,9 +728,7 @@ class dmp(object):  # pylint: disable=invalid-name
         parent_dir : str
             _id of the parent directory
         file_type : str
-            File format ("fastq", "fasta", "bam", "bed", "bb", "hdf5", "tsv",
-            "gz", "tbi", "wig", "bw", "pdb", "tif", "lif", "gem", "bt2", "amb",
-                "ann", "bwt", "pac", "sa", "trj", "dcd", "gff3")
+            File format (see validate_file)
         size : int
             File sizer in bytes
         data_type : str
