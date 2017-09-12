@@ -736,7 +736,7 @@ class dmp(object):  # pylint: disable=invalid-name
         file_type : str
             File format (see validate_file)
         size : int
-            File sizer in bytes
+            File size in bytes
         data_type : str
             The type of information in the file (RNA-seq, ChIP-seq, etc)
         taxon_id : int
