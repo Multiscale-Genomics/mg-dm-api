@@ -233,7 +233,7 @@ class adjacency(object):  # pylint: disable=invalid-name
 
         start2 = 0
         end2 = 0
-        if limit_chr != None:
+        if limit_chr is not None:
             if limit_start != None and limit_end != None:
                 start2 = int(np.floor(float(limit_start) / float(self.resolution)))
                 end2 = int(np.ceil(float(limit_end) / float(self.resolution)))
@@ -285,7 +285,7 @@ class adjacency(object):  # pylint: disable=invalid-name
         for i in r_index:
             x_start = ((i[0] + x_pos) * int(self.resolution))
             y_chr = self.get_chromosome_from_array_index(i[1] + start2)
-            if limit_chr != None:
+            if limit_chr is not None:
                 y_start = (i[1] + start2) * int(self.resolution)
             else:
                 y_start = (
@@ -352,7 +352,7 @@ class adjacency(object):  # pylint: disable=invalid-name
         chr_param = {}
 
         genome_len = 0
-        bin_count = [0]*len(bin_sizes)
+        bin_count = [0] * len(bin_sizes)
         chromosome_count = len(chromosomes)
         for i in range(chromosome_count):
             chromosome = chromosomes[i]
@@ -362,10 +362,15 @@ class adjacency(object):  # pylint: disable=invalid-name
             # Calculate the number of bins for a chromosome and then join with
             # the offset values for the start in the array
             bin_s = [int(np.ceil(int(chromosome[1]) / float(y))) for y in bin_sizes]
+
+            size_list = []
+            for j, bcv in enumerate(bin_count):
+                size_list.append([bin_s[j], bcv, bin_s[j] + bcv])
+
             bin_c = dict(
                 zip(
                     bin_sizes,
-                    [[bin_s[j], bin_count[j], bin_s[j] + bin_count[j]] for j in range(len(bin_count))]
+                    size_list
                 )
             )
 
@@ -377,10 +382,14 @@ class adjacency(object):  # pylint: disable=invalid-name
             # Calculate the new offset values.
             bin_count = [bin_count[i] + bin_s[i] for i in range(len(bin_count))]
 
+        total_bin_size_list = []
+        for i, tbcv in enumerate(bin_count):
+            total_bin_size_list.append([bin_s[i], tbcv])
+
         total_bin_count = dict(
             zip(
                 bin_sizes,
-                [[bin_s[i], bin_count[i]] for i in range(len(bin_count))]
+                total_bin_size_list
             )
         )
         chr_param["meta"] = {"genomeSize": genome_len, "totalBinCount": total_bin_count}
@@ -416,7 +425,7 @@ class adjacency(object):  # pylint: disable=invalid-name
         for chr_id in self.chr_param.keys():
             if chr_id == "meta":
                 continue
-            #print(self.chr_param[chr_id]["bins"], type(self.chr_param[chr_id]["bins"]))
+            # print(self.chr_param[chr_id]["bins"], type(self.chr_param[chr_id]["bins"]))
             chr_end = self.chr_param[chr_id]["bins"][int(self.resolution)][2]
             chr_start = self.chr_param[chr_id]["bins"][int(self.resolution)][1]
             if index >= chr_start and index <= chr_end:

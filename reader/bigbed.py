@@ -19,8 +19,6 @@ from __future__ import print_function
 
 import pyBigWig
 
-from dmp import dmp
-
 
 class bigbed_reader(object):  # pylint: disable=invalid-name
     """
