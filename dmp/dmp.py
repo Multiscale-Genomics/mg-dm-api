@@ -41,8 +41,6 @@ class dmp(object):  # pylint: disable=invalid-name
         config = configparser.RawConfigParser()
         config.read(cnf_loc)
 
-        self.ftp_root = "ftp://test.test_url.org/"
-
         if test is True:
             import mongomock
             self.client = mongomock.MongoClient()
@@ -54,7 +52,6 @@ class dmp(object):  # pylint: disable=invalid-name
             user = config.get("dmp", "user")
             password = config.get("dmp", "pass")
             dmp_db = config.get("dmp", "db")
-            self.ftp_root = config.get("dmp", "ftp_root")
 
             try:
                 self.client = MongoClient(
