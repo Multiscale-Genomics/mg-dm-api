@@ -15,8 +15,9 @@
    limitations under the License.
 """
 
-from .dmp import dmp
-from .rest import rest
+# Required for importing the modules
+from .dmp import dmp  # NOQA
+from .rest import rest  # NOQA
 
 __author__ = 'Mark McDowall'
 __version__ = '0.0'

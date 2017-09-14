@@ -234,7 +234,7 @@ class adjacency(object):  # pylint: disable=invalid-name
         start2 = 0
         end2 = 0
         if limit_chr is not None:
-            if limit_start != None and limit_end != None:
+            if limit_start is not None and limit_end is not None:
                 start2 = int(np.floor(float(limit_start) / float(self.resolution)))
                 end2 = int(np.ceil(float(limit_end) / float(self.resolution)))
                 xy2_offset = self.chr_param[limit_chr]["bins"][self.resolution][1]
