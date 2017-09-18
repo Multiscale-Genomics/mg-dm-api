@@ -502,7 +502,7 @@ class dmp(object):  # pylint: disable=invalid-name
         )
 
         parent_files = []
-        if file_obj['source_id']:
+        if file_obj is not None and file_obj['source_id']:
             source_count = len(file_obj['source_id'])
             if source_count > 0:
                 for source_id in file_obj['source_id']:
