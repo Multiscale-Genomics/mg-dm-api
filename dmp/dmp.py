@@ -266,6 +266,8 @@ class dmp(object):  # pylint: disable=invalid-name
         for entry in results:
             entry["_id"] = str(entry["_id"])
             entry["creation_time"] = str(entry["creation_time"])
+            if "expiration_date" in entry["meta_data"]:
+                entry["meta_data"]["expiration_date"] = str(entry["meta_data"]["expiration_date"])
             files.append(entry)
 
         return files
