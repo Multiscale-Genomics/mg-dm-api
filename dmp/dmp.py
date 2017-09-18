@@ -191,6 +191,10 @@ class dmp(object):  # pylint: disable=invalid-name
         """
         entries = self.db_handle.entries
         file_obj = entries.find_one({'_id': ObjectId(file_id), 'user_id': user_id})
+
+        if file_obj is None:
+            return {}
+
         file_obj["_id"] = str(file_obj["_id"])
         file_obj["creation_time"] = str(file_obj["creation_time"])
         return file_obj
