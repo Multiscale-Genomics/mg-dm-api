@@ -104,7 +104,7 @@ class dmp(object):  # pylint: disable=invalid-name
 
         file_id = self.set_file(
             "test", os.path.join('/tmp/sample.bw'),
-            "file", "bb", 64000, None, "RNA-seq", 9606,
+            "file", "bw", 64000, None, "RNA-seq", 9606,
             meta_data={'assembly': 'GCA_0123456789'},
             _id=ObjectId(str("testtest0001"))
         )
