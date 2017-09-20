@@ -79,6 +79,16 @@ class dmp(object):  # pylint: disable=invalid-name
             [('user_id', pymongo.ASCENDING), ('taxon_id', pymongo.ASCENDING)],
             unique=False, background=True)
 
+
+    def _copy_to_tmp(self, file_path, tmp_path):
+
+        if os.path.isfile(tmp_path) is False:
+            with open(tmp_path, 'wb') as f_out:
+                with open(file_path, 'rb') as f_in:
+                    f_out.write(f_in.read())
+
+        return True
+
     def _test_loading_dataset(self):
         users = ["adam", "ben", "chris", "denis", "eric"]
         file_types = [
@@ -95,12 +105,15 @@ class dmp(object):  # pylint: disable=invalid-name
             meta_data={'assembly': 'GCA_0123456789'}
         )
 
+        data_path = os.path.join(os.path.dirname(__file__), "../test/data/")
+
         file_id = self.set_file(
             "test", os.path.join('/tmp/sample.bb'),
             "file", "bb", 64000, None, "RNA-seq", 9606,
             meta_data={'assembly': 'GCA_0123456789'},
             _id=ObjectId(str("testtest0000"))
         )
+        self._copy_to_tmp(data_path + 'sample.bb', '/tmp/sample.bb')
 
         file_id = self.set_file(
             "test", os.path.join('/tmp/sample.bw'),
@@ -108,6 +121,7 @@ class dmp(object):  # pylint: disable=invalid-name
             meta_data={'assembly': 'GCA_0123456789'},
             _id=ObjectId(str("testtest0001"))
         )
+        self._copy_to_tmp(data_path + 'sample.bw', '/tmp/sample.bw')
 
         file_id = self.set_file(
             "test", '/tmp/sample_coords.hdf5',
@@ -115,6 +129,7 @@ class dmp(object):  # pylint: disable=invalid-name
             meta_data={'assembly': 'GCA_0123456789'},
             _id=ObjectId(str("testtest0002"))
         )
+        self._copy_to_tmp(data_path + 'sample_coords.hdf5', '/tmp/sample_coords.hdf5')
 
         file_id = self.set_file(
             "test", '/tmp/sample_adjacency.hdf5',
@@ -122,6 +137,7 @@ class dmp(object):  # pylint: disable=invalid-name
             meta_data={'assembly': 'GCA_0123456789'},
             _id=ObjectId(str("testtest0003"))
         )
+        self._copy_to_tmp(data_path + 'sample_adjacency.hdf5', '/tmp/sample_adjacency.hdf5')
 
         for user in users:
             data_type = 'RNA-seq'
