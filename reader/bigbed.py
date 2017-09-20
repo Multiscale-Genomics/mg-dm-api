@@ -17,6 +17,7 @@
 
 from __future__ import print_function
 
+import os
 import pyBigWig
 
 
@@ -26,7 +27,7 @@ class bigbed_reader(object):  # pylint: disable=invalid-name
     BigBed files. All required information should be passed to this class.
     """
 
-    def __init__(self, file_path=''):
+    def __init__(self, user_id, file_path=''):
         """
         Initialise the module and
 
@@ -41,6 +42,14 @@ class bigbed_reader(object):  # pylint: disable=invalid-name
         """
 
         # Open the bigbed file
+        if user_id == 'test':
+            tmp_path = '/tmp/sample.bb'
+            resource_path = os.path.join(os.path.dirname(__file__), "../test/data/sample.bb")
+            if os.path.isfile(tmp_path) is False:
+                with open(tmp_path, 'wb') as f_out:
+                    with open(resource_path, 'rb') as f_in:
+                        f_out.write(f_in.read())
+
         self.file_handle = pyBigWig.open(file_path, 'r')
 
     def close(self):
