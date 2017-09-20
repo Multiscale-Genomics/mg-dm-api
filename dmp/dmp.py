@@ -200,7 +200,7 @@ class dmp(object):  # pylint: disable=invalid-name
            da.get_file_by_id(<unique_file_id>)
         """
         entries = self.db_handle.entries
-        file_obj = entries.find_one({'_id': ObjectId(file_id), 'user_id': user_id})
+        file_obj = entries.find_one({'_id': ObjectId(str(file_id)), 'user_id': user_id})
 
         if file_obj is None:
             return {}
