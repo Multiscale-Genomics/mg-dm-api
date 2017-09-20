@@ -83,7 +83,7 @@ class dmp(object):  # pylint: disable=invalid-name
         users = ["adam", "ben", "chris", "denis", "eric"]
         file_types = [
             "fastq", "fa", "fasta", "bam", "bed", "bb", "hdf5", "tsv", "gz",
-            "tbi", "wig", "bw", "pdb", "prmtop", "trj", "dcd", "gff3"
+            "tbi", "wig", "bw"
         ]
         data_types = ['RNA-seq', 'MNase-Seq', 'ChIP-seq', 'WGBS', 'HiC']
         compressed = [None, 'gzip', 'zip']
@@ -98,19 +98,29 @@ class dmp(object):  # pylint: disable=invalid-name
         file_id = self.set_file(
             "test", os.path.join('/tmp/sample.bb'),
             "file", "bb", 64000, None, "RNA-seq", 9606,
-            meta_data={'assembly': 'GCA_0123456789'}
+            meta_data={'assembly': 'GCA_0123456789'},
+            _id=ObjectId(str("testtest0000"))
+        )
+
+        file_id = self.set_file(
+            "test", os.path.join('/tmp/sample.bw'),
+            "file", "bb", 64000, None, "RNA-seq", 9606,
+            meta_data={'assembly': 'GCA_0123456789'},
+            _id=ObjectId(str("testtest0001"))
         )
 
         file_id = self.set_file(
             "test", '/tmp/sample_coords.hdf5',
             "file", "hdf5", 64000, None, "HiC", 9606,
-            meta_data={'assembly': 'GCA_0123456789'}
+            meta_data={'assembly': 'GCA_0123456789'},
+            _id=ObjectId(str("testtest0002"))
         )
 
         file_id = self.set_file(
             "test", '/tmp/sample_adjacency.hdf5',
             "file", "hdf5", 64000, None, "HiC", 9606,
-            meta_data={'assembly': 'GCA_0123456789'}
+            meta_data={'assembly': 'GCA_0123456789'},
+            _id=ObjectId(str("testtest0003"))
         )
 
         for user in users:
