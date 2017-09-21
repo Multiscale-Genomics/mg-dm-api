@@ -79,7 +79,6 @@ class dmp(object):  # pylint: disable=invalid-name
             [('user_id', pymongo.ASCENDING), ('taxon_id', pymongo.ASCENDING)],
             unique=False, background=True)
 
-
     def _copy_to_tmp(self, file_path, tmp_path):
 
         if os.path.isfile(tmp_path) is False:
@@ -299,7 +298,7 @@ class dmp(object):  # pylint: disable=invalid-name
 
         return file_obj[0]
 
-        def get_files_by_user(self, user_id, rest=False):
+    def get_files_by_user(self, user_id, rest=False):
         """
         Get a list of the file dictionary objects given a `user_id`
 

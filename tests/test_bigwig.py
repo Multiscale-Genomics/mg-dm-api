@@ -33,4 +33,4 @@ def test_bigwig():
     assert isinstance(wig_str, str)
 
     wig_obj = bwr.get_range(chromosome, start, end, 'json')
-    assert len(wig_obj) >0
+    assert len(wig_obj) > 0
