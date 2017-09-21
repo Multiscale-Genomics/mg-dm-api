@@ -25,6 +25,7 @@ import configparser
 
 import pymongo
 from pymongo import MongoClient, ReadPreference
+import bson
 from bson.objectid import ObjectId
 
 
@@ -215,7 +216,11 @@ class dmp(object):  # pylint: disable=invalid-name
         files = []
 
         row_filter = {"user_id": user_id}
-        if key is not None:
+        if (
+                key is not None
+                and isinstance(str(key), str)
+                and isinstance(value, (str, int, float, bson.objectid.ObjectId))
+        ):
             row_filter[key] = value
 
         if rest is True:
@@ -291,12 +296,58 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_file_by_id(<unique_file_id>)
         """
-        file_obj = self._get_rows(user_id, '_id', ObjectId(str(file_id)), rest)
+        file_obj = self._get_rows(str(user_id), '_id', ObjectId(str(file_id)), rest)
 
         if len(file_obj) == 0:
             return {}
 
         return file_obj[0]
+
+    def get_file_by_file_path(self, user_id, file_path, rest=False):
+        """
+        Get a list of the file dictionary objects given a `user_id` and
+        `file_path`
+
+        Parameters
+        ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to
+            "common" if the files can be shared between users
+        file_path : str
+            File path (see validate_file)
+
+        Returns
+        -------
+        dict
+            file_path : str
+                Location of the file in the file system
+            file_type : str
+                File format (see validate_file)
+            data_type : str
+                The type of information in the file (RNA-seq, ChIP-seq, etc)
+            taxon_id : int
+                Taxon ID that the species that the file has been derived from
+            compressed : str
+                Type of compression (None, gzip, zip)
+            source_id : list
+                List of IDs of files that were processed to generate this file
+            meta_data : dict
+                Dictionary object containing the extra data related to the
+                generation of the file or describing the way it was processed
+            creation_time : list
+                Time at which the file was loaded into the system
+
+        Example
+        -------
+        .. code-block:: python
+           :linenos:
+
+           from dmp import dmp
+           da = dmp()
+           da.get_files_by_file_path(<user_id>, <file_type>)
+        """
+        return self._get_rows(str(user_id), 'file_path', str(file_path), rest)
+
 
     def get_files_by_user(self, user_id, rest=False):
         """
@@ -322,7 +373,7 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_user(<user_id>)
         """
-        return self._get_rows(user_id, None, None, rest)
+        return self._get_rows(str(user_id), None, None, rest)
 
     def get_files_by_file_type(self, user_id, file_type, rest=False):
         """
@@ -367,7 +418,7 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_file_type(<user_id>, <file_type>)
         """
-        return self._get_rows(user_id, "file_type", file_type, rest)
+        return self._get_rows(str(user_id), "file_type", str(file_type), rest)
 
     def get_files_by_data_type(self, user_id, data_type, rest=False):
         """
@@ -412,7 +463,7 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_data_type(<user_id>, <data_type>)
         """
-        return self._get_rows(user_id, "data_type", data_type, rest)
+        return self._get_rows(str(user_id), "data_type", str(data_type), rest)
 
     def get_files_by_taxon_id(self, user_id, taxon_id, rest=False):
         """
@@ -457,7 +508,7 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_taxon_id(<user_id>, <taxon_id>)
         """
-        return self._get_rows(user_id, "taxon_id", taxon_id, rest)
+        return self._get_rows(str(user_id), "taxon_id", int(taxon_id), rest)
 
     def get_files_by_assembly(self, user_id, assembly, rest=False):
         """
@@ -502,7 +553,7 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_taxon_id(<user_id>, <taxon_id>)
         """
-        return self._get_rows(user_id, "meta_data.assembly", assembly, rest)
+        return self._get_rows(str(user_id), "meta_data.assembly", str(assembly), rest)
 
     def _get_file_parents(self, user_id, file_id):
         """
