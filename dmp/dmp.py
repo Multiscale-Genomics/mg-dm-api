@@ -105,7 +105,7 @@ class dmp(object):  # pylint: disable=invalid-name
             meta_data={'assembly': 'GCA_0123456789'}
         )
 
-        data_path = os.path.join(os.path.dirname(__file__), "../test/data/")
+        data_path = os.path.join(os.path.dirname(__file__), "test/data/")
 
         file_id = self.set_file(
             "test", os.path.join('/tmp/sample.bb'),
@@ -168,62 +168,6 @@ class dmp(object):  # pylint: disable=invalid-name
                     user, file_handle, "file", 'bam', 64000, None,
                     data_type, 9606, None, [file_id],
                     meta_data={'assembly': 'GCA_0123456789', 'tool': 'bwa_aligner'})
-
-    def get_file_by_id(self, user_id, file_id):
-        """
-        Returns files data based on the unique_id for a given file
-
-        Parameters
-        ----------
-        user_id : str
-            Identifier to uniquely locate the users files. Can be set to
-            "common" if the files can be shared between users
-        file_id : str
-            Location of the file in the file system
-
-        Returns
-        -------
-        dict
-            file_path : str
-                Location of the file in the file system
-            path_type : str
-
-            file_type : str
-                File format (see validate_file)
-            size : int
-            parent_dir : str
-            data_type : str
-                The type of information in the file (RNA-seq, ChIP-seq, etc)
-            taxon_id : int
-                Taxon ID that the species that the file has been derived from
-            compressed : str
-                Type of compression (None, gzip, zip)
-            source_id : list
-                List of IDs of files that were processed to generate this file
-            meta_data : dict
-                Dictionary object containing the extra data related to the
-                generation of the file or describing the way it was processed
-            creation_time : list
-                Time at which the file was loaded into the system
-
-        Example
-        -------
-        .. code-block:: python
-           :linenos:
-
-           from dmp import dmp
-           da = dmp()
-           da.get_file_by_id(<unique_file_id>)
-        """
-        entries = self.db_handle.entries
-        file_obj = entries.find_one({'_id': ObjectId(str(file_id)), 'user_id': user_id})
-
-        if file_obj is None:
-            return {}
-
-        file_obj["_id"] = str(file_obj["_id"])
-        file_obj["creation_time"] = str(file_obj["creation_time"])
-        return file_obj
 
     def _get_rows(self, user_id, key=None, value=None, rest=False):
         """
@@ -302,7 +246,60 @@ class dmp(object):  # pylint: disable=invalid-name
 
         return files
 
-    def get_files_by_user(self, user_id, rest=False):
+    def get_file_by_id(self, user_id, file_id, rest=False):
+        """
+        Returns files data based on the unique_id for a given file
+
+        Parameters
+        ----------
+        user_id : str
+            Identifier to uniquely locate the users files. Can be set to
+            "common" if the files can be shared between users
+        file_id : str
+            Location of the file in the file system
+
+        Returns
+        -------
+        dict
+            file_path : str
+                Location of the file in the file system
+            path_type : str
+
+            file_type : str
+                File format (see validate_file)
+            size : int
+            parent_dir : str
+            data_type : str
+                The type of information in the file (RNA-seq, ChIP-seq, etc)
+            taxon_id : int
+                Taxon ID that the species that the file has been derived from
+            compressed : str
+                Type of compression (None, gzip, zip)
+            source_id : list
+                List of IDs of files that were processed to generate this file
+            meta_data : dict
+                Dictionary object containing the extra data related to the
+                generation of the file or describing the way it was processed
+            creation_time : list
+                Time at which the file was loaded into the system
+
+        Example
+        -------
+        .. code-block:: python
+           :linenos:
+
+           from dmp import dmp
+           da = dmp()
+           da.get_file_by_id(<unique_file_id>)
+        """
+        file_obj = self._get_rows(user_id, '_id', ObjectId(str(file_id)), rest)
+
+        if len(file_obj) == 0:
+            return {}
+
+        return file_obj[0]
+
+        def get_files_by_user(self, user_id, rest=False):
         """
         Get a list of the file dictionary objects given a `user_id`
 
