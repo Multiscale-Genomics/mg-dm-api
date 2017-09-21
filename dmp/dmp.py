@@ -28,6 +28,9 @@ from pymongo import MongoClient, ReadPreference
 import bson
 from bson.objectid import ObjectId
 
+from dm_generator.GenerateSampleCoords import GenerateSampleCoords
+from dm_generator.GenerateSampleAdjacency import GenerateSampleAdjacency
+
 
 class dmp(object):  # pylint: disable=invalid-name
     """
@@ -105,7 +108,7 @@ class dmp(object):  # pylint: disable=invalid-name
             meta_data={'assembly': 'GCA_0123456789'}
         )
 
-        data_path = os.path.join(os.path.dirname(__file__), "test/data/")
+        data_path = os.path.join(os.path.dirname(__file__), "../tests/data/")
 
         file_id = self.set_file(
             "test", os.path.join('/tmp/sample.bb'),
@@ -129,7 +132,9 @@ class dmp(object):  # pylint: disable=invalid-name
             meta_data={'assembly': 'GCA_0123456789'},
             _id=ObjectId(str("testtest0002"))
         )
-        self._copy_to_tmp(data_path + 'sample_coords.hdf5', '/tmp/sample_coords.hdf5')
+        if os.path.isfile('/tmp/sample_coords.hdf5') is False:
+            gsc = GenerateSampleCoords()
+            gsc.main()
 
         file_id = self.set_file(
             "test", '/tmp/sample_adjacency.hdf5',
@@ -137,7 +142,9 @@ class dmp(object):  # pylint: disable=invalid-name
             meta_data={'assembly': 'GCA_0123456789'},
             _id=ObjectId(str("testtest0003"))
         )
-        self._copy_to_tmp(data_path + 'sample_adjacency.hdf5', '/tmp/sample_adjacency.hdf5')
+        if os.path.isfile('/tmp/sample_adjacency.hdf5') is False:
+            gsa = GenerateSampleAdjacency()
+            gsa.main()
 
         for user in users:
             data_type = 'RNA-seq'
