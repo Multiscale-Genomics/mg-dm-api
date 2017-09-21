@@ -18,7 +18,6 @@
 from reader.bigbed import bigbed_reader
 import pytest # pylint: disable=unused-import
 
-@pytest.mark.underdeverlopment
 def test_bigbed():
     """
     Testing the bigbed reader

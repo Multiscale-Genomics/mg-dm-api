@@ -18,7 +18,6 @@
 from reader.bigwig import bigwig_reader
 import pytest # pylint: disable=unused-import
 
-@pytest.mark.underdeverlopment
 def test_bigwig():
     """
     Testing the bigbed reader

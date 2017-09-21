@@ -24,7 +24,6 @@ import pytest # pylint: disable=unused-import
 
 # 286sec ==> 0.286sec per query
 
-@pytest.mark.underdeverlopment
 def test_hdf5():
     """
     Test for retrieving lists of files that have features within a defined
