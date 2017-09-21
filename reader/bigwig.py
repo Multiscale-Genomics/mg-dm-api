@@ -48,7 +48,7 @@ class bigwig_reader(object):  # pylint: disable=invalid-name
         # Open the bigwig file
         if user_id == 'test':
             tmp_path = '/tmp/sample.bw'
-            resource_path = os.path.join(os.path.dirname(__file__), "../test/data/sample.bw")
+            resource_path = os.path.join(os.path.dirname(__file__), "../tests/data/sample.bw")
             if os.path.isfile(tmp_path) is False:
                 with open(tmp_path, 'wb') as f_out:
                     with open(resource_path, 'rb') as f_in:

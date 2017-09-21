@@ -44,7 +44,8 @@ class bigbed_reader(object):  # pylint: disable=invalid-name
         # Open the bigbed file
         if user_id == 'test':
             tmp_path = '/tmp/sample.bb'
-            resource_path = os.path.join(os.path.dirname(__file__), "../test/data/sample.bb")
+            resource_path = os.path.join(os.path.dirname(__file__), "../tests/data/sample.bb")
+            print(resource_path)
             if os.path.isfile(tmp_path) is False:
                 with open(tmp_path, 'wb') as f_out:
                     with open(resource_path, 'rb') as f_in:
