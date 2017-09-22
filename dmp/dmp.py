@@ -108,7 +108,8 @@ class dmp(object):  # pylint: disable=invalid-name
             meta_data={'assembly': 'GCA_0123456789'}
         )
 
-        data_path = os.path.join(os.path.dirname(__file__), "../tests/data/")
+        data_path = os.path.join(os.path.dirname(__file__), "../dm_test_data/")
+        print("data_path:", data_path)
 
         file_id = self.set_file(
             "test", os.path.join('/tmp/sample.bb'),
