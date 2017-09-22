@@ -31,6 +31,11 @@ setup(
     license='Apache 2.0',
 
     packages=find_packages(),
+    package_data={
+        'dm_test_data': [
+            'sample.bb', 'sample.bw', 'sample_3D_models.hdf5', 'sample_adjacency.hdf5'
+        ]
+    },
 
     install_requires=[
         'pymongo>=3.3', 'mongomock>=3.7', 'configparser', 'numpy', 'h5py',
