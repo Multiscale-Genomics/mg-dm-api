@@ -15,6 +15,7 @@
    limitations under the License.
 """
 
+from dmp import dmp
 from reader.bigbed import bigbed_reader
 import pytest # pylint: disable=unused-import
 
@@ -22,6 +23,8 @@ def test_bigbed():
     """
     Testing the bigbed reader
     """
+
+    dm_handle = dmp(test=True)
 
     chromosome = 19
     start = 3000000

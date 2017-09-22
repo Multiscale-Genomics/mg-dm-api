@@ -15,6 +15,7 @@
    limitations under the License.
 """
 
+from dmp import dmp
 from reader.bigwig import bigwig_reader
 import pytest # pylint: disable=unused-import
 
@@ -22,6 +23,8 @@ def test_bigwig():
     """
     Testing the bigbed reader
     """
+
+    dm_handle = dmp(test=True)
 
     chromosome = 19
     start = 3000000
