@@ -882,7 +882,7 @@ class dmp(object):  # pylint: disable=invalid-name
             "meta_data": meta_data,
             "creation_time": datetime.datetime.utcnow()
         }
-        date_delta = datetime.timedelta(days=84)
+        date_delta = datetime.timedelta(days=84)  # 12 weeks
         entry["meta_data"]["expiration_date"] = entry["creation_time"] + date_delta
         entry.update(kwargs)
 
