@@ -306,8 +306,8 @@ class dmp(object):  # pylint: disable=invalid-name
         """
         file_obj = self._get_rows(str(user_id), '_id', ObjectId(str(file_id)), rest)
 
-        if len(file_obj) == 0:
-            return {}
+        if not file_obj:
+            return {"msg": "No files found"}
 
         return file_obj[0]
 
@@ -381,7 +381,12 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_user(<user_id>)
         """
-        return self._get_rows(str(user_id), None, None, rest)
+        file_obj = self._get_rows(str(user_id), None, None, rest)
+
+        if not file_obj:
+            return {"msg": "No files found"}
+
+        return file_obj
 
     def get_files_by_file_type(self, user_id, file_type, rest=False):
         """
@@ -426,7 +431,12 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_file_type(<user_id>, <file_type>)
         """
-        return self._get_rows(str(user_id), "file_type", str(file_type), rest)
+        file_obj = self._get_rows(str(user_id), "file_type", str(file_type), rest)
+
+        if not file_obj:
+            return {"msg": "No files found"}
+
+        return file_obj
 
     def get_files_by_data_type(self, user_id, data_type, rest=False):
         """
@@ -471,7 +481,12 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_data_type(<user_id>, <data_type>)
         """
-        return self._get_rows(str(user_id), "data_type", str(data_type), rest)
+        file_obj = self._get_rows(str(user_id), "data_type", str(data_type), rest)
+
+        if not file_obj:
+            return {"msg": "No files found"}
+
+        return file_obj
 
     def get_files_by_taxon_id(self, user_id, taxon_id, rest=False):
         """
@@ -516,7 +531,12 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_taxon_id(<user_id>, <taxon_id>)
         """
-        return self._get_rows(str(user_id), "taxon_id", int(taxon_id), rest)
+        file_obj = self._get_rows(str(user_id), "taxon_id", int(taxon_id), rest)
+
+        if not file_obj:
+            return {"msg": "No files found"}
+
+        return file_obj
 
     def get_files_by_assembly(self, user_id, assembly, rest=False):
         """
@@ -561,7 +581,12 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_taxon_id(<user_id>, <taxon_id>)
         """
-        return self._get_rows(str(user_id), "meta_data.assembly", str(assembly), rest)
+        file_obj = self._get_rows(str(user_id), "meta_data.assembly", str(assembly), rest)
+
+        if not file_obj:
+            return {"msg": "No files found"}
+
+        return file_obj
 
     def _get_file_parents(self, user_id, file_id):
         """
