@@ -34,7 +34,7 @@ def test_files_by_type():
         user = random.choice(users)
         file_type = random.choice(file_types)
         results = dm_handle.get_files_by_file_type(user, file_type)
-        assert isinstance(results, type([])) is True
+        assert isinstance(results, type([])) is True or isinstance(results, type({})) is True
 
 def test_files_by_type_rest():
     """
