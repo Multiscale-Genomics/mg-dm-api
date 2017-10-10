@@ -811,7 +811,7 @@ class dmp(object):  # pylint: disable=invalid-name
 
         # Require assembly in the meta_data
         ft_assembly_required = [k for k in file_types if "assembly" in file_types[k]]
-        if entry['file_type'] in ft_assembly_required:
+        if str.lower(str(entry['file_type'])) in ft_assembly_required:
             if 'meta_data' not in entry or 'assembly' not in entry['meta_data']:
                 raise ValueError(
                     'Matching assembly ID is required within the meta_data field'
