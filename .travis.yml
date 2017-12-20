@@ -8,13 +8,30 @@ python:
   - "2.7"
   #- "3.5"
 
+before_install:
+    - pwd
+    - ls /usr/lib/
+    - mkdir -p ${HOME}/bin
+    - mkdir -p ${HOME}/lib
+    - mkdir -p ${HOME}/code
+
 # command to install dependencies
 install:
   - pip install -e .
   - pip install -r requirements.txt
 
+  # UCSC Tools
+    - cd ${HOME}/lib
+    - wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/bedToBigBed
+    - wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/wigToBigWig
+
 before_script:
-  - pwd
+    - cd ${HOME}/bin
+
+    - ln -s ${HOME}/lib/bedToBigBed bedToBigBed
+    - ln -s ${HOME}/lib/wigToBigWig wigToBigWig
+
+    - cd ${HOME}/build/Multiscale-Genomics/mg-dm-api
 
 # command to run tests
 script: pytest -m "not underdeverlopment"
