@@ -1,12 +1,10 @@
 language: python
 
 os: linux
-dist: trusty
-group: edge
 
 python:
-  - "2.7"
-  #- "3.5"
+    - "2.7"
+    # - "3.5"
 
 before_install:
     - pwd
@@ -17,8 +15,8 @@ before_install:
 
 # command to install dependencies
 install:
-  - pip install -e .
-  - pip install -r requirements.txt
+    - pip install -e .
+    - pip install -r requirements.txt
 
   # UCSC Tools
     - cd ${HOME}/lib
