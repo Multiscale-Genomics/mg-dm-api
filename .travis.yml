@@ -41,7 +41,7 @@ install:
 before_script:
     - cd ${HOME}/lib
     - chmod +x bedToBigBed
-    - chmod +x bedToBigWig
+    - chmod +x wigToBigWig
 
     - cd ${HOME}/bin
 
