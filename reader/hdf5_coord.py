@@ -30,7 +30,7 @@ class coord(object):  # pylint: disable=invalid-name
     HDF5 files. All required information should be passed to this class.
     """
 
-    def __init__(self, user_id='test', file_id='', resolution=None):
+    def __init__(self, user_id, file_id, resolution=None, cnf_loc=''):
         """
         Initialise the module and set the required base parameters
 
@@ -57,7 +57,6 @@ class coord(object):  # pylint: disable=invalid-name
                 gsa.main()
             self.file_handle = h5py.File('/tmp/sample_coords.hdf5', 'r')
         else:
-            cnf_loc = os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
             dm_handle = dmp(cnf_loc)
             file_obj = dm_handle.get_file_by_id(user_id, file_id)
             self.file_handle = h5py.File(file_obj['file_path'], 'r')

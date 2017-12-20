@@ -31,7 +31,7 @@ class tabix(object):  # pylint: disable=invalid-name
     test_file_gz = '../sample.gff3.gz'
     test_file_tbi = '../sample.gff3.gz.tbi'
 
-    def __init__(self, user_id, file_id=''):
+    def __init__(self, user_id, file_id, cnf_loc=''):
         """
         Initialise the module and
 
@@ -53,7 +53,6 @@ class tabix(object):  # pylint: disable=invalid-name
         if user_id == 'test':
             self.file_handle = pysam.TabixFile(self.test_file_gz)
         else:
-            cnf_loc = os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
             dm_handle = dmp(cnf_loc)
             file_obj = dm_handle.get_file_by_id(user_id, file_id)
             self.file_handle = pyBigWig.open(file_obj['file_path'], 'r')

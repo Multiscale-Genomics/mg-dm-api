@@ -20,6 +20,9 @@ from __future__ import print_function
 import os
 import pyBigWig
 
+from dmp import dmp
+from dm_generator.GenerateSampleBigWig import GenerateSampleBigWig
+
 
 class bigwig_reader(object):  # pylint: disable=invalid-name
     """
@@ -27,7 +30,7 @@ class bigwig_reader(object):  # pylint: disable=invalid-name
     BigBed files. All required information should be passed to this class.
     """
 
-    def __init__(self, user_id, file_path=''):
+    def __init__(self, user_id, file_id, cnf_loc=''):
         """
         Initialise the module and
 
@@ -46,15 +49,18 @@ class bigwig_reader(object):  # pylint: disable=invalid-name
         """
 
         # Open the bigwig file
+        # Open the bigbed file
         if user_id == 'test':
-            tmp_path = '/tmp/sample.bw'
-            resource_path = os.path.join(os.path.dirname(__file__), "../tests/data/sample.bw")
-            if os.path.isfile(tmp_path) is False:
-                with open(tmp_path, 'wb') as f_out:
-                    with open(resource_path, 'rb') as f_in:
-                        f_out.write(f_in.read())
+            resource_path = '/tmp/sample.bw'
+            if os.path.isfile(resource_path) is False:
+                gsa = GenerateSampleBigWig()
+                gsa.main()
+        else:
+            dm_handle = dmp(cnf_loc)
+            file_obj = dm_handle.get_file_by_id(user_id, file_id)
 
-        self.file_handle = pyBigWig.open(file_path, 'r')
+
+        self.file_handle = pyBigWig.open(file_obj['file_path'], 'r')
 
     def get_chromosomes(self):
         """
