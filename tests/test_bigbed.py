@@ -15,7 +15,7 @@
    limitations under the License.
 """
 
-from dmp import dmp
+import os
 from reader.bigbed import bigbed_reader
 import pytest # pylint: disable=unused-import
 
@@ -24,12 +24,12 @@ def test_bigbed():
     Testing the bigbed reader
     """
 
-    dm_handle = dmp(test=True)
+    cnf_loc = os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
 
     chromosome = 19
     start = 3000000
     end = 3001000
-    bbr = bigbed_reader('test', '/tmp/sample.bb')
+    bbr = bigbed_reader('test', '/tmp/sample.bb', cnf_loc)
 
     bed_str = bbr.get_range(chromosome, start, end, 'bed')
     assert isinstance(bed_str, str)

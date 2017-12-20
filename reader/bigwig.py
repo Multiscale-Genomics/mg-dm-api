@@ -55,12 +55,11 @@ class bigwig_reader(object):  # pylint: disable=invalid-name
             if os.path.isfile(resource_path) is False:
                 gsa = GenerateSampleBigWig()
                 gsa.main()
+            self.file_handle = pyBigWig.open(resource_path, 'r')
         else:
             dm_handle = dmp(cnf_loc)
             file_obj = dm_handle.get_file_by_id(user_id, file_id)
-
-
-        self.file_handle = pyBigWig.open(file_obj['file_path'], 'r')
+            self.file_handle = pyBigWig.open(file_obj['file_path'], 'r')
 
     def get_chromosomes(self):
         """

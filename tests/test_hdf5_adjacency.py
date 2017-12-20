@@ -17,13 +17,17 @@
 
 from __future__ import print_function
 
+import os
+
 from reader.hdf5_adjacency import adjacency
 
 def test_range():
     """
     Test the range function
     """
-    hdf5_handle = adjacency('test', '', 10000)
+    cnf_loc = os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
+
+    hdf5_handle = adjacency('test', '', 10000, cnf_loc)
     results = hdf5_handle.get_range('chr1', 100000, 200000, limit_chr='chr2')
 
     results_count = len(results['results'])

@@ -45,6 +45,8 @@ class adjacency(object):  # pylint: disable=invalid-name
             get_resolutions() and set_resolutions() can be called. Once the
             resolution has been set then all functions are callable.
         """
+        self.file_id = file_id # file_id required later on for URL generation
+
         if user_id == 'test':
             resource_path = '/tmp/sample_adjacency.hdf5'
             if os.path.isfile(resource_path) is False:
