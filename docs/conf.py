@@ -28,7 +28,7 @@ class Mock(MagicMock):
     def __getattr__(cls, name):
         return MagicMock()
 
-MOCK_MODULES = ['pyBigWig']
+MOCK_MODULES = ['pyBigWig', 'pysam']
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 import dmp
@@ -45,9 +45,6 @@ import dmp
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
-#    'sphinx.ext.intersphinx',
-#    'sphinx.ext.coverage',
-#    'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
 ]
 
@@ -69,7 +66,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'MuG DMP API'
-copyright = u'2017, Mark McDowall'
+copyright = u'2018, Mark McDowall'
 author = u'Mark McDowall'
 
 # The version info for the project you're documenting, acts as replacement for
