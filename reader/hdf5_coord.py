@@ -24,7 +24,7 @@ from dmp import dmp
 from dm_generator.GenerateSampleCoords import GenerateSampleCoords
 
 
-class coord(object):  # pylint: disable=invalid-name
+class coord(object):  # pylint: disable=invalid-name,too-many-instance-attributes
     """
     Class related to handling the functions for interacting directly with the
     HDF5 files. All required information should be passed to this class.
@@ -63,7 +63,7 @@ class coord(object):  # pylint: disable=invalid-name
 
         self.resolution = resolution
 
-        if self.resolution != None:
+        if self.resolution is not None:
             self.grp = self.file_handle[str(self.resolution)]
             self.meta = self.grp['meta']
             self.mpgrp = self.meta['model_params']
@@ -283,11 +283,9 @@ class coord(object):  # pylint: disable=invalid-name
         if self.resolution is None:
             return {}
 
-        return list(
-            set(
-                [self.mpgrp[region_id].attrs['chromosome'].decode('utf-8') for region_id in self.mpgrp.keys()]
-            )
-        )
+        return list(set([
+            self.mpgrp[region_id].attrs['chromosome'].decode('utf-8') for region_id in self.mpgrp.keys()  # pylint: disable=line-too-long
+        ]))
 
     def get_regions(self, chr_id, start, end):
         """
@@ -311,7 +309,9 @@ class coord(object):  # pylint: disable=invalid-name
         if self.resolution is None:
             return {}
 
-        return [region_id for region_id in self.mpgrp.keys() if self.mpgrp[region_id].attrs['start'] < end and self.mpgrp[region_id].attrs['end'] > start and self.mpgrp[region_id].attrs['chromosome'].decode('utf-8') == chr_id]
+        return [
+            region_id for region_id in self.mpgrp.keys() if self.mpgrp[region_id].attrs['start'] < end and self.mpgrp[region_id].attrs['end'] > start and self.mpgrp[region_id].attrs['chromosome'].decode('utf-8') == chr_id  # pylint: disable=line-too-long
+        ]
 
     def get_models(self, region_id):
         """
@@ -365,6 +365,7 @@ class coord(object):  # pylint: disable=invalid-name
               restraints : list
                   List of retraints for each position
               hic_data : dict
+                  Hi-C model data
            metadata : dict
               model_count : int
                   Count of the number of models for the defined region ID

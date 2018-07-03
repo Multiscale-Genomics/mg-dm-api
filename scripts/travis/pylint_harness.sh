@@ -19,6 +19,7 @@ disabled="--disable=similarities,invalid-name,too-many-statements,too-many-argum
 
 pylint ${disabled} --rcfile pylintrc dmp > output.err
 pylint ${disabled} --rcfile pylintrc dm_generator >> output.err
+pylint ${disabled} --rcfile pylintrc reader >> output.err
 pylint ${disabled} --rcfile pylintrc tests >> output.err
 
 grep -v "\-\-\-\-\-\-\-\-\-" output.err | grep -v "Your code has been rated" | grep -v "\n\n" | sed '/^$/d' > pylint.err

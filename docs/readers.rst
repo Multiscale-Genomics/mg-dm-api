@@ -28,12 +28,12 @@ Custom Reader APIs
 
    BigBed Files
    ============
-   .. autoclass:: reader.bigbed.bigbed
+   .. autoclass:: reader.bigbed.bigbed_reader
       :members:
 
    BigWig Files
    ============
-   .. autoclass:: reader.bigwig.bigwig
+   .. autoclass:: reader.bigwig.bigwig_reader
       :members:
 
    Tabix Files

@@ -47,7 +47,7 @@ def test_files_by_type_rest():
 
     dm_handle = dmp(test=True)
 
-    for i in range(10): # pylint: disable=unused-variable
+    for i in range(10):  # pylint: disable=unused-variable
         user = random.choice(users)
         file_type = random.choice(file_types)
         results = dm_handle.get_files_by_file_type(user, file_type, True)

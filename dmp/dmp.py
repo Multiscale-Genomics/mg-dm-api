@@ -9,11 +9,11 @@
        http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
+   distributed under the License is distributed on an 'AS IS' BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-"""
+"""  # pylint: disable=too-many-lines
 
 from __future__ import print_function, unicode_literals
 
@@ -83,8 +83,11 @@ class dmp(object):  # pylint: disable=invalid-name
             [('user_id', pymongo.ASCENDING), ('taxon_id', pymongo.ASCENDING)],
             unique=False, background=True)
 
-    def _copy_to_tmp(self, file_path, tmp_path):
-
+    @staticmethod
+    def _copy_to_tmp(file_path, tmp_path):
+        """
+        Copy file to a temporary location for testing
+        """
         if os.path.isfile(tmp_path) is False:
             with open(tmp_path, 'wb') as f_out:
                 with open(file_path, 'rb') as f_in:
@@ -92,7 +95,10 @@ class dmp(object):  # pylint: disable=invalid-name
 
         return True
 
-    def _test_loading_dataset(self):
+    def _test_loading_dataset(self):  # pylint: disable=too-many-locals
+        """
+        Load a test dataset into the DM API object
+        """
         users = ["adam", "ben", "chris", "denis", "eric"]
         file_types = [
             "fastq", "fa", "fasta", "bam", "bed", "bb", "hdf5", "tsv", "gz",
@@ -276,11 +282,13 @@ class dmp(object):  # pylint: disable=invalid-name
             file_path : str
                 Location of the file in the file system
             path_type : str
-
+                File or Folder
             file_type : str
                 File format (see validate_file)
             size : int
+                Size of the file
             parent_dir : str
+                Location of the parent dir
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -355,7 +363,6 @@ class dmp(object):  # pylint: disable=invalid-name
            da.get_files_by_file_path(<user_id>, <file_type>)
         """
         return self._get_rows(str(user_id), 'file_path', str(file_path), rest)
-
 
     def get_files_by_user(self, user_id, rest=False):
         """
@@ -715,7 +722,7 @@ class dmp(object):  # pylint: disable=invalid-name
             file_path : str
                 Location of the file in the file system
             path_type : str
-
+                File or folder
             file_type : str
                 File format ("amb", "ann", "bam", "bb", "bed", "bt2", "bw",
                 "bwt", "cpt", "csv", "dcd", "fa", "fasta", "fastq", "gem",
@@ -825,7 +832,7 @@ class dmp(object):  # pylint: disable=invalid-name
 
         return True
 
-    def set_file(  # pylint: disable=too-many-arguments
+    def set_file(  # pylint: disable=too-many-arguments,too-many-locals
             self, user_id, file_path, path_type, file_type="", size=0, parent_dir="", data_type="",
             taxon_id="", compressed=None, source_id=None, meta_data=None, **kwargs):
         """
