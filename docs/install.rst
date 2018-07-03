@@ -13,11 +13,13 @@ Software
 Python Modules
 ^^^^^^^^^^^^^^
 
+- bson
 - pymongo
 - mongomock
 - h5py
 - numpy
 - pyBigWig
+- pysam
 
 
 Installation
