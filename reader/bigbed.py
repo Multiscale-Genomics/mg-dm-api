@@ -46,7 +46,10 @@ class bigbed_reader(object):  # pylint: disable=invalid-name
 
         # Open the bigbed file
         if user_id == 'test':
-            resource_path = '/tmp/sample.bb'
+            resource_path = os.path.join(
+                os.path.dirname(__file__),
+                "../tests/data/sample.bb"
+            )
             if os.path.isfile(resource_path) is False:
                 gsa = GenerateSampleBigBed()
                 gsa.main()

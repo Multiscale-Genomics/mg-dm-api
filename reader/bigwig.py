@@ -51,7 +51,10 @@ class bigwig_reader(object):  # pylint: disable=invalid-name
         # Open the bigwig file
         # Open the bigbed file
         if user_id == 'test':
-            resource_path = '/tmp/sample.bw'
+            resource_path = os.path.join(
+                os.path.dirname(__file__),
+                "../tests/data/sample.bw"
+            )
             if os.path.isfile(resource_path) is False:
                 gsa = GenerateSampleBigWig()
                 gsa.main()

@@ -17,7 +17,7 @@
 
 import os
 from reader.bigwig import bigwig_reader
-import pytest # pylint: disable=unused-import
+
 
 def test_bigwig():
     """
@@ -26,10 +26,15 @@ def test_bigwig():
 
     cnf_loc = os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
 
+    filename = os.path.join(
+        os.path.dirname(__file__),
+        "../tests/data/sample.bw"
+    )
+
     chromosome = 19
     start = 3000000
     end = 3001000
-    bwr = bigwig_reader('test', '/tmp/sample.bw', cnf_loc)
+    bwr = bigwig_reader('test', filename, cnf_loc)
 
     wig_str = bwr.get_range(chromosome, start, end, 'wig')
     assert isinstance(wig_str, str)

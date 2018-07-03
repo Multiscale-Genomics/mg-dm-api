@@ -51,7 +51,7 @@ class hdf5_reader(object):  # pylint: disable=invalid-name
            h5r = hdf5_reader('test')
         """
 
-        self.test_file = '../tests/data/region_idx.hdf5'
+        self.test_file = os.path.join(os.path.dirname(__file__), "../tests/data/region_idx.hdf5")
         self.user_id = user_id
 
         # Open the hdf5 file

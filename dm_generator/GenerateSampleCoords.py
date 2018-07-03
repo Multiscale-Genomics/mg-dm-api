@@ -19,6 +19,7 @@
 
 from __future__ import print_function
 
+import os
 import json
 import random
 import h5py
@@ -45,7 +46,7 @@ class GenerateSampleCoords(object):  # pylint: disable=too-few-public-methods
 
         for uuid in range(10):
             # Create the HDF5 file
-            filename = "/tmp/sample_coords.hdf5"
+            filename = os.path.join(os.path.dirname(__file__), "../tests/data/sample_coords.hdf5")
             hdf5_handle = h5py.File(filename, "a")
 
             if str(resolution) in hdf5_handle:

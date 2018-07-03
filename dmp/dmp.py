@@ -28,6 +28,8 @@ from pymongo import MongoClient, ReadPreference
 import bson
 from bson.objectid import ObjectId
 
+from dm_generator.GenerateSampleBigBed import GenerateSampleBigBed
+from dm_generator.GenerateSampleBigWig import GenerateSampleBigWig
 from dm_generator.GenerateSampleCoords import GenerateSampleCoords
 from dm_generator.GenerateSampleAdjacency import GenerateSampleAdjacency
 
@@ -114,42 +116,46 @@ class dmp(object):  # pylint: disable=invalid-name
             meta_data={'assembly': 'GCA_0123456789'}
         )
 
-        data_path = os.path.join(os.path.dirname(__file__), "../dm_test_data/")
-        print("data_path:", data_path)
+        data_path = os.path.join(os.path.dirname(__file__), "../tests/data/")
 
         file_id = self.set_file(
-            "test", os.path.join('/tmp/sample.bb'),
+            "test", os.path.realpath(os.path.join(data_path, 'sample.bb')),
             "file", "bb", 64000, None, "RNA-seq", 9606,
             meta_data={'assembly': 'GCA_0123456789'},
             _id=ObjectId(str("0123456789ab0123456789aa"))
         )
-        self._copy_to_tmp(data_path + 'sample.bb', '/tmp/sample.bb')
+        if os.path.isfile(data_path + 'sample.bb') is False:
+            gsbb = GenerateSampleBigBed()
+            gsbb.main()
 
         file_id = self.set_file(
-            "test", os.path.join('/tmp/sample.bw'),
+            "test", os.path.realpath(os.path.join(data_path, 'sample.bw')),
             "file", "bw", 64000, None, "RNA-seq", 9606,
             meta_data={'assembly': 'GCA_0123456789'},
             _id=ObjectId(str("0123456789ab0123456789ab"))
         )
-        self._copy_to_tmp(data_path + 'sample.bw', '/tmp/sample.bw')
+        if os.path.isfile(data_path + 'sample.bw') is False:
+            gsbw = GenerateSampleBigWig()
+            gsbw.main()
 
         file_id = self.set_file(
-            "test", '/tmp/sample_coords.hdf5',
+            "test", os.path.join(data_path, 'sample_coords.hdf5'),
             "file", "hdf5", 64000, None, "HiC", 9606,
             meta_data={'assembly': 'GCA_0123456789'},
             _id=ObjectId(str("0123456789ab0123456789ac"))
         )
-        if os.path.isfile('/tmp/sample_coords.hdf5') is False:
+
+        if os.path.isfile(data_path + 'sample_coords.hdf5') is False:
             gsc = GenerateSampleCoords()
             gsc.main()
 
         file_id = self.set_file(
-            "test", '/tmp/sample_adjacency.hdf5',
+            "test", os.path.join(data_path, 'sample_adjacency.hdf5'),
             "file", "hdf5", 64000, None, "HiC", 9606,
             meta_data={'assembly': 'GCA_0123456789'},
             _id=ObjectId(str("0123456789ab0123456789ad"))
         )
-        if os.path.isfile('/tmp/sample_adjacency.hdf5') is False:
+        if os.path.isfile(data_path + 'sample_adjacency.hdf5') is False:
             gsa = GenerateSampleAdjacency()
             gsa.main()
 
@@ -362,7 +368,9 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_file_path(<user_id>, <file_type>)
         """
-        return self._get_rows(str(user_id), 'file_path', str(file_path), rest)
+        file_obj = self._get_rows(str(user_id), 'file_path', str(file_path), rest)
+
+        return file_obj
 
     def get_files_by_user(self, user_id, rest=False):
         """
