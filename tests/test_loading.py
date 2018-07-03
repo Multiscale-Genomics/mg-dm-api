@@ -47,11 +47,11 @@ def test_loading():
 
         if data_type == 'RNA-seq' and file_type == 'fastq' and random.choice([0, 1]) == 1:
             file_loc = '/tmp/test/' + data_type + '/test_' + str(i) + '.bam'
-            file_id = dm_handle.set_file(
+            file_id_2 = dm_handle.set_file(
                 user_id, file_loc, 'file', 'bam', 64000, None, data_type, 9606, None, [file_id],
                 meta_data={'assembly': 'GCA_0123456789'}
             )
-            print(file_id)
+            print(file_id_2)
 
     for user_id in users:
         results = dm_handle.get_files_by_user(user_id)

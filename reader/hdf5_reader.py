@@ -125,7 +125,7 @@ class hdf5_reader(object):  # pylint: disable=invalid-name
         """
         grp = self.file_handle[assembly]
         cid = list(np.nonzero(grp['chromosomes']))
-        return [grp['chromosomes'][i] for i in cid[0]]
+        return [grp['chromosomes'][i].decode('utf-8') for i in cid[0]]
 
     def get_files(self, assembly):
         """

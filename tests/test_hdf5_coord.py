@@ -123,8 +123,7 @@ def test_get_chromosome_01():
     chromosomes = hdf5_handle.get_chromosomes()
 
     print("\tChromosomes:", chromosomes)
-
-    assert chromosomes > 0
+    assert chromosomes
 
 
 def test_get_regions():

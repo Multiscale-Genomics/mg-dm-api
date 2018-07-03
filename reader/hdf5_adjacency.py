@@ -222,6 +222,7 @@ class adjacency(object):  # pylint: disable=invalid-name
         y_pos = int(np.ceil(float(end) / float(self.resolution)))
 
         # xy_offset for the chromosome in the super array
+        print(self.chr_param.keys())
         xy_offset = self.chr_param[chr_id]["bins"][self.resolution][1]
 
         dset = self.hdf5_handle[str(self.resolution)]
@@ -369,7 +370,7 @@ class adjacency(object):  # pylint: disable=invalid-name
                 )
             )
 
-            chr_param[str(chromosome[0])] = {
+            chr_param[chromosome[0].decode('utf-8')] = {
                 'size': [int(chromosome[1]), genome_len],
                 'bins': bin_c
             }
