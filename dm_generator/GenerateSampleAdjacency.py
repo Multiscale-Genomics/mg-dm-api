@@ -64,9 +64,9 @@ class GenerateSampleAdjacency(object):
         hdf5_handle = h5py.File(filename, "w")
 
         for resolution in resolutions:
-            local_size = d_size / resolution
+            local_size = np.floor(d_size / resolution)
             print(resolution, d_size, local_size)
-            d_sample = np.zeros([int(local_size), int(local_size)], dtype='int32')
+            d_sample = np.zeros([local_size, local_size], dtype='int32')
             d_sample += self.create_matrix(local_size)
 
             dset = hdf5_handle.create_dataset(
