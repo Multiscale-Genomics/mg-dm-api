@@ -784,7 +784,7 @@ class dmp(object):  # pylint: disable=invalid-name
             "csv": [],
             "dcd": [],
             "fa": [],
-            "fasta": [],
+            "fasta": ["assembly"],  # This might not always be true and might need to be reviewed
             "fastq": [],
             "gem": ["assembly"],
             "gff3": ["assembly"],
