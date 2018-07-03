@@ -48,13 +48,13 @@ class GenerateSampleAdjacency(object):
         """
         resolutions = [10000, 100000, 1000000]
         chromosomes = [
-            ["chr1", 32000000],
-            ["chr2", 16000000],
-            ["chr3", 8000000],
-            ["chr4", 4000000],
-            ["chr5", 2000000],
-            ["chr6", 1000000],
-            ["X", 10000000]
+            [b"chr1", 32000000],
+            [b"chr2", 16000000],
+            [b"chr3", 8000000],
+            [b"chr4", 4000000],
+            [b"chr5", 2000000],
+            [b"chr6", 1000000],
+            [b"X", 10000000]
         ]
 
         d_size = sum([c[1] for c in chromosomes])
@@ -65,7 +65,6 @@ class GenerateSampleAdjacency(object):
 
         for resolution in resolutions:
             local_size = int(np.ceil(d_size / resolution))
-            print(resolution, d_size, local_size)
             d_sample = np.zeros([local_size, local_size], dtype='int32')
             d_sample += self.create_matrix(local_size)
 
