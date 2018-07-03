@@ -13,7 +13,6 @@ Software
 Python Modules
 ^^^^^^^^^^^^^^
 
-- bson
 - pymongo
 - mongomock
 - h5py
