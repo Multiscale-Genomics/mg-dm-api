@@ -19,7 +19,13 @@ os: linux
 
 python:
     - "2.7"
-    # - "3.5"
+    - "3.6"
+
+env:
+    matrix:
+        - TESTENV=docs
+        - TESTENV=code
+        - TESTENV=pylint
 
 before_install:
     - pwd
@@ -54,4 +60,6 @@ before_script:
 
 # command to run tests
 script:
-    pytest -m "not underdeverlopment"
+    - if [[ "$TESTENV" == "code" ]]; then pytest; fi
+    - if [[ "$TESTENV" == "docs" ]]; then ./scripts/travis/docs_harness.sh; fi
+    - if [[ "$TESTENV" == "pylint" ]]; then ./scripts/travis/pylint_harness.sh; fi
