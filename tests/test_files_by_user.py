@@ -19,6 +19,7 @@ from __future__ import print_function
 
 from dmp import dmp
 
+
 def test_files_by_user():
     """
     Test retrieving lists of files for all known test users.
@@ -31,6 +32,7 @@ def test_files_by_user():
         results = dm_handle.get_files_by_user(user)
         print(user, len(results))
         assert isinstance(results, type([])) is True
+
 
 def test_files_by_user_rest():
     """

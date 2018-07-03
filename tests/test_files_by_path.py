@@ -19,6 +19,7 @@ from __future__ import print_function, unicode_literals
 
 from dmp import dmp
 
+
 def test_files_by_file_path():
     """
     Test the retrieval of files for users by file type
@@ -28,7 +29,7 @@ def test_files_by_file_path():
 
     dm_handle = dmp(test=True)
 
-    for file_path in file_paths: # pylint: disable=unused-variable
+    for file_path in file_paths:  # pylint: disable=unused-variable
         results = dm_handle.get_file_by_file_path(user, file_path)
 
         assert isinstance(results, type([])) is True

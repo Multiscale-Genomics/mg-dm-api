@@ -21,6 +21,7 @@ import random
 
 from dmp import dmp
 
+
 def test_loading():
     """
     Test the loading of new files into the MongoDB
@@ -41,14 +42,14 @@ def test_loading():
         file_loc = '/tmp/test/' + data_type + '/test_' + str(i) + '.' + file_type
         file_id = dm_handle.set_file(
             user_id, file_loc, 'file', file_type, 64000, None, data_type, 9606, zipped,
-            meta_data={'assembly' : 'GCA_0123456789'}
+            meta_data={'assembly': 'GCA_0123456789'}
         )
 
         if data_type == 'RNA-seq' and file_type == 'fastq' and random.choice([0, 1]) == 1:
             file_loc = '/tmp/test/' + data_type + '/test_' + str(i) + '.bam'
             file_id = dm_handle.set_file(
                 user_id, file_loc, 'file', 'bam', 64000, None, data_type, 9606, None, [file_id],
-                meta_data={'assembly' : 'GCA_0123456789'}
+                meta_data={'assembly': 'GCA_0123456789'}
             )
             print(file_id)
 

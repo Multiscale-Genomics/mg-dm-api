@@ -17,6 +17,7 @@
 
 from dmp import dmp
 
+
 def test_files_by_user():
     """
     Test to determine that a user has N files and that removing a file reduces

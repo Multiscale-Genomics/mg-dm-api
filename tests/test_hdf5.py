@@ -21,9 +21,8 @@ import random
 import os
 
 from reader.hdf5_reader import hdf5_reader
-import pytest # pylint: disable=unused-import
-
 # 286sec ==> 0.286sec per query
+
 
 def test_hdf5():
     """
@@ -37,7 +36,6 @@ def test_hdf5():
         11, 12, 13, 14, 15, 16, 17, 18, 19,
         'X', 'Y'
     ]
-    #chr_list = [1,10,11,12,13]
 
     i = 0
     while i < 10:
@@ -47,11 +45,10 @@ def test_hdf5():
         h5r = hdf5_reader('test', cnf_loc)
 
         # Mouse
-        #file_ids = h5r.get_regions('GCA_000001635.7', chromosome, start, end)
         file_ids = h5r.get_regions('GRCm38', chromosome, start, end)
 
         # Human
-        #file_ids = h5r.get_regions('GCA_000001405.22', chromosome, start, end)
+        # file_ids = h5r.get_regions('GCA_000001405.22', chromosome, start, end)
 
         print(str(chromosome), str(start), str(end), str(file_ids))
         h5r.close()
