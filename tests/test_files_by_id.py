@@ -27,10 +27,10 @@ def test_files_by_id():
     """
     user = "test"
     file_paths = [
-        ObjectId(str("testtest0000")),
-        ObjectId(str("testtest0001")),
-        ObjectId(str("testtest0002")),
-        ObjectId(str("testtest0003"))
+        ObjectId(str("0123456789ab0123456789aa")),
+        ObjectId(str("0123456789ab0123456789ab")),
+        ObjectId(str("0123456789ab0123456789ac")),
+        ObjectId(str("0123456789ab0123456789ad"))
     ]
 
     dm_handle = dmp(test=True)
