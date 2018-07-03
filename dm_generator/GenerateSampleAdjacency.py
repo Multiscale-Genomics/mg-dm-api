@@ -48,20 +48,19 @@ class GenerateSampleAdjacency(object):
         """
         resolutions = [10000, 100000, 1000000]
         chromosomes = [
-            ['chr1', 32000000],
-            ['chr2', 16000000],
-            ['chr3', 8000000],
-            ['chr4', 4000000],
-            ['chr5', 2000000],
-            ['chr6', 1000000],
-            ['X', 10000000]
+            ["chr1", 32000000],
+            ["chr2", 16000000],
+            ["chr3", 8000000],
+            ["chr4", 4000000],
+            ["chr5", 2000000],
+            ["chr6", 1000000],
+            ["X", 10000000]
         ]
 
         d_size = sum([c[1] for c in chromosomes])
 
         # Create the HDF5 file
         filename = os.path.join(os.path.dirname(__file__), "../tests/data/sample_adjacency.hdf5")
-        # filename = "/tmp/sample_adjacency.hdf5"
         hdf5_handle = h5py.File(filename, "w")
 
         for resolution in resolutions:
