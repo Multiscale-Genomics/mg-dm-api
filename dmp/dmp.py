@@ -121,7 +121,7 @@ class dmp(object):  # pylint: disable=invalid-name
             "test", os.path.join('/tmp/sample.bb'),
             "file", "bb", 64000, None, "RNA-seq", 9606,
             meta_data={'assembly': 'GCA_0123456789'},
-            _id=ObjectId(str("testtesttesttesttest0000"))
+            _id=ObjectId(str("testtest0000"))
         )
         self._copy_to_tmp(data_path + 'sample.bb', '/tmp/sample.bb')
 
@@ -129,7 +129,7 @@ class dmp(object):  # pylint: disable=invalid-name
             "test", os.path.join('/tmp/sample.bw'),
             "file", "bw", 64000, None, "RNA-seq", 9606,
             meta_data={'assembly': 'GCA_0123456789'},
-            _id=ObjectId(str("testtesttesttesttest0001"))
+            _id=ObjectId(str("testtest0001"))
         )
         self._copy_to_tmp(data_path + 'sample.bw', '/tmp/sample.bw')
 
@@ -137,7 +137,7 @@ class dmp(object):  # pylint: disable=invalid-name
             "test", '/tmp/sample_coords.hdf5',
             "file", "hdf5", 64000, None, "HiC", 9606,
             meta_data={'assembly': 'GCA_0123456789'},
-            _id=ObjectId(str("testtesttesttesttest0002"))
+            _id=ObjectId(str("testtest0002"))
         )
         if os.path.isfile('/tmp/sample_coords.hdf5') is False:
             gsc = GenerateSampleCoords()
@@ -147,7 +147,7 @@ class dmp(object):  # pylint: disable=invalid-name
             "test", '/tmp/sample_adjacency.hdf5',
             "file", "hdf5", 64000, None, "HiC", 9606,
             meta_data={'assembly': 'GCA_0123456789'},
-            _id=ObjectId(str("testtesttesttesttest0003"))
+            _id=ObjectId(str("testtest0003"))
         )
         if os.path.isfile('/tmp/sample_adjacency.hdf5') is False:
             gsa = GenerateSampleAdjacency()
