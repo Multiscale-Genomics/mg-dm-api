@@ -5,3 +5,4 @@ h5py
 numpy
 six
 pyBigWig
+pysam
