@@ -34,24 +34,26 @@ def test_loading():
 
     dm_handle = dmp(test=True)
 
-    for i in range(10):
-        user_id = random.choice(users)
-        file_type = random.choice(file_types)
-        data_type = random.choice(data_types)
-        zipped = random.choice(compressed)
-        file_loc = '/tmp/test/' + data_type + '/test_' + str(i) + '.' + file_type
-        file_id = dm_handle.set_file(
-            user_id, file_loc, 'file', file_type, 64000, None, data_type, 9606, zipped,
-            meta_data={'assembly': 'GCA_0123456789'}
-        )
+    i = 0
+    for file_type in file_types:
+        for data_type in data_types:
+            for zipped in compressed:
+                user_id = random.choice(users)
+                file_loc = '/tmp/test/' + data_type + '/test_' + str(i) + '.' + file_type
+                file_id = dm_handle.set_file(
+                    user_id, file_loc, 'file', file_type, 64000, None, data_type, 9606, zipped,
+                    meta_data={'assembly': 'GCA_0123456789'}
+                )
+                print(file_id)
 
-        if data_type == 'RNA-seq' and file_type == 'fastq' and random.choice([0, 1]) == 1:
-            file_loc = '/tmp/test/' + data_type + '/test_' + str(i) + '.bam'
-            file_id_2 = dm_handle.set_file(
-                user_id, file_loc, 'file', 'bam', 64000, None, data_type, 9606, None, [file_id],
-                meta_data={'assembly': 'GCA_0123456789'}
-            )
-            print(file_id_2)
+                if data_type == 'RNA-seq' and file_type == 'fastq' and random.choice([0, 1]) == 1:
+                    file_loc = '/tmp/test/' + data_type + '/test_' + str(i) + '.bam'
+                    file_id_2 = dm_handle.set_file(
+                        user_id, file_loc, 'file', 'bam', 64000, None, data_type, 9606, None, [file_id],
+                        meta_data={'assembly': 'GCA_0123456789', 'tool': 'kallisto'}
+                    )
+                    print(file_id_2)
+                i += 1
 
     for user_id in users:
         results = dm_handle.get_files_by_user(user_id)
