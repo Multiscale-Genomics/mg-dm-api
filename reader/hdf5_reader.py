@@ -203,7 +203,7 @@ class hdf5_reader(object):  # pylint: disable=invalid-name
         start = int(start)
         end = int(end)
 
-        #chr X file X position
+        # chr X file X position
         dnp1 = dset1[chrom_idx.index(chromosome), :, start:end]
         dnp1k = dset1k[chrom_idx.index(chromosome), :, start:end]
         f_idx = []
