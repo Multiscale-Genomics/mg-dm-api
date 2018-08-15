@@ -18,6 +18,7 @@ Python Modules
 - h5py
 - numpy
 - pyBigWig
+- pysam
 
 
 Installation

@@ -17,7 +17,7 @@
 
 import os
 from reader.bigbed import bigbed_reader
-import pytest # pylint: disable=unused-import
+
 
 def test_bigbed():
     """
@@ -26,10 +26,15 @@ def test_bigbed():
 
     cnf_loc = os.path.dirname(os.path.abspath(__file__)) + '/mongodb.cnf'
 
+    filename = os.path.join(
+        os.path.dirname(__file__),
+        "../tests/data/sample.bb"
+    )
+
     chromosome = 19
     start = 3000000
     end = 3001000
-    bbr = bigbed_reader('test', '/tmp/sample.bb', cnf_loc)
+    bbr = bigbed_reader('test', filename, cnf_loc)
 
     bed_str = bbr.get_range(chromosome, start, end, 'bed')
     assert isinstance(bed_str, str)

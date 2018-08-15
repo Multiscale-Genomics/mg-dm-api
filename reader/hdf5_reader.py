@@ -51,7 +51,7 @@ class hdf5_reader(object):  # pylint: disable=invalid-name
            h5r = hdf5_reader('test')
         """
 
-        self.test_file = '../tests/data/region_idx.hdf5'
+        self.test_file = os.path.join(os.path.dirname(__file__), "../tests/data/region_idx.hdf5")
         self.user_id = user_id
 
         # Open the hdf5 file
@@ -125,7 +125,7 @@ class hdf5_reader(object):  # pylint: disable=invalid-name
         """
         grp = self.file_handle[assembly]
         cid = list(np.nonzero(grp['chromosomes']))
-        return [grp['chromosomes'][i] for i in cid[0]]
+        return [grp['chromosomes'][i].decode('utf-8') for i in cid[0]]
 
     def get_files(self, assembly):
         """
@@ -203,7 +203,7 @@ class hdf5_reader(object):  # pylint: disable=invalid-name
         start = int(start)
         end = int(end)
 
-        #chr X file X position
+        # chr X file X position
         dnp1 = dset1[chrom_idx.index(chromosome), :, start:end]
         dnp1k = dset1k[chrom_idx.index(chromosome), :, start:end]
         f_idx = []

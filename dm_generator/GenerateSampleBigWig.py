@@ -17,6 +17,7 @@
    limitations under the License.
 """
 
+import os
 import subprocess
 import shlex
 
@@ -32,7 +33,14 @@ class GenerateSampleBigWig(object):
         """
         Main function
         """
-        filename = "/tmp/sample.wig"
+        filename = os.path.join(
+            os.path.dirname(__file__),
+            "../tests/data/sample.wig"
+        )
+        filename_bw = os.path.join(
+            os.path.dirname(__file__),
+            "../tests/data/sample.bw"
+        )
         wig_handle = open(filename, "w")
         start = 300000
 
@@ -45,12 +53,15 @@ class GenerateSampleBigWig(object):
             start = b_end + randint(50, 100)
         wig_handle.close()
 
-        cs_file = "/tmp/chrom.size"
+        cs_file = os.path.join(
+            os.path.dirname(__file__),
+            "../tests/data/chrom.size"
+        )
         cs_handle = open(cs_file, "w")
         cs_handle.write("19\t" + str(start + 1000) + "\n")
         cs_handle.close()
 
-        command_line = "wigToBigWig /tmp/sample.wig /tmp/chrom.size /tmp/sample.bw"
+        command_line = "wigToBigWig {} {} {}".format(filename, cs_file, filename_bw)
         args = shlex.split(command_line)
         process_handle = subprocess.Popen(args)
         process_handle.wait()

@@ -19,6 +19,7 @@ from __future__ import print_function
 
 from dmp import dmp
 
+
 def test_history():
     """
     Test getting the history of a file.

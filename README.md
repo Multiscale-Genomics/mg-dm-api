@@ -12,6 +12,8 @@ API for the management of file locations and users within the MuG VRE.
   - monogomock
   - numpy
   - h5py
+  - pyBigWig
+  - pysam
 
 # Installation
 Cloneing from GitHub:

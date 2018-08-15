@@ -16,17 +16,19 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import os, sys
+import os
+import sys
 sys.path.insert(0, os.path.abspath('..'))
 
 from mock import Mock as MagicMock
 
+
 class Mock(MagicMock):
     @classmethod
     def __getattr__(cls, name):
-            return MagicMock()
+        return MagicMock()
 
-MOCK_MODULES = ['pyBigWig']
+MOCK_MODULES = ['pyBigWig', 'pysam']
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 import dmp
@@ -43,9 +45,6 @@ import dmp
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
-#    'sphinx.ext.intersphinx',
-#    'sphinx.ext.coverage',
-#    'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
 ]
 
@@ -67,7 +66,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'MuG DMP API'
-copyright = u'2017, Mark McDowall'
+copyright = u'2018, Mark McDowall'
 author = u'Mark McDowall'
 
 # The version info for the project you're documenting, acts as replacement for

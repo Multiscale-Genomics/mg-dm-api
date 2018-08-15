@@ -24,7 +24,7 @@ from dmp import dmp
 from dm_generator.GenerateSampleCoords import GenerateSampleCoords
 
 
-class coord(object):  # pylint: disable=invalid-name
+class coord(object):  # pylint: disable=invalid-name,too-many-instance-attributes
     """
     Class related to handling the functions for interacting directly with the
     HDF5 files. All required information should be passed to this class.
@@ -51,11 +51,14 @@ class coord(object):  # pylint: disable=invalid-name
 
         # Open the hdf5 file
         if user_id == 'test':
-            resource_path = '/tmp/sample_coords.hdf5'
+            resource_path = os.path.join(
+                os.path.dirname(__file__),
+                "../tests/data/sample_coords.hdf5"
+            )
             if os.path.isfile(resource_path) is False:
                 gsa = GenerateSampleCoords()
                 gsa.main()
-            self.file_handle = h5py.File('/tmp/sample_coords.hdf5', 'r')
+            self.file_handle = h5py.File(resource_path, 'r')
         else:
             dm_handle = dmp(cnf_loc)
             file_obj = dm_handle.get_file_by_id(user_id, file_id)
@@ -63,7 +66,7 @@ class coord(object):  # pylint: disable=invalid-name
 
         self.resolution = resolution
 
-        if self.resolution != None:
+        if self.resolution is not None:
             self.grp = self.file_handle[str(self.resolution)]
             self.meta = self.grp['meta']
             self.mpgrp = self.meta['model_params']
@@ -212,22 +215,22 @@ class coord(object):  # pylint: disable=invalid-name
         dset = self.grp['data']
 
         return {
-            'title': dset.attrs['title'].decode('utf-8'),
-            'experimentType': dset.attrs['experimentType'].decode('utf-8'),
-            'species': dset.attrs['species'].decode('utf-8'),
-            'project': dset.attrs['project'].decode('utf-8'),
-            'identifier': dset.attrs['identifier'].decode('utf-8'),
-            'assembly': dset.attrs['assembly'].decode('utf-8'),
-            'cellType': dset.attrs['cellType'].decode('utf-8'),
-            'resolution': dset.attrs['resolution'].decode('utf-8'),
-            'datatype': dset.attrs['datatype'].decode('utf-8'),
-            'components': dset.attrs['components'].decode('utf-8'),
-            'source': dset.attrs['source'].decode('utf-8'),
+            'title': dset.attrs['title'],
+            'experimentType': dset.attrs['experimentType'],
+            'species': dset.attrs['species'],
+            'project': dset.attrs['project'],
+            'identifier': dset.attrs['identifier'],
+            'assembly': dset.attrs['assembly'],
+            'cellType': dset.attrs['cellType'],
+            'resolution': dset.attrs['resolution'],
+            'datatype': dset.attrs['datatype'],
+            'components': dset.attrs['components'],
+            'source': dset.attrs['source'],
             'chromEnd': [np.asscalar(mpds.attrs['end'])],
             'end': np.asscalar(mpds.attrs['end']),
             'chromStart': [np.asscalar(mpds.attrs['start'])],
             'start': np.asscalar(mpds.attrs['start']),
-            'chrom': mpds.attrs['chromosome'].decode('utf-8'),
+            'chrom': mpds.attrs['chromosome'],
             'dependencies': self.dependencies,
             'uuid': region_id,
         }
@@ -283,11 +286,9 @@ class coord(object):  # pylint: disable=invalid-name
         if self.resolution is None:
             return {}
 
-        return list(
-            set(
-                [self.mpgrp[region_id].attrs['chromosome'].decode('utf-8') for region_id in self.mpgrp.keys()]
-            )
-        )
+        return list(set([
+            self.mpgrp[region_id].attrs['chromosome'] for region_id in self.mpgrp.keys()  # pylint: disable=line-too-long
+        ]))
 
     def get_regions(self, chr_id, start, end):
         """
@@ -311,7 +312,9 @@ class coord(object):  # pylint: disable=invalid-name
         if self.resolution is None:
             return {}
 
-        return [region_id for region_id in self.mpgrp.keys() if self.mpgrp[region_id].attrs['start'] < end and self.mpgrp[region_id].attrs['end'] > start and self.mpgrp[region_id].attrs['chromosome'].decode('utf-8') == chr_id]
+        return [
+            region_id for region_id in self.mpgrp.keys() if self.mpgrp[region_id].attrs['start'] < end and self.mpgrp[region_id].attrs['end'] > start and self.mpgrp[region_id].attrs['chromosome'] == chr_id  # pylint: disable=line-too-long
+        ]
 
     def get_models(self, region_id):
         """
@@ -365,6 +368,7 @@ class coord(object):  # pylint: disable=invalid-name
               restraints : list
                   List of retraints for each position
               hic_data : dict
+                  Hi-C model data
            metadata : dict
               model_count : int
                   Count of the number of models for the defined region ID

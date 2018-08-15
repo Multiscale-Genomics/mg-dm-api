@@ -21,6 +21,7 @@ import os
 
 from reader.hdf5_adjacency import adjacency
 
+
 def test_range():
     """
     Test the range function

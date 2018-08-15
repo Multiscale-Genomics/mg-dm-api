@@ -17,6 +17,7 @@
    limitations under the License.
 """
 
+import os
 import h5py
 import numpy as np
 
@@ -35,7 +36,7 @@ class GenerateSampleAdjacency(object):
         total_size = size * size
         rand_matrix = np.reshape(
             np.random.choice(
-                [0, 1], total_size, p=[0.9, 0.1]
+                [0, 1], int(total_size), p=[0.9, 0.1]
             ),
             (size, size)
         )
@@ -47,25 +48,23 @@ class GenerateSampleAdjacency(object):
         """
         resolutions = [10000, 100000, 1000000]
         chromosomes = [
-            ['chr1', 32000000],
-            ['chr2', 16000000],
-            ['chr3', 8000000],
-            ['chr4', 4000000],
-            ['chr5', 2000000],
-            ['chr6', 1000000],
-            ['X', 10000000]
+            [b"chr1", 32000000],
+            [b"chr2", 16000000],
+            [b"chr3", 8000000],
+            [b"chr4", 4000000],
+            [b"chr5", 2000000],
+            [b"chr6", 1000000],
+            [b"X", 10000000]
         ]
 
         d_size = sum([c[1] for c in chromosomes])
 
         # Create the HDF5 file
-        # filename = os.path.join(os.path.dirname(__file__), "../tests/data/sample_adjacency.hdf5")
-        filename = "/tmp/sample_adjacency.hdf5"
+        filename = os.path.join(os.path.dirname(__file__), "../tests/data/sample_adjacency.hdf5")
         hdf5_handle = h5py.File(filename, "w")
 
         for resolution in resolutions:
-            local_size = d_size / resolution
-            print(resolution, d_size, local_size)
+            local_size = int(np.ceil(d_size / resolution))
             d_sample = np.zeros([local_size, local_size], dtype='int32')
             d_sample += self.create_matrix(local_size)
 

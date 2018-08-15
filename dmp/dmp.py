@@ -9,11 +9,11 @@
        http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
+   distributed under the License is distributed on an 'AS IS' BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-"""
+"""  # pylint: disable=too-many-lines
 
 from __future__ import print_function, unicode_literals
 
@@ -28,6 +28,8 @@ from pymongo import MongoClient, ReadPreference
 import bson
 from bson.objectid import ObjectId
 
+from dm_generator.GenerateSampleBigBed import GenerateSampleBigBed
+from dm_generator.GenerateSampleBigWig import GenerateSampleBigWig
 from dm_generator.GenerateSampleCoords import GenerateSampleCoords
 from dm_generator.GenerateSampleAdjacency import GenerateSampleAdjacency
 
@@ -83,8 +85,11 @@ class dmp(object):  # pylint: disable=invalid-name
             [('user_id', pymongo.ASCENDING), ('taxon_id', pymongo.ASCENDING)],
             unique=False, background=True)
 
-    def _copy_to_tmp(self, file_path, tmp_path):
-
+    @staticmethod
+    def _copy_to_tmp(file_path, tmp_path):
+        """
+        Copy file to a temporary location for testing
+        """
         if os.path.isfile(tmp_path) is False:
             with open(tmp_path, 'wb') as f_out:
                 with open(file_path, 'rb') as f_in:
@@ -92,7 +97,10 @@ class dmp(object):  # pylint: disable=invalid-name
 
         return True
 
-    def _test_loading_dataset(self):
+    def _test_loading_dataset(self):  # pylint: disable=too-many-locals
+        """
+        Load a test dataset into the DM API object
+        """
         users = ["adam", "ben", "chris", "denis", "eric"]
         file_types = [
             "fastq", "fa", "fasta", "bam", "bed", "bb", "hdf5", "tsv", "gz",
@@ -108,42 +116,46 @@ class dmp(object):  # pylint: disable=invalid-name
             meta_data={'assembly': 'GCA_0123456789'}
         )
 
-        data_path = os.path.join(os.path.dirname(__file__), "../dm_test_data/")
-        print("data_path:", data_path)
+        data_path = os.path.join(os.path.dirname(__file__), "../tests/data/")
 
         file_id = self.set_file(
-            "test", os.path.join('/tmp/sample.bb'),
+            "test", os.path.realpath(os.path.join(data_path, 'sample.bb')),
             "file", "bb", 64000, None, "RNA-seq", 9606,
             meta_data={'assembly': 'GCA_0123456789'},
-            _id=ObjectId(str("testtest0000"))
+            _id=ObjectId(str("0123456789ab0123456789aa"))
         )
-        self._copy_to_tmp(data_path + 'sample.bb', '/tmp/sample.bb')
+        if os.path.isfile(data_path + 'sample.bb') is False:
+            gsbb = GenerateSampleBigBed()
+            gsbb.main()
 
         file_id = self.set_file(
-            "test", os.path.join('/tmp/sample.bw'),
+            "test", os.path.realpath(os.path.join(data_path, 'sample.bw')),
             "file", "bw", 64000, None, "RNA-seq", 9606,
             meta_data={'assembly': 'GCA_0123456789'},
-            _id=ObjectId(str("testtest0001"))
+            _id=ObjectId(str("0123456789ab0123456789ab"))
         )
-        self._copy_to_tmp(data_path + 'sample.bw', '/tmp/sample.bw')
+        if os.path.isfile(data_path + 'sample.bw') is False:
+            gsbw = GenerateSampleBigWig()
+            gsbw.main()
 
         file_id = self.set_file(
-            "test", '/tmp/sample_coords.hdf5',
+            "test", os.path.join(data_path, 'sample_coords.hdf5'),
             "file", "hdf5", 64000, None, "HiC", 9606,
             meta_data={'assembly': 'GCA_0123456789'},
-            _id=ObjectId(str("testtest0002"))
+            _id=ObjectId(str("0123456789ab0123456789ac"))
         )
-        if os.path.isfile('/tmp/sample_coords.hdf5') is False:
+
+        if os.path.isfile(data_path + 'sample_coords.hdf5') is False:
             gsc = GenerateSampleCoords()
             gsc.main()
 
         file_id = self.set_file(
-            "test", '/tmp/sample_adjacency.hdf5',
+            "test", os.path.join(data_path, 'sample_adjacency.hdf5'),
             "file", "hdf5", 64000, None, "HiC", 9606,
             meta_data={'assembly': 'GCA_0123456789'},
-            _id=ObjectId(str("testtest0003"))
+            _id=ObjectId(str("0123456789ab0123456789ad"))
         )
-        if os.path.isfile('/tmp/sample_adjacency.hdf5') is False:
+        if os.path.isfile(data_path + 'sample_adjacency.hdf5') is False:
             gsa = GenerateSampleAdjacency()
             gsa.main()
 
@@ -276,11 +288,13 @@ class dmp(object):  # pylint: disable=invalid-name
             file_path : str
                 Location of the file in the file system
             path_type : str
-
+                File or Folder
             file_type : str
                 File format (see validate_file)
             size : int
+                Size of the file
             parent_dir : str
+                Location of the parent dir
             data_type : str
                 The type of information in the file (RNA-seq, ChIP-seq, etc)
             taxon_id : int
@@ -354,8 +368,9 @@ class dmp(object):  # pylint: disable=invalid-name
            da = dmp()
            da.get_files_by_file_path(<user_id>, <file_type>)
         """
-        return self._get_rows(str(user_id), 'file_path', str(file_path), rest)
+        file_obj = self._get_rows(str(user_id), 'file_path', str(file_path), rest)
 
+        return file_obj
 
     def get_files_by_user(self, user_id, rest=False):
         """
@@ -715,7 +730,7 @@ class dmp(object):  # pylint: disable=invalid-name
             file_path : str
                 Location of the file in the file system
             path_type : str
-
+                File or folder
             file_type : str
                 File format ("amb", "ann", "bam", "bb", "bed", "bt2", "bw",
                 "bwt", "cpt", "csv", "dcd", "fa", "fasta", "fastq", "gem",
@@ -763,13 +778,13 @@ class dmp(object):  # pylint: disable=invalid-name
             "bb": ["assembly"],
             "bed": ["assembly"],
             "bt2": ["assembly"],
-            "bw": [],
+            "bw": ["assembly"],
             "bwt": ["assembly"],
             "cpt": [],
             "csv": [],
             "dcd": [],
             "fa": [],
-            "fasta": ["assembly"],
+            "fasta": ["assembly"],  # This might not always be true and might need to be reviewed
             "fastq": [],
             "gem": ["assembly"],
             "gff3": ["assembly"],
@@ -825,7 +840,7 @@ class dmp(object):  # pylint: disable=invalid-name
 
         return True
 
-    def set_file(  # pylint: disable=too-many-arguments
+    def set_file(  # pylint: disable=too-many-arguments,too-many-locals
             self, user_id, file_path, path_type, file_type="", size=0, parent_dir="", data_type="",
             taxon_id="", compressed=None, source_id=None, meta_data=None, **kwargs):
         """

@@ -19,6 +19,7 @@ from __future__ import print_function
 
 from reader.hdf5_coord import coord
 
+
 def get_region_ids(hdf5_handle, more_than_1=False):
     """
     Return a list of available regions from any chromosome without knowing if
@@ -52,14 +53,14 @@ def get_region_ids(hdf5_handle, more_than_1=False):
         print("get_region_ids - region_ids:", chromosomes[chromosome])
         if len(region_ids) > 1 and more_than_1 is True:
             return {
-                'chromosome' : chromosomes[chromosome],
-                'region_ids' : region_ids
+                'chromosome': chromosomes[chromosome],
+                'region_ids': region_ids
             }
 
         if region_ids is not None and more_than_1 is False:
             return {
-                'chromosome' : chromosomes[chromosome],
-                'region_ids' : region_ids
+                'chromosome': chromosomes[chromosome],
+                'region_ids': region_ids
             }
 
     return None
@@ -76,6 +77,7 @@ def test_resolutions():
     results_count = len(results)
 
     assert results_count > 0
+
 
 def test_set_resolution():
     """
@@ -94,6 +96,7 @@ def test_set_resolution():
     assert res_before is None
     assert res_after == int(results[0])
 
+
 def test_get_chromosome_00():
     """
     Test the list of chromosomes when no resolution has been specied is zero
@@ -103,6 +106,7 @@ def test_get_chromosome_00():
 
     chromosomes_count = len(chromosomes)
     assert chromosomes_count == 0
+
 
 def test_get_chromosome_01():
     """
@@ -119,8 +123,8 @@ def test_get_chromosome_01():
     chromosomes = hdf5_handle.get_chromosomes()
 
     print("\tChromosomes:", chromosomes)
+    assert chromosomes
 
-    assert chromosomes > 0
 
 def test_get_regions():
     """
@@ -137,6 +141,7 @@ def test_get_regions():
 
     print('\tGet Regions:', len(results))
     assert results is not None
+
 
 def test_get_region_order():
     """
@@ -156,6 +161,7 @@ def test_get_region_order():
     print('\tRegion Order:', results)
     assert results is not None
 
+
 def test_object_data():
     """
     Test getting the header data for the JSON object
@@ -172,6 +178,7 @@ def test_object_data():
 
     print('\tObject Data:', results)
     assert 'assembly' in results
+
 
 def test_clusters():
     """
@@ -191,6 +198,7 @@ def test_clusters():
     cluster_count = len(results)
     assert cluster_count == 4
 
+
 def test_centroids():
     """
     Test getting the list of centroids
@@ -209,6 +217,7 @@ def test_centroids():
     centroid_count = len(results)
     assert centroid_count == 5
 
+
 def test_get_models():
     """
     Test getting the list of models for a given region
@@ -226,6 +235,7 @@ def test_get_models():
     print('\tModels:', len(results))
     models_count = len(results)
     assert models_count == 1000
+
 
 def test_get_model():
     """
